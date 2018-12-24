@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const { secretOrKey } = require('../../config/keys');
 const passport = require('passport');
 
+
 //Load User model
 const User = require('../../models/User');
 
@@ -86,11 +87,11 @@ router.post('/login', async (req, res) => {
 
       const isMatch = await bcrypt.compare(password, user.password);
 
-      if (!isMatch) res.status(401).json({ password: 'Incorrect password' });
+      if (!isMatch) return res.status(401).json({ password: 'Incorrect password' });
 
-      const { id, firstName, LastName, email, role } = user;
+      const { id, firstName, lastName, email, role } = user;
 
-      const payload = { id, firstName, LastName, email, role };
+      const payload = { id, firstName, lastName, email, role };
 
       jwt.sign(payload, secretOrKey, { expiresIn: '7d' }, (err, token) => {
         res.status(200).json({
@@ -113,8 +114,20 @@ router.post('/login', async (req, res) => {
 //@desc   Register and Login user with Google Account
 router.get('/googleoauth', passport.authenticate('google', { scope: [ 'profile', 'email' ] }));
 
-router.get('/googleoauth/callback', protected, /*passport.authenticate('google', { failureRedirect: '/' }),*/ (req, res) => {
-	res.send(req.user);
+router.get('/googleoauth/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+
+	const { id, firstName, lastName, email, role } = req.user;
+
+	const payload = { id, firstName, lastName, email, role };
+
+	jwt.sign(payload, secretOrKey, { expiresIn: '7d' }, (err, token) => {
+		res.status(200).json({
+			succsess: true,
+			token: `Bearer ${token}`
+		});
+	});
+
+	req.logout();
 });
 
 module.exports = router;

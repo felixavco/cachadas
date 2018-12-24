@@ -12,13 +12,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-
 //Passport Middleware
 app.use(passport.initialize());
+
 //Passport Config
 require('./config/passport')(passport);
 require('./config/googleOauth')(passport);
-
 
 //Importing API routes
 const users =  require('./routes/api/users');
