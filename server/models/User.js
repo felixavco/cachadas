@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { default_avatar_URL } = require('../config/keys')
 
 //Create Schema
 const UserSchema = new Schema({
 	firstName: { type: String, required: true },
 	lastName: { type: String, required: true },
 	gender: { type: String },
+	GoogleId: { type: String}, 
 	email: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
 	public_email: { type: String },
@@ -13,7 +15,7 @@ const UserSchema = new Schema({
 	role: { type: String, default: 'user' },
 	avatar: {
 		type: String,
-		default: 'http://www.oda-alc.org/wp-content/uploads/jpg/generic-profile-avatar_352864.jpg'
+		default: default_avatar_URL
 	},
 	creation_date: { type: Date, default: new Date() }
 });
