@@ -1,0 +1,19 @@
+{
+  "name": "cachadas.com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felixavco/cachadas.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/felixavco/cachadas/issues"
+  },
+  "homepage": "https://github.com/felixavco/cachadas#readme"
+}

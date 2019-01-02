@@ -17,7 +17,10 @@ const UserSchema = new Schema({
 		type: String,
 		default: default_avatar_URL
 	},
-	creation_date: { type: Date, default: new Date() }
+	creation_date: { type: Date, default: new Date() }, 
+	wish_list: [{
+		post_item: { type: Schema.Types.ObjectId, ref: 'posts'}
+	}]
 });
 
 module.exports = User = mongoose.model('users', UserSchema);

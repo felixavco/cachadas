@@ -20,8 +20,9 @@ require('./config/passport')(passport);
 require('./config/googleOauth')(passport);
 
 //Importing API routes
-const users =  require('./routes/api/users');
-const posts =  require('./routes/api/posts');
+const userRoutes =  require('./routes/api/users');
+const postRoutes =  require('./routes/api/posts');
+const adminRoutes = require('./routes/api/admin')
 
 //DB Config
 const { mongoURI } = require('./config/keys');
@@ -37,11 +38,13 @@ const { mongoURI } = require('./config/keys');
 })();
 
 //Defining API routes
-app.use('/api/users', users);
-app.use('/api/posts', posts);
+app.use('/api/user', userRoutes);
+app.use('/api/post', postRoutes);
+app.use('/api/admin', adminRoutes);
 
-app.get('/', (req, res) => {
-  res.send("<h1>Home Page</h1>");
+//Catchall route 
+app.use((req, res) => {
+  res.send("<p>Invalid route please read the API documentation</p>");
 })
 
 
