@@ -1,49 +1,83 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
+
+//Router
+import { NavLink } from 'react-router-dom'
+//Redux
+import { connect } from 'react-redux';
+import { logoutUser } from '../../redux/actions/authActions'
 
 class Navbar extends Component {
 	render() {
+		const { isAuthenticated, user } = this.props.auth
+		let content = ""
+
+		if(!isAuthenticated) {
+			content = (
+				<Fragment>
+					<li className="nav-item">
+						<NavLink activeStyle={{ color: '#18BC9C'}}  className="nav-link" to="/login">
+							Login
+						</NavLink>
+					</li>
+
+					<li className="nav-item">
+						<NavLink activeStyle={{ color: '#18BC9C'}} className="nav-link" to="/register">
+							Register
+						</NavLink>
+					</li>
+				</Fragment>
+			)
+		} else {
+			content = (
+				<Fragment>
+					<li className="nav-item">
+						<NavLink activeStyle={{ color: '#18BC9C'}}  className="nav-link" to="/logt">
+							Logut
+						</NavLink>
+					</li>
+				</Fragment>
+			)
+		}
+
+
 		return (
 			<nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-				<a className="navbar-brand" href="#">
-					Cachadas.com
-				</a>
-				<button
-					className="navbar-toggler"
-					type="button"
-					data-toggle="collapse"
-					data-target="#navbarColor01"
-					aria-controls="navbarColor01"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span className="navbar-toggler-icon" />
-				</button>
+				<div className="container">
+					<NavLink className="navbar-brand" to="/">
+						Cachadas SV
+					</NavLink>
 
-				<div className="collapse navbar-collapse" id="navbarColor01">
-					<form className="form-inline my-2 my-lg-0">
-						<input className="form-control ml-sm-0" type="text" placeholder="Search" />
-					</form>
-					<ul className="navbar-nav ml-auto">
-						<li className="nav-item active">
-							<a className="nav-link" href="#">
-								Home <span className="sr-only">(current)</span>
-							</a>
-						</li>
-						<li className="nav-item">
-							<a className="nav-link" href="#">
-								Login
-							</a>
-						</li>
-						<li className="nav-item">
-							<a className="nav-link" href="#">
-								Register
-							</a>
-						</li>
-					</ul>
+					<button
+						className="navbar-toggler"
+						type="button"
+						data-toggle="collapse"
+						data-target="#navbarNav"
+						aria-controls="navbarNav"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span className="navbar-toggler-icon" />
+					</button>
+
+					<div className="collapse navbar-collapse" id="navbarNav">
+						<ul className="navbar-nav ml-auto">
+							{content}
+						</ul>
+					</div>
 				</div>
 			</nav>
 		);
 	}
 }
 
-export default Navbar;
+Navbar.prototypes = {
+	logoutUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+	auth: state.auth
+})
+
+export default connect(mapStateToProps, { logoutUser })(Navbar)

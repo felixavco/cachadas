@@ -42,12 +42,10 @@ app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/admin', adminRoutes);
 
-//Catchall route 
+//Catchall route
 app.use((req, res) => {
   res.send("<p>Invalid route please read the API documentation</p>");
 })
 
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+app.listen(port, () => console.log(`Server running on port ${port}`));

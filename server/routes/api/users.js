@@ -2,15 +2,13 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 
-//Load User model
-const User = require('../../models/User')
-
 //Controllers 
 const registerController = require('../../controllers/users').RegisterController
 const loginController = require('../../controllers/users').LoginController
 const googleAuthController = require('../../controllers/users').GoogleAuthController
 const userProfileController = require('../../controllers/users').UserProfileController
 
+//Load Passport jwt authentication
 const protected = passport.authenticate('jwt', { session: false })
 
 
