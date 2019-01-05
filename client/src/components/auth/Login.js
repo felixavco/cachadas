@@ -7,6 +7,7 @@ import { loginUser } from '../../redux/actions/authActions'
 import { withRouter } from 'react-router-dom'
 //Components 
 import TextFieldGroup from '../commons/TextFieldGroup'
+import GoogleBtn from './GoogleBtn'
 
 class Login extends Component {
   constructor() {
@@ -31,7 +32,7 @@ class Login extends Component {
   //Set errors from redux to the component state
   componentWillReceiveProps = nextProps => {
     if(nextProps.auth.isAuthenticated){
-      this.props.history.push('/')
+      this.props.history.push('/profile')
     }
 
     if(nextProps.errors) {
@@ -79,6 +80,7 @@ class Login extends Component {
 
             <button type="submit" className="btn btn-primary btn-block">{pageTitle} &nbsp;<i className="fas fa-sign-in-alt" /></button>
           </form>
+          <GoogleBtn/>
         </div>
        </div>
       </div>

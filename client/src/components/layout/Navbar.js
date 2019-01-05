@@ -1,45 +1,50 @@
-import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 //Router
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 //Redux
 import { connect } from 'react-redux';
-import { logoutUser } from '../../redux/actions/authActions'
+import { logoutUser } from '../../redux/actions/authActions';
 
 class Navbar extends Component {
-	render() {
-		const { isAuthenticated, user } = this.props.auth
-		let content = ""
 
-		if(!isAuthenticated) {
+	onLogoutClick = e => {
+		e.preventDefault()
+		this.props.logoutUser()
+	}
+
+	render() {
+		const { isAuthenticated, user } = this.props.auth;
+		let content = '';
+
+		if (!isAuthenticated) {
 			content = (
 				<Fragment>
 					<li className="nav-item">
-						<NavLink activeStyle={{ color: '#18BC9C'}}  className="nav-link" to="/login">
+						<NavLink activeStyle={{ color: '#18BC9C' }} className="nav-link" to="/login">
 							Login
 						</NavLink>
 					</li>
 
 					<li className="nav-item">
-						<NavLink activeStyle={{ color: '#18BC9C'}} className="nav-link" to="/register">
+						<NavLink activeStyle={{ color: '#18BC9C' }} className="nav-link" to="/register">
 							Register
 						</NavLink>
 					</li>
 				</Fragment>
-			)
+			);
 		} else {
 			content = (
 				<Fragment>
 					<li className="nav-item">
-						<NavLink activeStyle={{ color: '#18BC9C'}}  className="nav-link" to="/logt">
-							Logut
-						</NavLink>
+					<span className="nav-link" onClick={this.onLogoutClick} style={{cursor: 'pointer'}}>
+							Logout
+					</span>
 					</li>
 				</Fragment>
-			)
+			);
 		}
-
 
 		return (
 			<nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -61,9 +66,7 @@ class Navbar extends Component {
 					</button>
 
 					<div className="collapse navbar-collapse" id="navbarNav">
-						<ul className="navbar-nav ml-auto">
-							{content}
-						</ul>
+						<ul className="navbar-nav ml-auto">{content}</ul>
 					</div>
 				</div>
 			</nav>
@@ -74,10 +77,10 @@ class Navbar extends Component {
 Navbar.prototypes = {
 	logoutUser: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired
-}
+};
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
 	auth: state.auth
-})
+});
 
-export default connect(mapStateToProps, { logoutUser })(Navbar)
+export default connect(mapStateToProps, { logoutUser })(Navbar);

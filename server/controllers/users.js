@@ -9,16 +9,13 @@ const User = require('../models/User')
 const validateRegisterInput = require('../validation/register')
 const validateLoginInput = require('../validation/login')
 
+
 exports.AllUsersController = async (req, res) => {
 	try {
-		const { role } = req.user
-		//Only admins can see the full list of users
-		if (role != 'admin') {
-			res.status(401).json({ msg: 'Unauthorized' })
-		} else {
-			const users = await User.find()
-			res.status(200).json({ users })
-		}
+	
+		const users = await User.find()
+		res.status(200).json({ users })
+		
 	} catch (error) {
 		console.error(error)
 		res.status(500).json(error)
@@ -90,9 +87,9 @@ exports.LoginController =  async (req, res) => {
 				return res.status(401).json(errors)
 			}
 
-      const { id, firstName, lastName, email, role } = user
+      const { id, firstName, lastName, email, role, avatar, phone, public_email } = user
 
-      const payload = { id, firstName, lastName, email, role }
+      const payload = { id, firstName, lastName, email, role, avatar, phone, public_email }
 
       jwt.sign(payload, secretOrKey, { expiresIn: '7d' }, (err, token) => {
         res.status(200).json({
@@ -112,9 +109,9 @@ exports.LoginController =  async (req, res) => {
 
 exports.GoogleAuthController = (req, res) => {
 
-	const { id, firstName, lastName, email, role } = req.user
+	const { id, firstName, lastName, email, role, avatar } = req.user
 
-	const payload = { id, firstName, lastName, email, role }
+	const payload = { id, firstName, lastName, email, role, avatar }
 
 	jwt.sign(payload, secretOrKey, { expiresIn: '7d' }, (err, token) => {
 		res.status(200).json({

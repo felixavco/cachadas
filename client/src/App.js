@@ -4,7 +4,7 @@ import setAuthToken from './utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 
 //React Router
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 
 //Redux 
 import { Provider } from 'react-redux'
@@ -13,9 +13,19 @@ import { setCurrentUser, logoutUser } from './redux/actions/authActions'
 
 //Components 
 import Navbar from './components/layout/Navbar';
-import Login from './components/login/Login'
-import Register from './components/register/Register'
+import Login from './components/auth/Login'
+import Register from './components/auth/Register'
 import Landing from './components/landing/Landing'
+import Profile from './components/profile/Profile'
+import EditProfile from './components/profile/EditProfile'
+import CreateAd from './components/profile/CreateAd'
+import MyAds from './components/profile/MyAds'
+import WishList from './components/profile/WishList'
+import Settings from './components/profile/Settings'
+//Private Route component
+import PrivateRoute from './components/auth/PrivateRoute'
+//Not Found page
+import NotFound from './components/commons/NotFound'
 
 //Checks if there is a token 
 if(localStorage.jwtToken) {
@@ -47,9 +57,34 @@ class App extends Component {
           <Fragment>
             <Navbar />
             <div className="container main-cont">
+              {/* Public Routes */}
               <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+
+              {/* Private Routes */}
+              <Switch>
+                <PrivateRoute exact path="/profile" component={Profile} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/wish-list" component={WishList} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/my-ads" component={MyAds} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/create-ad" component={CreateAd} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/account-settings" component={Settings} />
+              </Switch>
+
+              {/* Not Found */}
+              <Route exact path="/not-found" component={NotFound} />
+              {/* <Redirect from="*" to="/not-found" /> */}
             </div>
           </Fragment>
         </Router>

@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 //Redux
-import { connect } from 'react-redux';
-import { registerUser } from '../../redux/actions/authActions';
+import { connect } from 'react-redux'
+import { registerUser } from '../../redux/actions/authActions'
 //Router
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 //Components
-import TextFieldGroup from '../commons/TextFieldGroup';
+import TextFieldGroup from '../commons/TextFieldGroup'
+import GoogleBtn from './GoogleBtn'
+
 
 class Register extends Component {
 	constructor() {
@@ -105,6 +107,7 @@ class Register extends Component {
 								Create Account &nbsp;<i className="fas fa-user-circle" />
 							</button>
 						</form>
+						<GoogleBtn />
 					</div>
 				</div>
 			</div>
