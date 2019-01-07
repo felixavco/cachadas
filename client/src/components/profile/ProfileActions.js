@@ -5,7 +5,7 @@ const ProfileActions = () => {
 	return (
 		<div className="profile-actions">
 			<NavLink activeClassName="active" to="/profile" className="btn btn-outline-primary btn-block mb-3">
-				Profile &nbsp; <i className="far fa-list-alt" />
+				Profile &nbsp; <i className="fas fa-user-alt" />
 			</NavLink>
 			<NavLink activeClassName="active" to="/edit-profile" className="btn btn-outline-primary btn-block mb-3">
 				Edit Profile &nbsp; <i className="fas fa-user-edit" />

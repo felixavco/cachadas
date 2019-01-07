@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 //Components
-import ProfileTemplate from './ProfileTemplate'
+import ProfileTemplate from '../profile/ProfileTemplate'
 
 class CreateAd extends Component {
   render() {

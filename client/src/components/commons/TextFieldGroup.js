@@ -9,18 +9,23 @@ const TextFieldGroup = ({
   info, 
   type,
   onChange,
-  disabled
+  disabled,
+  label,
+  pattern
 }) => {
   return (
     <div className="form-group">
+      {label ? (<label htmlFor={name}>{label}</label>) : null}
       <input
         type={ type }
         className={`form-control form-control-lg ${error ? 'is-invalid' : ''}`}
         placeholder={placeholder}
         name={name}
+        id={name}
         value={value}
         onChange={onChange}
         disabled={disabled}
+        pattern={pattern}
         noValidate
       />
       {info && <small className="form-text text-muted">{info}</small> }
@@ -28,6 +33,7 @@ const TextFieldGroup = ({
     </div>
   )
 }
+
 
 TextFieldGroup.propTypes = {
   name: PropTypes.string.isRequired,
@@ -38,6 +44,8 @@ TextFieldGroup.propTypes = {
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.string,
+  label: PropTypes.string,
+  patterni: PropTypes.string
 }
 
 TextFieldGroup.defaultProps = {

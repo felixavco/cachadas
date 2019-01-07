@@ -34,11 +34,11 @@ class Register extends Component {
 	}
 
 	//Set errors from redux to the component state
-	componentWillReceiveProps = (nextProps) => {
+	componentWillReceiveProps = nextProps => {
 		if (nextProps.errors) {
 			this.setState({ errors: nextProps.errors });
 		}
-	};
+	}
 
 	onSubmit = (e) => {
 		e.preventDefault();
@@ -59,6 +59,7 @@ class Register extends Component {
 					<div className="col-md-6 m-auto">
 						<h2 className="display-4 mt-3 text-center">Sing Up</h2>
 						<p className="lead text-center">Create your account</p>
+						<div className="d-flex justify-content-center mb-2"><small>All fields are required</small></div>
 						<form noValidate onSubmit={this.onSubmit}>
 							<TextFieldGroup
 								placeholder="First Name"

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ProfileTemplate from './ProfileTemplate'
+import ProfileTemplate from '../profile/ProfileTemplate'
 
 class MyAds extends Component {
   render() {

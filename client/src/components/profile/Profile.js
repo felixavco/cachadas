@@ -9,6 +9,13 @@ import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 
 class Profile extends Component {
+
+  componentWillReceiveProps = nextProps => {
+    if(nextProps) {
+      console.log("NEW PROPS")    
+    }
+  }
+
   render() {
     const { email, public_email, firstName, lastName, phone } = this.props.auth.user
 

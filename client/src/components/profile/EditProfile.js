@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import Helment from 'react-helmet'
 import PropTypes from 'prop-types'
+
+//Router
 import { withRouter } from 'react-router-dom'
 
 //Redux
 import { connect } from 'react-redux'
-
+import { editUser } from '../../redux/actions/authActions'
 
 //Components
 import TextFieldGroup from '../commons/TextFieldGroup'
@@ -28,28 +30,33 @@ class EditProfile extends Component {
 
 	}
 
+	componentWillReceiveProps = nextProps => {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors });
+		}
+	}
+
 	onChange = e => this.setState({ [e.target.name]: e.target.value })
 
 	onSubmit = e => {
 		e.preventDefault()
-		this.props.history.push('/profile')
 		const updatedUser = {...this.state}
-		console.log(updatedUser)
+		this.props.editUser(updatedUser, this.props.history)
 	}
 
 	render() {
-		const { firstName, lastName, public_email, phone, errors, id } = this.state;
+		const { firstName, lastName, public_email, phone, errors } = this.state;
 		return (
 			<ProfileTemplate>
 				<Helment>
 					<title>Edit Profile</title>
 				</Helment>
 				<div className="edit-profile">
-					<form className="w-75 mx-auto" onSubmit={this.onSubmit}>
+					<form className="w-75 mx-auto" onSubmit={this.onSubmit} noValidate>
 						<h2 className="display-4 text-center mb-2">Edit Profile</h2>
-
+						<div className="d-flex justify-content-center"><small>(*) Required Fields</small></div>
 						<TextFieldGroup
-							placeholder="First Name"
+							label="* First Name"
 							name="firstName"
 							value={firstName}
 							onChange={this.onChange}
@@ -57,7 +64,7 @@ class EditProfile extends Component {
 						/>
 
 						<TextFieldGroup
-							placeholder="Last Name"
+							label="* Last Name"
 							name="lastName"
 							value={lastName}
 							onChange={this.onChange}
@@ -65,16 +72,17 @@ class EditProfile extends Component {
 						/>
 
 						<TextFieldGroup
-							placeholder="Public Email"
+							label="Public Email"
 							name="public_email"
 							type="email"
 							value={public_email}
 							onChange={this.onChange}
 							error={errors.public_email}
 						/>
-
+		
 						<TextFieldGroup
-							placeholder="Phone"
+							label="Phone"
+							type="tel"
 							name="phone"
 							value={phone}
 							onChange={this.onChange}
@@ -94,11 +102,13 @@ class EditProfile extends Component {
 }
 
 EditProfile.proptypes = {
+	editUser: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-	auth: state.auth
+	auth: state.auth,
+	errors: state.errors
 })
 
-export default connect(mapStateToProps)(withRouter(EditProfile))
+export default connect(mapStateToProps, { editUser })(withRouter(EditProfile))

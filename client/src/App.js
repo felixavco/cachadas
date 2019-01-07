@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from 'react';
-import './App.css';
+import React, { Component, Fragment } from 'react'
 import setAuthToken from './utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 
 //React Router
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 //Redux 
 import { Provider } from 'react-redux'
@@ -18,8 +17,8 @@ import Register from './components/auth/Register'
 import Landing from './components/landing/Landing'
 import Profile from './components/profile/Profile'
 import EditProfile from './components/profile/EditProfile'
-import CreateAd from './components/profile/CreateAd'
-import MyAds from './components/profile/MyAds'
+import CreateAd from './components/ads/CreateAd'
+import MyAds from './components/ads/MyAds'
 import WishList from './components/profile/WishList'
 import Settings from './components/profile/Settings'
 //Private Route component

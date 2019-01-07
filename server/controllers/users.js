@@ -103,6 +103,7 @@ exports.LoginController =  async (req, res) => {
     }
 	
 	} catch (error) {
+		console.error(error)
 		res.status(500).json(error)
 	}
 }
@@ -123,8 +124,26 @@ exports.GoogleAuthController = (req, res) => {
 	req.logout()
 }
 
-exports.UserProfileController = (req, res) => {
-	const { id, avatar, firstName, lastName, email, public_email, phone, fullName } = req.user
-	const user_profile = { id, avatar, firstName, lastName, email, public_email, phone, fullName }
-	res.status(200).json(user_profile)
+exports.updateUserProfile = async (req, res) => {
+	try {
+
+		const { id, firstName, lastName, public_email, phone, errors } = req.body
+		updatedInfo = { firstName, lastName, public_email, phone }
+
+		const updatedUser = await User.findByIdAndUpdate(id, updatedInfo, {new: true})
+
+		if(!updatedUser) {
+			errors.user = "Invalid Request"
+			res.status(400).json(errors)
+		} else {
+			const { id, firstName, lastName, public_email, phone, avatar, email, role } = updatedUser
+			const updatedProfile = { id, firstName, lastName, public_email, phone, avatar, email, role  }
+			res.status(200).json(updatedProfile)
+		}
+
+	} catch (error) {
+		console.error(error)
+		res.status(500).json(error);
+	}
 }
+

@@ -1,11 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import './layout.css'
 
 //Router
 import { NavLink } from 'react-router-dom';
 //Redux
 import { connect } from 'react-redux';
 import { logoutUser } from '../../redux/actions/authActions';
+
+//component
+import Avatar from './Avatar'
 
 class Navbar extends Component {
 
@@ -15,20 +19,20 @@ class Navbar extends Component {
 	}
 
 	render() {
-		const { isAuthenticated, user } = this.props.auth;
+		const { isAuthenticated, user } = this.props.auth
 		let content = '';
 
 		if (!isAuthenticated) {
 			content = (
 				<Fragment>
 					<li className="nav-item">
-						<NavLink activeStyle={{ color: '#18BC9C' }} className="nav-link" to="/login">
+						<NavLink activeClassName="active" className="nav-link" to="/login">
 							Login
 						</NavLink>
 					</li>
 
 					<li className="nav-item">
-						<NavLink activeStyle={{ color: '#18BC9C' }} className="nav-link" to="/register">
+						<NavLink activeClassName="active" className="nav-link" to="/register">
 							Register
 						</NavLink>
 					</li>
@@ -36,14 +40,12 @@ class Navbar extends Component {
 			);
 		} else {
 			content = (
-				<Fragment>
-					<li className="nav-item">
-					<span className="nav-link" onClick={this.onLogoutClick} style={{cursor: 'pointer'}}>
-							Logout
-					</span>
-					</li>
-				</Fragment>
-			);
+				<Avatar 
+					name={`${user.firstName} ${user.lastName}`}
+					avatarImg={user.avatar}
+					onClick={this.onLogoutClick}
+				/>
+			)
 		}
 
 		return (
