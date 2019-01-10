@@ -109,7 +109,6 @@ exports.LoginController =  async (req, res) => {
 }
 
 exports.GoogleAuthController = (req, res) => {
-
 	const { id, firstName, lastName, email, role, avatar } = req.user
 
 	const payload = { id, firstName, lastName, email, role, avatar }
@@ -124,12 +123,18 @@ exports.GoogleAuthController = (req, res) => {
 	req.logout()
 }
 
+
+
 exports.updateUserProfile = async (req, res) => {
 	try {
-
 		const { id, firstName, lastName, public_email, phone, errors } = req.body
-		updatedInfo = { firstName, lastName, public_email, phone }
-
+		if(req.file) {
+			const avatar = "http://localhost:5000/" + req.file.path
+			updatedInfo = { firstName, lastName, public_email, phone, avatar }
+		} else {
+			updatedInfo = { firstName, lastName, public_email, phone }
+		}
+		
 		const updatedUser = await User.findByIdAndUpdate(id, updatedInfo, {new: true})
 
 		if(!updatedUser) {

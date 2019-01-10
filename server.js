@@ -1,10 +1,13 @@
+const path = require('path')
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const morgan = require('morgan')
 
+
 const port = process.env.PORT || 5000
+
 const app = express()
 
 //Morgan MiddleWare
@@ -36,6 +39,9 @@ const { mongoURI } = require('./config/keys')
 app.use('/api/user', userRoutes)
 app.use('/api/post', postRoutes)
 app.use('/api/admin', adminRoutes)
+
+//Serving Static forlder for avatar images
+app.use('/avatars', express.static(path.join(__dirname, 'avatars')))
 
 //Catchall route
 app.use((req, res) => {

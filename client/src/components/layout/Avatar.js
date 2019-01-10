@@ -5,17 +5,17 @@ import { Link } from 'react-router-dom'
 const Avatar = props => {
 	return (
 		<li className="nav-item dropdown">
-			<a
+			<span 
+				style={{cursor: 'pointer'}}
 				className="nav-link dropdown-toggle"
-				href="#"
 				id="navbarDropdown"
 				role="button"
 				data-toggle="dropdown"
 				aria-haspopup="true"
 				aria-expanded="false"
 			>
-			<img className="avatar-img" src={props.avatarImg} alt={props.name}/>	{props.name}
-			</a>
+			{props.name} &nbsp; <img className="avatar-img" src={props.avatarImg} alt={props.name}/>
+			</span>
 			<div className="dropdown-menu" aria-labelledby="navbarDropdown">
 				<Link className="dropdown-item" to="/profile">
           Profile &nbsp; <i className="fas fa-user-alt"/> 

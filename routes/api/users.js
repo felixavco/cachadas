@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 
+
 //Controllers 
 const registerController = require('../../controllers/users').RegisterController
 const loginController = require('../../controllers/users').LoginController
@@ -14,6 +15,28 @@ const updateProfileValidation = require('../../validation/updateProfile')
 //Load Passport jwt authentication
 const protected = passport.authenticate('jwt', { session: false })
 
+//Multer 
+const multer = require('multer')
+
+//Configure location where the file will be saved and the name for the file
+const storage =  multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, 'avatars')
+	},
+	filename: (req, file, cb) => {
+		const ext = file.mimetype.split('/')[1]
+		cb(null, req.body.id + '.' + ext)
+	}
+})
+
+//Filter invalid file extensions
+const fileFilter = (req, file, cb) => {
+	if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+		cb(null, true)
+	} else {
+		cb(null, false)
+	}
+}
 
 //@route  /api/user/register
 //@method POST
@@ -39,7 +62,13 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
 //@method POST
 //@access Protected
 //@desc   Updates a new profile
-router.post('/profile', protected, updateProfileValidation, updateUserProfile)
+router.post(
+    '/profile', 
+    protected, 
+    multer({ storage, fileFilter }).single('avatar'),
+    updateProfileValidation, 
+    updateUserProfile
+)
 
 
 module.exports = router

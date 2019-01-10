@@ -1,24 +1,28 @@
 {
   "name": "cachadas.com",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Simple app to post ads to buy and sell stuffs",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon server/server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm start\" \"npm run client\""
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/felixavco/cachadas.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/felixavco/cachadas/issues"
-  },
-  "homepage": "https://github.com/felixavco/cachadas#readme",
+  "author": "Felix Avelar",
+  "license": "MIT",
   "dependencies": {
-    "concurrently": "^4.1.0"
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.0",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   }
 }

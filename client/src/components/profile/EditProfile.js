@@ -21,6 +21,7 @@ class EditProfile extends Component {
 
 		this.state = {
 			id,
+			avatar: null,
 			firstName,
 			lastName,
 			public_email,
@@ -36,12 +37,28 @@ class EditProfile extends Component {
 		}
 	}
 
+	onChangeImg = e => this.setState({ [e.target.name]: e.target.files[0]})
+	
+
 	onChange = e => this.setState({ [e.target.name]: e.target.value })
 
 	onSubmit = e => {
 		e.preventDefault()
-		const updatedUser = {...this.state}
-		this.props.editUser(updatedUser, this.props.history)
+		const { id, avatar, firstName, lastName, public_email, phone } = this.state
+
+		const formData = new FormData()
+		formData.append('id', id)
+		formData.append('avatar',avatar)
+		formData.append('firstName',firstName)
+		formData.append('lastName', lastName)
+		formData.append('public_email', public_email)
+		formData.append('phone', phone)
+		if(!avatar) {
+			this.props.editUser(formData, this.props.history)
+		} else {
+			this.props.editUser(formData, null)
+		}
+		
 	}
 
 	render() {
@@ -55,6 +72,13 @@ class EditProfile extends Component {
 					<form className="w-75 mx-auto" onSubmit={this.onSubmit} noValidate>
 						<h2 className="display-4 text-center mb-2">Edit Profile</h2>
 						<div className="d-flex justify-content-center"><small>(*) Required Fields</small></div>
+
+						<div className="custom-file">
+							<input type="file" className="custom-file-input" name="avatar" id="validatedCustomFile" onChange={this.onChangeImg} />
+							<label className="custom-file-label" htmlFor="validatedCustomFile">Profile Picture</label>
+							<div className="invalid-feedback">Example invalid custom file feedback</div>
+  					</div>
+
 						<TextFieldGroup
 							label="* First Name"
 							name="firstName"
