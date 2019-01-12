@@ -1,29 +1,33 @@
 const Validator = require('validator')
 const isEmpty = require('./is-empty')
 
-module.exports = validateLoginInput = data => {
+module.exports = (req, res, next) => {
+
+  let {email, password} = req.body
+
   let errors = {}
 
-  data.email = !isEmpty(data.email) ? data.email : ''
-  data.password = !isEmpty(data.password) ? data.password : ''
+  email = !isEmpty(email) ? email : ''
+  password = !isEmpty(password) ? password : ''
 
   //Email Validation
-  if(Validator.isEmpty(data.email)) {
+  if(Validator.isEmpty(email)) {
     errors.email = "Ingrese su correo electronico"
-  } else if(!Validator.isEmail(data.email)) {
+  } else if(!Validator.isEmail(email)) {
     errors.email = "El formato del Correo electronico no es valido"
   }
 
   //Password Validation
-  if(Validator.isEmpty(data.password)) {
+  if(Validator.isEmpty(password)) {
     errors.password = "Ingrese su contraseña"
-  } else if(!Validator.isLength(data.password, {min:6, max:30})){
+  } else if(!Validator.isLength(password, {min:6, max:30})){
     errors.password = "Contraseña incorrecta."
   }
 
-  return {
-    errors,
-    isValid: isEmpty(errors)
+  if(!isEmpty(errors)) {
+    return res.status(400).json(errors)
   }
+  req.errors = errors
+  next()
 
 }

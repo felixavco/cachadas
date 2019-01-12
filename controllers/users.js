@@ -5,11 +5,10 @@ const { secretOrKey } = require('../config/keys')
 //Load User model
 const User = require('../models/User')
 
-//Imput Validation 
-const validateRegisterInput = require('../validation/register')
-const validateLoginInput = require('../validation/login')
-
-
+//@route  /api/admin/all-users
+//@method GET
+//@access Protected
+//@desc   return a list of users, only accesible from the admin panel
 exports.AllUsersController = async (req, res) => {
 	try {
 	
@@ -22,11 +21,12 @@ exports.AllUsersController = async (req, res) => {
 	}
 }
 
+//@route  /api/user/register
+//@method POST
+//@access Public
+//@desc   Register new users
 exports.RegisterController = async (req, res) => {
 	try {
-		//Check Validation
-		const { errors, isValid } = validateRegisterInput(req.body)
-		if(!isValid) return res.status(400).json(errors)
 
 		//checks if the email address already exist
 		const user = await User.findOne({ email: req.body.email })
@@ -58,11 +58,12 @@ exports.RegisterController = async (req, res) => {
 	}
 }
 
+//@route  /api/user/login
+//@method POST
+//@access Public
+//@desc   Login user and returning Token
 exports.LoginController =  async (req, res) => {
 	try {
-		//Check Validation
-		const { errors, isValid } = validateLoginInput(req.body)
-		if(!isValid) return res.status(400).json(errors)
 
 		const { email: r_email, password } = req.body
 
@@ -108,6 +109,10 @@ exports.LoginController =  async (req, res) => {
 	}
 }
 
+//@route  /api/user/googleoauth
+//@method GET
+//@access Public
+//@desc   Register and Login user with Google Account
 exports.GoogleAuthController = (req, res) => {
 	const { id, firstName, lastName, email, role, avatar } = req.user
 
@@ -124,7 +129,10 @@ exports.GoogleAuthController = (req, res) => {
 }
 
 
-
+//@route  /api/user/profile
+//@method POST
+//@access Protected
+//@desc   Updates a new profile
 exports.updateUserProfile = async (req, res) => {
 	try {
 		const { id, firstName, lastName, public_email, phone, errors } = req.body

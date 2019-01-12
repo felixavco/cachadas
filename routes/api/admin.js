@@ -15,6 +15,11 @@ const isAdmin = require('../../authorization/isAdmin')
 //@method GET
 //@access Protected
 //@desc   return a list of users, only accesible from the admin panel
-router.get('/all-users', protected, isAdmin, allUsersController)
+router.get(
+  '/all-users', 
+  protected, 
+  isAdmin, 
+  allUsersController
+)
 
 module.exports = router 

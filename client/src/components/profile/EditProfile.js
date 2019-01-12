@@ -69,10 +69,10 @@ class EditProfile extends Component {
 					<title>Edit Profile</title>
 				</Helment>
 				<div className="edit-profile">
-					<form className="w-75 mx-auto" onSubmit={this.onSubmit} noValidate>
-						<h2 className="display-4 text-center mb-2">Edit Profile</h2>
-						<div className="d-flex justify-content-center"><small>(*) Required Fields</small></div>
-
+					<h2 className="display-4 text-center mb-2">Edit Profile</h2>
+					<div className="d-flex justify-content-center"><small>(*) Required Fields</small></div>
+					<form className="w-75 custom-form edit-profile-form mx-auto mt-3 p-4" onSubmit={this.onSubmit} noValidate>
+					
 						<div className="custom-file">
 							<input type="file" className="custom-file-input" name="avatar" id="validatedCustomFile" onChange={this.onChangeImg} />
 							<label className="custom-file-label" htmlFor="validatedCustomFile">Profile Picture</label>

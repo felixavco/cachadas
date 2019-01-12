@@ -4,10 +4,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { registerUser } from '../../redux/actions/authActions'
 //Router
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 //Components
 import TextFieldGroup from '../commons/TextFieldGroup'
-import GoogleBtn from './GoogleBtn'
 
 
 class Register extends Component {
@@ -108,7 +107,10 @@ class Register extends Component {
 								Create Account &nbsp;<i className="fas fa-user-circle" />
 							</button>
 						</form>
-						<GoogleBtn />
+
+						<div className="mt-3">
+            	<p className="lead">Already have an account? <Link to="/login">Login</Link></p> 
+          	</div>
 					</div>
 				</div>
 			</div>

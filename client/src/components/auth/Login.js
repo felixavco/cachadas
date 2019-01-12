@@ -4,10 +4,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loginUser } from '../../redux/actions/authActions'
 //Router 
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 //Components 
 import TextFieldGroup from '../commons/TextFieldGroup'
-import GoogleBtn from './GoogleBtn'
 
 class Login extends Component {
   constructor() {
@@ -80,7 +79,12 @@ class Login extends Component {
 
             <button type="submit" className="btn btn-primary btn-block">{pageTitle} &nbsp;<i className="fas fa-sign-in-alt" /></button>
           </form>
-          <GoogleBtn/>
+          <div className="mt-3">
+            <p className="lead">New User? <Link to="/register">Create an Account</Link></p> 
+          </div>
+          <div className="mt-3">
+            <p className="lead">Forgot Password? <Link to="/reset-password">Reset Password</Link></p> 
+          </div>
         </div>
        </div>
       </div>

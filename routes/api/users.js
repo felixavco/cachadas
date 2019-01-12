@@ -10,7 +10,9 @@ const googleAuthController = require('../../controllers/users').GoogleAuthContro
 const updateUserProfile = require('../../controllers/users').updateUserProfile
 
 //Validation
-const updateProfileValidation = require('../../validation/updateProfile')
+const validateProfileUpdate = require('../../validation/updateProfile')
+const validateRegisterInput = require('../../validation/register')
+const validateLoginInput = require('../../validation/login')
 
 //Load Passport jwt authentication
 const protected = passport.authenticate('jwt', { session: false })
@@ -42,21 +44,36 @@ const fileFilter = (req, file, cb) => {
 //@method POST
 //@access Public
 //@desc   Register new users
-router.post('/register', registerController)
+router.post(
+	'/register', 
+	validateRegisterInput,
+	registerController
+)
 
 //@route  /api/user/login
 //@method POST
 //@access Public
 //@desc   Login user and returning Token
-router.post('/login', loginController)
+router.post(
+	'/login', 
+	validateLoginInput,
+	loginController
+)
 
 //@route  /api/user/googleoauth
 //@method GET
 //@access Public
 //@desc   Register and Login user with Google Account
-router.get('/google', passport.authenticate('google', { scope: [ 'profile', 'email' ] }))
+router.get(
+	'/google', 
+	passport.authenticate('google', { scope: [ 'profile', 'email' ] })
+)
 
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), googleAuthController)
+router.get(
+	'/google/callback', 
+	passport.authenticate('google', { failureRedirect: '/' }), 
+	googleAuthController
+)
 
 //@route  /api/user/profile
 //@method POST
@@ -66,7 +83,7 @@ router.post(
     '/profile', 
     protected, 
     multer({ storage, fileFilter }).single('avatar'),
-    updateProfileValidation, 
+    validateProfileUpdate, 
     updateUserProfile
 )
 

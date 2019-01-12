@@ -3,6 +3,21 @@
   height: 13rem;
 }
 
+.change-password-form, .delete-account {
+  background: #f3f3f3;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 5px #333;
+}
+
+.edit-profile-form, .create-ad-form {
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 15px #d6d6d6;
+}
+
+.custom-form input {
+  border: 1px solid #4582EC;
+  text-align: center;
+}
 
 .profile-img-cont img {
   width: 100%;
@@ -16,5 +31,9 @@
 
 label, small {
   color: #9b9b9b;
+}
+
+.input-hide {
+  display: none;
 }
 

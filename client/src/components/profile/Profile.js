@@ -23,9 +23,10 @@ class Profile extends Component {
         <hr/>
         <div className="container mx-5">
           <p className="lead"><span><i className="fas fa-at"/> Email: </span>{email}</p>
-          <p className="lead"><span><i className="fas fa-at"/> Public Email: </span>{!public_email ? (<Link to="/edit-profile">Edit Profile</Link>) : public_email}</p>
-          <p className="lead"><span><i className="fas fa-phone"/> Phone: </span>{!phone ? (<Link to="/edit-profile">Edit Profile</Link>) : phone}</p>
+          <p className="lead"><span><i className="fas fa-at"/> Public Email *: </span>{!public_email ? (<Link to="/edit-profile">Edit Profile</Link>) : public_email}</p>
+          <p className="lead"><span><i className="fas fa-phone"/> Public Phone *: </span>{!phone ? (<Link to="/edit-profile">Edit Profile</Link>) : phone}</p>
         </div>
+        <small className="mt-3 mx-5">* Visible on your public Ads</small>
        </div>
       </ProfileTemplate>
     )

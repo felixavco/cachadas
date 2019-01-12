@@ -20,7 +20,7 @@ import EditProfile from './components/profile/EditProfile'
 import CreateAd from './components/ads/CreateAd'
 import MyAds from './components/ads/MyAds'
 import WishList from './components/profile/WishList'
-import Settings from './components/profile/Settings'
+import Settings from './components/profile/settings/Settings'
 //Private Route component
 import PrivateRoute from './components/auth/PrivateRoute'
 //Not Found page
