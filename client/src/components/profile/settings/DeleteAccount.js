@@ -1,15 +1,26 @@
 import React, { Component, Fragment } from 'react';
 import TextFieldGroup from '../../commons/TextFieldGroup'
+import PropTypes from 'prop-types'
+
+//Redux
+import { connect } from 'react-redux'
+import { deleteAccount } from '../../../redux/actions/authActions'
 
 class DeleteAccount extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       password: '',
       isActive: false,
       errors: {}
     }
 
+  }
+
+  componentWillReceiveProps = nextProps => {
+    if(nextProps.errors) {
+      this.setState({errors: nextProps.errors})
+    }
   }
 
   onChange = e => {
@@ -32,8 +43,8 @@ class DeleteAccount extends Component {
     })
   }
   
-  onSubmit = () => {
-    console.log("ACCOUNT DELETED :(")
+  onDeleteAccount = () => {
+    this.props.deleteAccount({password: this.state.password})
   }
 
 	render() {
@@ -71,7 +82,7 @@ class DeleteAccount extends Component {
                   type="password"
                   value={password}
                   onChange={this.onChange}
-                  error={errors.currentPassword}
+                  error={errors.password}
                 />
 
                 </form>
@@ -80,7 +91,7 @@ class DeleteAccount extends Component {
 								<button onClick={this.clearForm} type="button" className="btn btn-primary" data-dismiss="modal">
 									Close
 								</button>
-								<button onClick={this.onSubmit} type="button" className="btn btn-danger" disabled={!isActive ? "disabled" : null}>
+								<button onClick={this.onDeleteAccount} type="button" className="btn btn-danger" disabled={!isActive ? "disabled" : null}>
 									DELETE ACCOUNT
 								</button>
 							</div>
@@ -92,4 +103,12 @@ class DeleteAccount extends Component {
 	}
 }
 
-export default DeleteAccount;
+DeleteAccount.proptypes = {
+  errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  errors: state.errors
+})
+
+export default connect(mapStateToProps, { deleteAccount })(DeleteAccount);

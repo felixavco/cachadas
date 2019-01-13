@@ -7,12 +7,16 @@ const passport = require('passport')
 const registerController = require('../../controllers/users').RegisterController
 const loginController = require('../../controllers/users').LoginController
 const googleAuthController = require('../../controllers/users').GoogleAuthController
-const updateUserProfile = require('../../controllers/users').updateUserProfile
+const updateUserProfile = require('../../controllers/users').UpdateUserProfile
+const changePasswordController = require('../../controllers/users').ChangePasswordController
+const deleteAccountController = require('../../controllers/users').DeleteAccountController
 
 //Validation
 const validateProfileUpdate = require('../../validation/updateProfile')
 const validateRegisterInput = require('../../validation/register')
 const validateLoginInput = require('../../validation/login')
+const validateChangePassword = require('../../validation/changePassword')
+const validateDeleteAccount = require('../../validation/deleteAccount')
 
 //Load Passport jwt authentication
 const protected = passport.authenticate('jwt', { session: false })
@@ -27,7 +31,7 @@ const storage =  multer.diskStorage({
 	},
 	filename: (req, file, cb) => {
 		const ext = file.mimetype.split('/')[1]
-		cb(null, req.body.id + '.' + ext)
+		cb(null, req.user._id + '.' + ext)
 	}
 })
 
@@ -80,12 +84,33 @@ router.get(
 //@access Protected
 //@desc   Updates a new profile
 router.post(
-    '/profile', 
-    protected, 
-    multer({ storage, fileFilter }).single('avatar'),
-    validateProfileUpdate, 
-    updateUserProfile
+	'/profile', 
+	protected, 
+	multer({ storage, fileFilter }).single('avatar'),
+	validateProfileUpdate, 
+	updateUserProfile
 )
 
+//@route  /api/user/change-password
+//@method POST
+//@access Protected
+//@desc   changes the user password
+router.post(
+	'/change-password', 
+	protected, 
+	validateChangePassword, 
+	changePasswordController
+)
+
+//@route  /api/user/delete
+//@method POST
+//@access Protected
+//@desc   Delete user account
+router.post(
+	'/delete', 
+	protected,
+	validateDeleteAccount,
+	deleteAccountController
+)
 
 module.exports = router

@@ -3,7 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const passport = require('passport')
-const morgan = require('morgan')
+// const morgan = require('morgan')
 
 
 const port = process.env.PORT || 5000
@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000
 const app = express()
 
 //Morgan MiddleWare
-app.use(morgan('combined'))
+// app.use(morgan('combined'))
 
 /** BodyParser Middleware **/
 // parse application/x-www-form-urlencoded

@@ -8,7 +8,7 @@ const CreateAdPage1 = (props) => {
 	const { isActive, title, description, category, price, errors, change } = props;
 
 	const options = [
-		{ label: '* Select a category', value: 0 },
+		{ label: '* Select a category', value: "none" },
 		{ label: 'Smart Phones & Tablets', value: 'smartphones' },
 		{ label: 'Computers and Electronics', value: 'electronics' },
 		{ label: 'Cars & Motorcycles', value: 'vehicles' },
@@ -24,17 +24,17 @@ const CreateAdPage1 = (props) => {
 			<TextFieldGroup placeholder="* Title" name="title" value={title} onChange={change} error={errors.title} />
 
 			<div className="row">
-				<div className="col-md-9 col-12">
+				<div className="col-md-8 col-12">
 					<SelectListGroup
 						name="category"
 						value={category}
 						onChange={change}
 						error={errors.category}
 						options={options}
-					/>
+					/> 
 				</div>
         
-        <div className="col-md-3 col-12">
+        <div className="col-md-4 col-12">
           <TextFieldGroup
             placeholder="* Price"
             name="price"
@@ -48,7 +48,7 @@ const CreateAdPage1 = (props) => {
 
 			<TextAreaFieldGroup
 				placeholder="* Description"
-				name={description}
+				name="description"
 				value={description}
 				onChange={change}
 				error={errors.description}

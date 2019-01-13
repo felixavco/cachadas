@@ -28,6 +28,8 @@ exports.AllUsersController = async (req, res) => {
 exports.RegisterController = async (req, res) => {
 	try {
 
+		const { errors } = req
+
 		//checks if the email address already exist
 		const user = await User.findOne({ email: req.body.email })
 		if (user) {
@@ -65,6 +67,7 @@ exports.RegisterController = async (req, res) => {
 exports.LoginController =  async (req, res) => {
 	try {
 
+		const { errors } = req
 		const { email: r_email, password } = req.body
 
 		//Find user by email
@@ -133,9 +136,11 @@ exports.GoogleAuthController = (req, res) => {
 //@method POST
 //@access Protected
 //@desc   Updates a new profile
-exports.updateUserProfile = async (req, res) => {
+exports.UpdateUserProfile = async (req, res) => {
 	try {
-		const { id, firstName, lastName, public_email, phone, errors } = req.body
+		const { _id } = req.user
+		const { firstName, lastName, public_email, phone, errors } = req.body
+
 		if(req.file) {
 			const avatar = "http://localhost:5000/" + req.file.path
 			updatedInfo = { firstName, lastName, public_email, phone, avatar }
@@ -143,7 +148,7 @@ exports.updateUserProfile = async (req, res) => {
 			updatedInfo = { firstName, lastName, public_email, phone }
 		}
 		
-		const updatedUser = await User.findByIdAndUpdate(id, updatedInfo, {new: true})
+		const updatedUser = await User.findByIdAndUpdate(_id, updatedInfo, {new: true})
 
 		if(!updatedUser) {
 			errors.user = "Invalid Request"
@@ -160,3 +165,86 @@ exports.updateUserProfile = async (req, res) => {
 	}
 }
 
+//@route  /api/user/change-password
+//@method POST
+//@access Protected
+//@desc   changes the user password
+exports.ChangePasswordController = async (req, res) => {
+	try {
+		const { errors } = req
+		const { password, _id } = req.user
+		const {currentPassword, newPassword } = req.body
+	
+		const user = await User.findOne({ _id })
+	
+		if(!user){
+			errors.user = "Unauthorized request"
+			return res.status(401).json(errors);
+		}
+	
+		const isMatch = await bcrypt.compare(currentPassword, password)
+	
+		if(!isMatch) {
+			errors.currentPassword = "Incorrect Password"
+			return res.status(401).json(errors);
+		}
+
+		bcrypt.genSalt(10, (err, salt) => {
+			bcrypt.hash(newPassword, salt, async(err, hash) => {
+				try {
+					if(err) throw err
+
+					//Stores the new Password
+					await User.findByIdAndUpdate(_id, {password: hash})
+					res.status(200).json({msg: "Password Changed!"})
+
+				} catch (err) {
+					errors.error = err
+					res.status(500).json(errors)
+				}
+			})
+		})
+
+	} catch (err) {
+		errors.error = err
+		res.status(500).json(errors)
+	}
+
+
+}
+
+//@route  /api/user/delete
+//@method POST
+//@access Protected
+//@desc   Delete user account
+exports.DeleteAccountController = async (req, res) => {
+	try {
+
+		const { errors } = req
+		const { _id, password } = req.user
+		const { password: currentPassword } = req.body
+
+		const user = await User.findOne({ _id })
+	
+		if(!user){
+			errors.password = "Unauthorized request"
+			return res.status(401).json(errors);
+		}
+	
+		const isMatch = await bcrypt.compare(currentPassword, password)
+	
+		if(!isMatch) {
+			errors.password = "Incorrect Password"
+			return res.status(401).json(errors);
+		}
+
+		//If Password is correct, proceed to delete user
+		await User.findByIdAndDelete({ _id })
+		res.status(200).json({msg: "User Deleted!"});
+
+	} catch (err) {
+		errors.error = err
+		res.status(500).json(errors)
+	}
+	
+}

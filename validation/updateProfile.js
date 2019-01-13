@@ -3,11 +3,10 @@ const isEmpty = require('./is-empty')
 
 module.exports = (req, res, next) => {
 
-  let { firstName, lastName, public_email, phone, id } = req.body
+  let { firstName, lastName, public_email, phone } = req.body
 
   let errors = {}
 
-  id = !isEmpty(id) ? id : ''
   firstName = !isEmpty(firstName) ? firstName : ''
   lastName = !isEmpty(lastName) ? lastName : ''
   public_email = !isEmpty(public_email) ? public_email : ''
@@ -20,11 +19,6 @@ module.exports = (req, res, next) => {
     }
   }
  
-  //id Validation
-  if(Validator.isEmpty(id)) {
-    errors.id = "No user Found"
-  }
-
   //Email Validation
   if(!Validator.isEmpty(public_email)) {
     if(!Validator.isEmail(public_email)) {

@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import TextFieldGroup from '../../commons/TextFieldGroup'
+import PropTypes from 'prop-types'
+
+//Redux
+import { connect } from 'react-redux'
+import { changePassword } from '../../../redux/actions/authActions'
 
 class ChangePassword extends Component {
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
 
 		this.state = {
 			showInput: true,
@@ -16,7 +21,13 @@ class ChangePassword extends Component {
 		}
 	}
 
-	onChange = (e) => {
+	componentWillReceiveProps = nextProps => {
+		if(nextProps.errors) {
+			this.setState({errors: nextProps.errors})
+		}
+	}
+
+	onChange = e => {
 		this.setState({ [e.target.name]: e.target.value })
 		this.inputValidation()
 	}
@@ -44,10 +55,11 @@ class ChangePassword extends Component {
 		}
 	}
 
-	onChangePassword = (e) => {
+	onChangePassword = e => {
 		e.preventDefault()
-
-		console.log(this.state)
+		const { currentPassword, newPassword, confirmNewPwd } = this.state
+		const newPasswordData = { currentPassword, newPassword, confirmNewPwd }
+		this.props.changePassword(newPasswordData)
 	}
 
 	render() {
@@ -98,4 +110,12 @@ class ChangePassword extends Component {
 	}
 }
 
-export default ChangePassword
+ChangePassword.proptypes = {
+	errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+	errors: state.errors
+})
+
+export default connect(mapStateToProps, { changePassword })(ChangePassword)

@@ -17,10 +17,9 @@ class EditProfile extends Component {
 	constructor(props) {
 		super(props)
 
-		const { firstName, lastName, public_email, phone, id } = this.props.auth.user
+		const { firstName, lastName, public_email, phone } = this.props.auth.user
 
 		this.state = {
-			id,
 			avatar: null,
 			firstName,
 			lastName,
@@ -44,10 +43,9 @@ class EditProfile extends Component {
 
 	onSubmit = e => {
 		e.preventDefault()
-		const { id, avatar, firstName, lastName, public_email, phone } = this.state
+		const { avatar, firstName, lastName, public_email, phone } = this.state
 
 		const formData = new FormData()
-		formData.append('id', id)
 		formData.append('avatar',avatar)
 		formData.append('firstName',firstName)
 		formData.append('lastName', lastName)
@@ -73,10 +71,9 @@ class EditProfile extends Component {
 					<div className="d-flex justify-content-center"><small>(*) Required Fields</small></div>
 					<form className="w-75 custom-form edit-profile-form mx-auto mt-3 p-4" onSubmit={this.onSubmit} noValidate>
 					
-						<div className="custom-file">
-							<input type="file" className="custom-file-input" name="avatar" id="validatedCustomFile" onChange={this.onChangeImg} />
-							<label className="custom-file-label" htmlFor="validatedCustomFile">Profile Picture</label>
-							<div className="invalid-feedback">Example invalid custom file feedback</div>
+						<div className="mb-2">
+							<input ref={fileInput => this.fileInput = fileInput} className="input-hide" type="file" name="avatar" onChange={this.onChangeImg} />
+							<button onClick={() => this.fileInput.click()} type="button" className="btn btn-primary">Change Profile Picture <i className="fas fa-camera-retro"/></button>
   					</div>
 
 						<TextFieldGroup
