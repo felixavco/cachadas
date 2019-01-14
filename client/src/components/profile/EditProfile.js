@@ -96,7 +96,7 @@ class EditProfile extends Component {
 							label="Public Email"
 							name="public_email"
 							type="email"
-							value={public_email}
+							value={public_email || ''}
 							onChange={this.onChange}
 							error={errors.public_email}
 						/>
@@ -105,7 +105,7 @@ class EditProfile extends Component {
 							label="Phone"
 							type="tel"
 							name="phone"
-							value={phone}
+							value={phone || ''}
 							onChange={this.onChange}
 							error={errors.phone}
 						/>
@@ -124,7 +124,8 @@ class EditProfile extends Component {
 
 EditProfile.proptypes = {
 	editUser: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired
+	auth: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

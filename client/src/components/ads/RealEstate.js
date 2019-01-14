@@ -5,7 +5,7 @@ import SelectListGroup from '../commons/SelectListGroup';
 const RealEstate = props => {
 
   const PropertyTypes = [
-    {label: "* Select Prolerty Type", value: 'propertyType'},
+    {label: "* Prolerty Type", value: ''},
     {label: "House", value: 'House'},
     {label: "Room", value: 'Room'},
     {label: "Apartment", value: 'Apartment'},
@@ -19,7 +19,7 @@ const RealEstate = props => {
   ]
 
   const Rooms = [
-    {label: '* Rooms', value: 'rooms'},
+    {label: '* Rooms', value: ''},
     {label: '2', value: '2'},
     {label: '3', value: '3'},
     {label: '4', value: '4'},
@@ -27,7 +27,7 @@ const RealEstate = props => {
   ]
 
   const Bathrooms = [
-    {label: '* Bathrooms', value: 'bathrooms'},
+    {label: '* Bathrooms', value: ''},
     {label: '1', value: '1'},
     {label: '2', value: '2'},
     {label: '3', value: '3'},

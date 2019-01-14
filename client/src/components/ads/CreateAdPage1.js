@@ -5,7 +5,7 @@ import TextAreaFieldGroup from '../commons/TextAreaFieldGroup';
 import SelectListGroup from '../commons/SelectListGroup';
 
 const CreateAdPage1 = (props) => {
-	const { isActive, title, description, category, price, errors, change } = props;
+	const { isActive, title, description, category, price, errors, contactEmail, contactPhone, change } = props;
 
 	const options = [
 		{ label: '* Select a category', value: "none" },
@@ -21,7 +21,39 @@ const CreateAdPage1 = (props) => {
 
 	return (
 		<div className={!isActive ? 'input-hide' : null}>
-			<TextFieldGroup placeholder="* Title" name="title" value={title} onChange={change} error={errors.title} />
+		
+			<TextFieldGroup 
+				placeholder="* Title" 
+				name="title" 
+				value={title} 
+				onChange={change} 
+				error={errors.title} 
+			/>
+
+			<div className="row">
+				<div className="col-md-6 col-12">
+
+				<TextFieldGroup 
+					placeholder="* Contact Phone" 
+					name="contactPhone" 
+					value={contactPhone} 
+					onChange={change} 
+					error={errors.contactPhone} 
+				/>
+
+				</div>
+				<div className="col-md-6 col-12">
+				
+				<TextFieldGroup 
+					placeholder="* Contact Email" 
+					name="contactEmail" 
+					value={contactEmail} 
+					onChange={change} 
+					error={errors.contactEmail} 
+				/>
+
+				</div>
+			</div>
 
 			<div className="row">
 				<div className="col-md-8 col-12">
@@ -53,6 +85,9 @@ const CreateAdPage1 = (props) => {
 				onChange={change}
 				error={errors.description}
 			/>
+			<div className="">
+				Upload Images : <input type="file" name="images" id="images" multiple accept="image/jpg, image/jpeg, image/png"/>
+			</div>
 		</div>
 	);
 };

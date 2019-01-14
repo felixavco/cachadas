@@ -2,14 +2,8 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 
-
-//Controllers 
-const registerController = require('../../controllers/users').RegisterController
-const loginController = require('../../controllers/users').LoginController
-const googleAuthController = require('../../controllers/users').GoogleAuthController
-const updateUserProfile = require('../../controllers/users').UpdateUserProfile
-const changePasswordController = require('../../controllers/users').ChangePasswordController
-const deleteAccountController = require('../../controllers/users').DeleteAccountController
+//Load Passport jwt authentication
+const protected = passport.authenticate('jwt', { session: false })
 
 //Validation
 const validateProfileUpdate = require('../../validation/updateProfile')
@@ -18,8 +12,13 @@ const validateLoginInput = require('../../validation/login')
 const validateChangePassword = require('../../validation/changePassword')
 const validateDeleteAccount = require('../../validation/deleteAccount')
 
-//Load Passport jwt authentication
-const protected = passport.authenticate('jwt', { session: false })
+//Controllers 
+const registerController = require('../../controllers/users').RegisterController
+const loginController = require('../../controllers/users').LoginController
+const googleAuthController = require('../../controllers/users').GoogleAuthController
+const updateUserProfile = require('../../controllers/users').UpdateUserProfile
+const changePasswordController = require('../../controllers/users').ChangePasswordController
+const deleteAccountController = require('../../controllers/users').DeleteAccountController
 
 //Multer 
 const multer = require('multer')

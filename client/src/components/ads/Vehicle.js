@@ -6,7 +6,7 @@ import TextFieldGroup from '../commons/TextFieldGroup';
 const Vehicle = props => {
 
   const carMaker = [
-    {label: '* Select Maker', value: 'make'},
+    {label: '* Select Make', value: ''},
 		{ label: 'Acura', value: 'Acura' },
 		{ label: 'Audi', value: 'Audi' },
 		{ label: 'BMW', value: 'BMW' },
@@ -44,22 +44,29 @@ const Vehicle = props => {
   for(i ; i <= y; i++) {
     Years.unshift({label: i, value: i})
   }
-  const Year = [{label: '* Select Year', value: 'year'}, ...Years]
+  const Year = [{label: '* Select Year', value: ''}, ...Years]
 
   const Types = [
-    {label: '* Select Type', value: 'type'},
+    {label: '* Select Type', value: ''},
     {label: 'Sedan, SUV, Compact', value: 'vehicle'},
     {label: 'Motorcycle', value: 'Motorcycle'},
     {label: 'Truck', value: 'Truck'}
   ]
 
   const Transmisions = [
-    {label: '* Transmision Type', value: 'transmision'},
+    {label: '* Transmision Type', value: ''},
     {label: 'Automatic', value: 'Automatic'},
     {label: 'Manual', value: 'Manual'}
   ]
+
+  const GAS = [
+    {label: 'Gasoline', value: 'Gasoline'},
+    {label: 'Diesel', value: 'Diesel'},
+    {label: 'Hybrid', value: 'Hybrid'},
+    {label: 'Electric', value: 'Electric'},
+  ]
   
-  const { isActive, make, errors, year, change, odometer, model, type, transmision } = props
+  const { isActive, make, errors, year, change, gas, model, type, transmision } = props
 
   return (
     <div className={!isActive ? 'input-hide' : null}>
@@ -119,14 +126,13 @@ const Vehicle = props => {
         />
       </div>
       <div className="col-md-6 col-12">
-        <TextFieldGroup
-          placeholder="Odometer?"
-          name="odometer"
-          type="number"
-          value={odometer}
-          onChange={change}
-          error={errors.odometer}
-        />
+        <SelectListGroup
+            name="gas"
+            value={gas}
+            onChange={change}
+            options={GAS}
+            error={errors.gas}
+          /> 
       </div>
      </div>
     </div>
