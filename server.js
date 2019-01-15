@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const path = require('path')
 // const morgan = require('morgan')
 
 
@@ -43,10 +44,20 @@ app.use('/api/admin', adminRoutes)
 //Serving Static forlder for avatar images
 app.use('/avatars', express.static(path.join(__dirname, 'avatars')))
 
-//Catchall route
-app.use((req, res) => {
-  res.send("<p>Invalid route please read the API documentation</p>")
-})
+if(process.env.NODE_ENV === 'production') {
+  //Serve static assets if in Production
+  app.use(express.static('client/build'))
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+
+} else {
+  //Catchall route
+  app.use((req, res) => {
+    res.send("<p>Invalid route please read the API documentation</p>")
+  })
+}
 
 // Connect to the Database
 mongoose.connect(mongoURI, { useNewUrlParser: true })

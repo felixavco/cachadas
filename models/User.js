@@ -15,7 +15,7 @@ const UserSchema = new Schema({
 	role: { type: String, default: 'user' },
 	avatar: {
 		type: String,
-		default: default_avatar_URL
+		default: 'http://www.oda-alc.org/wp-content/uploads/jpg/generic-profile-avatar_352864.jpg'
 	},
 	creation_date: { type: Date, default: new Date() }, 
 	wish_list: [{

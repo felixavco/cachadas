@@ -142,7 +142,7 @@ exports.UpdateUserProfile = async (req, res) => {
 		const { firstName, lastName, public_email, phone, errors } = req.body
 
 		if(req.file) {
-			const avatar = "http://localhost:5000/" + req.file.path
+			const avatar = /* "http://localhost:5000/" + */ req.file.path
 			updatedInfo = { firstName, lastName, public_email, phone, avatar }
 		} else {
 			updatedInfo = { firstName, lastName, public_email, phone }
