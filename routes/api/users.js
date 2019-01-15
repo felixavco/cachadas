@@ -30,8 +30,7 @@ const storage =  multer.diskStorage({
 	},
 	filename: (req, file, cb) => {
 		const ext = file.mimetype.split('/')[1]
-		const d = Math.round(Math.random() * new Date().getMilliseconds())
-		cb(null, req.user._id + '_' + d + '.' + ext)
+		cb(null, req.user._id + '.' + ext)
 	}
 })
 
