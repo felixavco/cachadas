@@ -5,7 +5,7 @@ import TextAreaFieldGroup from '../commons/TextAreaFieldGroup';
 import SelectListGroup from '../commons/SelectListGroup';
 
 const CreateAdPage1 = (props) => {
-	const { isActive, title, description, category, price, errors, contactEmail, contactPhone, change } = props;
+	const { isActive, title, description, category, price, errors, contactEmail, contactPhone, change, imagesOnChange } = props;
 
 	const options = [
 		{ label: '* Select a category', value: "none" },
@@ -85,8 +85,8 @@ const CreateAdPage1 = (props) => {
 				onChange={change}
 				error={errors.description}
 			/>
-			<div className="">
-				Upload Images : <input type="file" name="images" id="images" multiple accept="image/jpg, image/jpeg, image/png"/>
+			<div className="mx-auto">
+				<input onChange={imagesOnChange} type="file" name="images" id="images" multiple accept="image/jpg, image/jpeg, image/png"/>
 			</div>
 		</div>
 	);

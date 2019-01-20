@@ -12,7 +12,9 @@ const UserSchema = new Schema({
 	password: { type: String, required: true },
 	public_email: { type: String },
 	phone: { type: String },
-	role: { type: String, default: 'user' },
+	role: { type: String, default: 'user', required: true},
+	resetToken: { type: String },
+	expResToken: { type: Date },
 	avatar: {
 		type: String,
 		default: 'http://www.oda-alc.org/wp-content/uploads/jpg/generic-profile-avatar_352864.jpg'

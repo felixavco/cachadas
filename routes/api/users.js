@@ -10,6 +10,8 @@ const validateProfileUpdate = require('../../validation/updateProfile')
 const validateRegisterInput = require('../../validation/register')
 const validateLoginInput = require('../../validation/login')
 const validateChangePassword = require('../../validation/changePassword')
+const validateResetPassword = require('../../validation/resetPassword')
+const validateResetPasswordPut = require('../../validation/resetPasswordPut')
 const validateDeleteAccount = require('../../validation/deleteAccount')
 
 //Controllers 
@@ -18,6 +20,8 @@ const loginController = require('../../controllers/users').LoginController
 const googleAuthController = require('../../controllers/users').GoogleAuthController
 const updateUserProfile = require('../../controllers/users').UpdateUserProfile
 const changePasswordController = require('../../controllers/users').ChangePasswordController
+const resetPasswordController = require('../../controllers/users').ResetPasswordController
+const resetPasswordControllerPut = require('../../controllers/users').ResetPasswordControllerPut
 const deleteAccountController = require('../../controllers/users').DeleteAccountController
 
 //Multer 
@@ -99,6 +103,26 @@ router.post(
 	protected, 
 	validateChangePassword, 
 	changePasswordController
+)
+
+//@route  /api/user/reset-password
+//@method POST
+//@access Public
+//@desc   reset the user password, when user forgot the password, sends an email with the reset password url (requires user email)
+router.post(
+	'/reset-password', 
+	validateResetPassword, 
+	resetPasswordController
+)
+
+//@route  /api/user/reset-password
+//@method PUT
+//@access Public
+//@desc   receives the token sent via email and changes the user password
+router.put(
+	'/reset-password', 
+	validateResetPasswordPut, 
+	resetPasswordControllerPut
 )
 
 //@route  /api/user/delete

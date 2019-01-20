@@ -1,6 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
 
 //Load Passport jwt authentication
 const protected = passport.authenticate('jwt', { session: false })
@@ -12,7 +15,16 @@ const validateCreatePost = require('../../validation/createPost')
 const createPostController = require('../../controllers/posts').CreatePostController
 
 //Multer
-const multer = require('multer')
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     console.log(file)
+//     cb(null, 'uploads')
+//   }, 
+//   filename: (req, file, cb) => {
+//     cb(null, file.filename + '-' + Date.now())
+//   }
+// })
+
 
 //@route  /api/posts
 //@method GET
@@ -24,13 +36,11 @@ router.get('/', (req, res) => { res.json({msg: "posts works"})})
 //@method POST
 //@access Protected
 //@desc   Creates new Ad (Post)
-router.post(
-  '/create', 
-  multer().single('images'),
-  protected,
-  validateCreatePost,
-  createPostController
-)
+router.post('/create', upload.array('images', 2), (req, res) => {
+    console.log(req.files)
+    console.log(req.body)
+    res.status(200).json(req.body);
+})
 
 
 module.exports = router

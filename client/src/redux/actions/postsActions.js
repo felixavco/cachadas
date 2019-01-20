@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { CREATE_POST, GET_ERRORS } from './types'
+import { GET_ERRORS } from './types'
 
 //Create new Ad (Post)
 export const createPost = (postData, history) => dispatch => {

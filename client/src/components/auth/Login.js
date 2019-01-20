@@ -79,6 +79,7 @@ class Login extends Component {
 
             <button type="submit" className="btn btn-primary btn-block">{pageTitle} &nbsp;<i className="fas fa-sign-in-alt" /></button>
           </form>
+          
           <div className="mt-3">
             <p className="lead">New User? <Link to="/register">Create an Account</Link></p> 
           </div>

@@ -39,6 +39,7 @@ export const loginUser = userData => (dispatch) => {
 		})
 }
 
+//Edit user information
 export const editUser = (updatedUser, history) => (dispatch) => {
 	axios.post('/api/user/profile', updatedUser)
 		.then((res) => {
@@ -69,7 +70,7 @@ export const setCurrentUser = userData => {
 	}
 }
 
-//Changes the user password
+//Changes the user password (from account settings when the user knows the current password)
 export const changePassword = newPasswordData => dispatch => {
 	axios.post('/api/user/change-password', newPasswordData) 
 		.then(res => logoutUser())
@@ -79,6 +80,31 @@ export const changePassword = newPasswordData => dispatch => {
 				payload: err.response.data
 			})
 		})
+}
+
+//Reset user Password (when the user forgot the password and cannot login)
+export const resetPassword = (data, history) => dispatch => {
+	if(data.email) {
+		axios
+			.post('/api/user/reset-password', data)
+			.then(res => history.push('/login'))
+			.catch(err => {
+				dispatch({
+					type: GET_ERRORS,
+					payload: err.response.data
+				})
+			})
+	} else {
+		axios
+			.put('/api/user/reset-password', data)
+			.then(res => history.push('/login'))
+			.catch(err => {
+				dispatch({
+					type: GET_ERRORS,
+					payload: err.response.data
+				})
+			})
+	}
 }
 
 export const deleteAccount = data => dispatch => {

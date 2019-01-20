@@ -21,10 +21,15 @@ import CreateAd from './components/ads/CreateAd'
 import MyAds from './components/ads/MyAds'
 import WishList from './components/profile/WishList'
 import Settings from './components/profile/settings/Settings'
+import ResetPassword from './components/auth/ResetPassword';
+import ResetPasswordForm from './components/auth/ResetPasswordForm';
 //Private Route component
 import PrivateRoute from './components/auth/PrivateRoute'
 //Not Found page
 import NotFound from './components/commons/NotFound'
+
+//**********DELETE LATER **************/
+import TEST from './components/TEST/Form'
 
 //Checks if there is a token 
 if(localStorage.jwtToken) {
@@ -60,6 +65,9 @@ class App extends Component {
               <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/reset-password" component={ResetPassword} />
+              <Route exact path="/reset-password/:token" component={ResetPasswordForm} />
+              <Route exact path="/test" component={TEST} />
 
               {/* Private Routes */}
               <Switch>

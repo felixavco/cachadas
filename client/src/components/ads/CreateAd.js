@@ -62,6 +62,12 @@ class CreateAd extends Component {
 		this.setState({ [e.target.name]: e.target.value }, () => this.validateInput())
 	}
 
+	imagesOnChange = e => {
+		this.setState({
+			images: e.target.files
+		})
+	}
+
 	vehicleOnChange = e => {
 		this.setState({[e.target.name]: e.target.value}, () => this.vehicleInputValidation())
 	}
@@ -234,7 +240,7 @@ class CreateAd extends Component {
 				break;
 		
 			default:
-
+			
 				this.props.createPost(formData, this.props.history)
 				break;
 		}
@@ -280,13 +286,18 @@ class CreateAd extends Component {
 							<h3 className="mt-3 text-center display-4">Create Ad</h3>
 							<hr />
 							<small className="mb-3">* Required Fields </small>
-							<form onSubmit={this.onSubmit} className="custom-form create-ad-form mx-auto mt-3 p-4">
+							<form 
+								onSubmit={this.onSubmit} 
+								className="custom-form create-ad-form mx-auto mt-3 p-4"
+							>
+
               <CreateAdPage1 
                 isActive={isActive}
                 title={title}
                 description={description}
                 category={category}
 								change={this.onChange}
+								imagesOnChange={this.imagesOnChange}
                 errors={errors}
 								price={price}
 								contactPhone={contactPhone}
