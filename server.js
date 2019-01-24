@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000
 
 const app = express()
 
-//Morgan MiddleWare
+// Morgan MiddleWare
 // app.use(morgan('combined'))
 
 /** BodyParser Middleware **/
@@ -34,14 +34,14 @@ const adminRoutes = require('./routes/api/admin')
 //DB Config
 const { mongoURI } = require('./config/keys')
 
-
 //Defining API routes
 app.use('/api/user', userRoutes)
 app.use('/api/post', postRoutes)
 app.use('/api/admin', adminRoutes)
 
-//Serving Static forlder for avatar images
+//Serving Static forlder for avatar and uploads images
 app.use('/avatars', express.static(path.join(__dirname, 'avatars')))
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 if(process.env.NODE_ENV === 'production') {
   //Serve static assets if in Production
@@ -57,6 +57,11 @@ if(process.env.NODE_ENV === 'production') {
     res.send("<p>Invalid route please read the API documentation</p>")
   })
 }
+
+app.use((req, res, next) => {
+  req.errors = {}
+  next()
+})
 
 // Connect to the Database
 mongoose.connect(mongoURI, { useNewUrlParser: true })

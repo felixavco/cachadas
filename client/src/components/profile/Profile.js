@@ -33,7 +33,7 @@ class Profile extends Component {
   }
 }
 
-Profile.prototypes = {
+Profile.propTypes = {
 	auth: PropTypes.object.isRequired
 }
 

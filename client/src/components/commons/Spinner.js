@@ -1,16 +1,19 @@
-import React from 'react'
-import spinner from '../../img/spinner.gif'
+import React from 'react';
 
- const Spinner = () => {
-  return (
-    <div>
-      <img 
-        src={spinner} 
-        alt="Loading..."
-        style={{width: '200px', margin: 'auto', display: 'block'}}
-      />
-    </div>
-  )
-}
+const Spinner = () => {
 
-export default Spinner
+	const styles = {
+		width: '75px',
+		height: '75px'
+	}
+
+	return (
+		<div className="mx-auto mt-5 text-center">
+			<div style={styles} className="spinner-border text-primary" role="status">
+				<span className="sr-only">Loading...</span>
+			</div>
+		</div>
+	);
+};
+
+export default Spinner;

@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
   if(!isEmpty(errors)) {
     return res.status(400).json(errors)
   }
-  req.errors = errors
+
   next()
 
 }

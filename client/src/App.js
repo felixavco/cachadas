@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import setAuthToken from './utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
+import './styles/App.css'
 
 //React Router
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
@@ -12,6 +13,7 @@ import { setCurrentUser, logoutUser } from './redux/actions/authActions'
 
 //Components 
 import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Landing from './components/landing/Landing'
@@ -28,8 +30,6 @@ import PrivateRoute from './components/auth/PrivateRoute'
 //Not Found page
 import NotFound from './components/commons/NotFound'
 
-//**********DELETE LATER **************/
-import TEST from './components/TEST/Form'
 
 //Checks if there is a token 
 if(localStorage.jwtToken) {
@@ -67,7 +67,6 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/reset-password" component={ResetPassword} />
               <Route exact path="/reset-password/:token" component={ResetPasswordForm} />
-              <Route exact path="/test" component={TEST} />
 
               {/* Private Routes */}
               <Switch>
@@ -93,6 +92,7 @@ class App extends Component {
               <Route exact path="/not-found" component={NotFound} />
               {/* <Redirect from="*" to="/not-found" /> */}
             </div>
+            <Footer/>
           </Fragment>
         </Router>
       </Provider>

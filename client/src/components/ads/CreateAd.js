@@ -216,8 +216,10 @@ class CreateAd extends Component {
 		formData.append('description', description)
 		formData.append('category', category)
 		formData.append('price', price)
-		formData.append('images', images)
-
+		for(let i = 0; i < images.length; i++){
+			formData.append('images', images[i])
+		}
+		
 		switch (category) {
 			case "vehicles":
 			
