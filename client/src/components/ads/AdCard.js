@@ -11,16 +11,11 @@ class AdCard extends Component {
 	}
 
 	onDeleteConfirmation = confirmation => {
-
 		if(confirmation) {
-
 			this.props.onDelete(this.state.id)
 			this.setState({id: ''})
-
 		} else {
-
 			this.setState({id: ''})
-
 		}
 	};
 
@@ -87,7 +82,8 @@ class AdCard extends Component {
 								<button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => this.onDeleteConfirmation(false)}>
 									Cancel
 								</button>
-								<button type="button" className="btn btn-danger" onClick={() => this.onDeleteConfirmation(true)}>
+								<button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => this.onDeleteConfirmation(true)}
+								>
 									DELETE
 								</button>
 							</div>
