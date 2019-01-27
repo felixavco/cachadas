@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { secretOrKey } = require('../config/keys');
@@ -66,8 +68,9 @@ exports.RegisterController = async (req, res) => {
 //@access Public
 //@desc   Login user and returning Token
 exports.LoginController = async (req, res) => {
+	const { errors } = req;
+
 	try {
-		const { errors } = req;
 		const { email: r_email, password } = req.body;
 
 		//Find user by email
@@ -110,24 +113,6 @@ exports.LoginController = async (req, res) => {
 	}
 };
 
-//@route  /api/user/googleoauth
-//@method GET
-//@access Public
-//@desc   Register and Login user with Google Account
-exports.GoogleAuthController = (req, res) => {
-	const { id, firstName, lastName, email, role, avatar } = req.user;
-
-	const payload = { id, firstName, lastName, email, role, avatar };
-
-	jwt.sign(payload, secretOrKey, { expiresIn: '7d' }, (err, token) => {
-		res.status(200).json({
-			succsess: true,
-			token: `Bearer ${token}`
-		});
-	});
-
-	req.logout();
-};
 
 //@route  /api/user/profile
 //@method POST
@@ -292,8 +277,10 @@ exports.ResetPasswordControllerPut = async (req, res) => {
 //@access Protected
 //@desc   Delete user account
 exports.DeleteAccountController = async (req, res) => {
+	
+	const { errors } = req;
+
 	try {
-		const { errors } = req;
 		const { _id, password } = req.user;
 		const { password: currentPassword } = req.body;
 
@@ -311,9 +298,14 @@ exports.DeleteAccountController = async (req, res) => {
 			return res.status(401).json(errors);
 		}
 
+		if(user.avatar !== "avatars/default.jpg"){
+			fs.unlink(user.avatar, () => {})
+		}
+
 		//If Password is correct, proceed to delete user
-		await User.findByIdAndDelete({ _id });
+		await user.remove();
 		res.status(200).json({ msg: 'User Deleted!' });
+		
 	} catch (err) {
 		errors.error = err;
 		res.status(500).json(errors);

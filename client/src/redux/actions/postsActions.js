@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { MY_POSTS, GET_ERRORS } from './types'
+import { MY_POSTS, GET_SINGLE_POST, GET_ERRORS } from './types'
 
 //Create new Ad (Post)
 export const createPost = (postData, history) => dispatch => {
@@ -11,6 +11,24 @@ export const createPost = (postData, history) => dispatch => {
       dispatch({
         type: GET_ERRORS,
 				payload: err.response.data
+      })
+    })
+}
+
+//Return single post (ad)
+export const getSinglePost = postId => dispatch => {
+  axios
+    .post('/api/post/single', postId)
+    .then(res => {
+      dispatch({
+        type: GET_SINGLE_POST,
+        payload: res.data
+      })
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     })
 }

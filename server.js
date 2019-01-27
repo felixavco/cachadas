@@ -5,8 +5,7 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 // const morgan = require('morgan')
 
-
-const port = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000
 
 const app = express()
 
@@ -24,7 +23,6 @@ app.use(passport.initialize())
 
 //Passport Config
 require('./config/passport')(passport)
-require('./config/googleOauth')(passport)
 
 //Importing API routes
 const userRoutes =  require('./routes/api/users')
@@ -67,7 +65,7 @@ app.use((req, res, next) => {
 mongoose.connect(mongoURI, { useNewUrlParser: true })
   .then(db => {
     console.log("Connected to DB")
-    app.listen(port, () => console.log(`Server running on port ${port}`))
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
   })
   .catch(err => console.error(err))
 

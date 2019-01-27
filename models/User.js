@@ -17,7 +17,7 @@ const UserSchema = new Schema({
 	expResToken: { type: Date },
 	avatar: {
 		type: String,
-		default: 'http://www.oda-alc.org/wp-content/uploads/jpg/generic-profile-avatar_352864.jpg'
+		default: 'avatars/default.jpg'
 	},
 	creation_date: { type: Date, default: new Date() }, 
 	wish_list: [{

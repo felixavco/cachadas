@@ -84,6 +84,7 @@ class EditProfile extends Component {
 								type="button" className="btn btn-primary"
 							> 
 								Change Profile Picture 
+								&nbsp;
 								<i className="fas fa-camera-retro"/>
 							</button>
   					</div>

@@ -17,7 +17,6 @@ const validateDeleteAccount = require('../../validation/deleteAccount')
 //Controllers 
 const registerController = require('../../controllers/users').RegisterController
 const loginController = require('../../controllers/users').LoginController
-const googleAuthController = require('../../controllers/users').GoogleAuthController
 const updateUserProfile = require('../../controllers/users').UpdateUserProfile
 const changePasswordController = require('../../controllers/users').ChangePasswordController
 const resetPasswordController = require('../../controllers/users').ResetPasswordController
@@ -65,21 +64,6 @@ router.post(
 	'/login', 
 	validateLoginInput,
 	loginController
-)
-
-//@route  /api/user/googleoauth
-//@method GET
-//@access Public
-//@desc   Register and Login user with Google Account
-router.get(
-	'/google', 
-	passport.authenticate('google', { scope: [ 'profile', 'email' ] })
-)
-
-router.get(
-	'/google/callback', 
-	passport.authenticate('google', { failureRedirect: '/' }), 
-	googleAuthController
 )
 
 //@route  /api/user/profile
@@ -137,3 +121,5 @@ router.post(
 )
 
 module.exports = router
+
+

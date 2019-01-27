@@ -109,7 +109,7 @@ export const resetPassword = (data, history) => dispatch => {
 
 export const deleteAccount = data => dispatch => {
 	axios.post('/api/user/delete', data)
-		.then(res => console.log(res.data))
+		.then(res => logoutUser())
 		.catch(err => {
 			dispatch({
 				type: GET_ERRORS,

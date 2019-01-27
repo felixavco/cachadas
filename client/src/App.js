@@ -25,6 +25,7 @@ import WishList from './components/profile/WishList'
 import Settings from './components/profile/settings/Settings'
 import ResetPassword from './components/auth/ResetPassword';
 import ResetPasswordForm from './components/auth/ResetPasswordForm';
+import SingleAd from './components/ads/singleAd/SingleAd';
 //Private Route component
 import PrivateRoute from './components/auth/PrivateRoute'
 //Not Found page
@@ -67,6 +68,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/reset-password" component={ResetPassword} />
               <Route exact path="/reset-password/:token" component={ResetPasswordForm} />
+              <Route exact path="/post/:postId" component={SingleAd} />
 
               {/* Private Routes */}
               <Switch>

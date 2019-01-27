@@ -9,16 +9,18 @@ const protected = passport.authenticate('jwt', { session: false })
 //Validation
 const validateCreatePost = require('../../validation/createPost')
 const validateDeletePost = require('../../validation/deletePost')
+const validateSinglePost = require('../../validation/singlePost')
 
 //Controllers 
 const createPostController = require('../../controllers/posts').CreatePostController
 const myAdsController = require('../../controllers/posts').MyAdsController
 const deletePostController = require('../../controllers/posts').DeletePostController
+const singlePostController = require('../../controllers/posts').SinglePostController
+const allPostsController = require('../../controllers/posts').AllPostsController
 
 //Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const { _id } = req.user
     cb(null, `uploads`)
   }, 
   filename: (req, file, cb) => {
@@ -36,11 +38,25 @@ const fileFilter = (req, file, cb) => {
 }
 
 
-//@route  /api/posts
+//@route  /api/post
 //@method GET
-//@access Protected
-//@desc   return a list of posts, only accesible from the admin panel
-router.get('/', (req, res) => { res.json({msg: "posts works"})})
+//@access public
+//@desc   returns a list of all posts (ads)
+router.get(
+  '/', 
+  allPostsController
+)
+
+//@route  /api/post/single
+//@method POST
+//@access public
+//@desc   return a single post
+router.post(
+  '/single',
+  validateSinglePost, 
+  singlePostController
+)
+
 
 //@route  /api/post/create
 //@method POST

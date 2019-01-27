@@ -1,8 +1,9 @@
-import { MY_POSTS } from '../actions/types'
-import isEmpty from '../../validation/isEmpty'
+import { MY_POSTS, GET_SINGLE_POST } from '../actions/types'
+// import isEmpty from '../../validation/isEmpty'
 
 const initialState = {
-  myPosts: []
+  myPosts: [],
+  singlePost: {}
 }
 
 export default (state = initialState, action) => {
@@ -13,7 +14,12 @@ export default (state = initialState, action) => {
         ...state,
         myPosts: action.payload
       }
-    break
+
+    case GET_SINGLE_POST:
+      return {
+        ...state, 
+        singlePost: action.payload
+      }
   
     default:
       return state
