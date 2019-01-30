@@ -1,23 +1,12 @@
 import React from 'react';
 
-import TextFieldGroup from '../commons/TextFieldGroup';
-import TextAreaFieldGroup from '../commons/TextAreaFieldGroup';
-import SelectListGroup from '../commons/SelectListGroup';
+import TextFieldGroup from '../../commons/TextFieldGroup';
+import TextAreaFieldGroup from '../../commons/TextAreaFieldGroup';
+import SelectListGroup from '../../commons/SelectListGroup';
+//List Items
+import { categories } from '../List_Items/ListsItems'
 
-const CreateAdPage1 = (props) => {
-	const { isActive, title, description, category, price, errors, contactEmail, contactPhone, change, imagesOnChange } = props;
-
-	const options = [
-		{ label: '* Select a category', value: "none" },
-		{ label: 'Smart Phones & Tablets', value: 'smartphones' },
-		{ label: 'Computers and Electronics', value: 'electronics' },
-		{ label: 'Cars & Motorcycles', value: 'vehicles' },
-		{ label: 'Real Estate', value: 'real_estate' },
-		{ label: 'Clothing & Accessories', value: 'clothing' },
-		{ label: 'Services', value: 'services' },
-		{ label: 'Food & Drinks', value: 'food' },
-		{ label: 'Other', value: 'other' }
-	];
+const CreateAdPage1 = ({ isActive, title, description, category, price, errors, contactEmail, contactPhone, change, imagesOnChange }) => {
 
 	return (
 		<div className={!isActive ? 'input-hide' : null}>
@@ -62,7 +51,7 @@ const CreateAdPage1 = (props) => {
 						value={category}
 						onChange={change}
 						error={errors.category}
-						options={options}
+						options={categories}
 					/> 
 				</div>
         
@@ -85,9 +74,19 @@ const CreateAdPage1 = (props) => {
 				onChange={change}
 				error={errors.description}
 			/>
+
 			<div className="mx-auto">
-				<input onChange={imagesOnChange} type="file" name="images" id="images" multiple accept="image/jpg, image/jpeg, image/png"/>
+			
+				<input 
+					onChange={imagesOnChange} 
+					type="file" 
+					name="images" 
+					id="images" 
+					multiple accept="image/jpg, image/jpeg, image/png"
+				/>
+				
 			</div>
+			
 		</div>
 	);
 };

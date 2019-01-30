@@ -8,11 +8,11 @@ import { withRouter } from 'react-router-dom'
 
 //Redux
 import { connect } from 'react-redux'
-import { createPost } from '../../redux/actions/postsActions'
+import { createPost } from '../../../redux/actions/postsActions'
 
 //Components
-import ProfileTemplate from '../profile/ProfileTemplate';
-import CreateAdPage1 from '../ads/CreateAdPage1'
+import ProfileTemplate from '../../profile/ProfileTemplate';
+import CreateAdPage1 from './CreateAdPage1'
 import Vehicle from './Vehicle'
 import RealEstate from './RealEstate'
 

@@ -15,9 +15,22 @@ export const createPost = (postData, history) => dispatch => {
     })
 }
 
-//Return single post (ad)
-export const getSinglePost = postId => dispatch => {
+//Edit Post 
+export const editPost = (postData, history) => dispatch => {
   axios
+    .post('/api/post/edit', postData)
+    .then(res => history.push(`/post/${res.data.updated}?origin=my-ads`))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+				payload: err.response.data
+      })
+    })
+}
+
+//Return single post (ad)
+export const getSinglePost = (postId) => dispatch => {
+    axios
     .post('/api/post/single', postId)
     .then(res => {
       dispatch({

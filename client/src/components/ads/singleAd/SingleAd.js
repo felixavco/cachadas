@@ -97,9 +97,6 @@ class SingleAd extends Component {
 
 			const { id } = this.props.auth.user;
 
-			console.log(id)
-			console.log(owner)
-
 			content = (
 			<Fragment>
 				{owner === id ? (<Link to={`/post/edit/${_id}`} className="mt-3 btn btn-primary">Edit  <i className="fas fa-pencil-alt" /></Link>) : null}

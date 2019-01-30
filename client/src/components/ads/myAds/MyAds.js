@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import ProfileTemplate from '../profile/ProfileTemplate';
+import ProfileTemplate from '../../profile/ProfileTemplate';
 import PropTypes from 'prop-types'
-import emptyImage  from  '../../img/empty-image.png';
+import emptyImage  from  '../../../img/empty-image.png';
 
 //Components
-import Spinner from '../commons/Spinner';
+import Spinner from '../../commons/Spinner';
 import AdCard from './AdCard';
 
 //Router
 import { Link } from 'react-router-dom';
 
-
 //Redux
 import { connect } from 'react-redux';
-import { loadMyPosts, deletePost } from '../../redux/actions/postsActions'
+import { loadMyPosts, deletePost } from '../../../redux/actions/postsActions'
 
 class MyAds extends Component {
 	constructor() {

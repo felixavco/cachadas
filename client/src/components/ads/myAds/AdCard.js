@@ -22,13 +22,13 @@ class AdCard extends Component {
 	render() {
 		let { img, description, title, id } = this.props;
 
-		if (title.length >= 25) {
+		// if (title.length >= 25) {
 			title = title.substring(0, 25) + '...';
-		}
+		// }
 
-		if (description.length >= 100) {
+		// if (description.length >= 100) {
 			description = description.substring(0, 100) + '...';
-		}
+		// }
 
 
 		return (
@@ -43,6 +43,7 @@ class AdCard extends Component {
 					<p className="px-3 description">{description}</p>
 					<div className="actions-cont mx-auto d-flex justify-content-end">
 						<Link className="action edit mr-2" to={`/post/edit/${id}`}>
+							Edit &nbsp;
 							<i className="fas fa-pencil-alt" />
 						</Link>
 						<span
@@ -53,6 +54,7 @@ class AdCard extends Component {
 							data-toggle="modal"
 							data-target="#deletePostModal"
 						>
+							Delete &nbsp;
 							<i className="fas fa-trash-alt" />
 						</span>
 					</div>

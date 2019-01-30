@@ -73,12 +73,13 @@ class EditProfile extends Component {
 					
 						<div className="mb-2">
 							<input 
-							ref={fileInput => this.fileInput = fileInput} 
-								className="input-hide" 
+								ref={fileInput => this.fileInput = fileInput} 
+								className="d-none" 
 								type="file" name="avatar" 
 								onChange={this.onChangeImg} 
 								accept="image/png, image/jpg, image/jpeg"
 							/>
+							
 							<button 
 								onClick={() => this.fileInput.click()} 
 								type="button" className="btn btn-primary"

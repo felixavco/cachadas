@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
-p, h5, h6 {
+p, h5, h6, h3 {
   font-family: 'Roboto', sans-serif; }
 
 .container {
@@ -44,3 +44,18 @@ p, h5, h6 {
       .grid .adCard .delete:hover {
         background: #d9534f;
         color: #fafafa; }
+
+.grid-images {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[4];
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem; }
+  .grid-images .single-img-cont {
+    width: 100%;
+    height: 150pxs; }
+    .grid-images .single-img-cont img {
+      width: 100%;
+      height: 100%;
+      border-radius: 0.3rem 0.3rem 0 0;
+      overflow: hidden; }

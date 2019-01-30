@@ -1,39 +1,10 @@
 import React from 'react'
 
-import SelectListGroup from '../commons/SelectListGroup';
+import SelectListGroup from '../../commons/SelectListGroup';
+//List Items
+import { PropertyTypes, Transactions, Rooms, Bathrooms } from '../List_Items/ListsItems';
 
 const RealEstate = props => {
-
-  const PropertyTypes = [
-    {label: "* Prolerty Type", value: ''},
-    {label: "House", value: 'House'},
-    {label: "Room", value: 'Room'},
-    {label: "Apartment", value: 'Apartment'},
-    {label: "Terrain", value: 'Terrain'},
-  ]
-
-  const Transactions = [
-    {label: 'Sell', value: 'Sell'},
-    {label: 'Rent', value: 'Rent'},
-    {label: 'Buy', value: 'Buy'}
-  ]
-
-  const Rooms = [
-    {label: '* Rooms', value: ''},
-    {label: '2', value: '2'},
-    {label: '3', value: '3'},
-    {label: '4', value: '4'},
-    {label: '+5', value: '+5'},
-  ]
-
-  const Bathrooms = [
-    {label: '* Bathrooms', value: ''},
-    {label: '1', value: '1'},
-    {label: '2', value: '2'},
-    {label: '3', value: '3'},
-    {label: '+4', value: '+4'},
-  ]
-
 
   const { isActive, propertyType, change, transaction, rooms, bathrooms, errors } = props
 

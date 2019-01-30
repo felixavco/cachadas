@@ -14,6 +14,7 @@ const PostSchema = new Schema({
 	transaction: { type: String },
 	images: [],
 	make: { type: String },
+	transmision: { type: String },
 	year: { type: String },
 	gas: { type: String },
 	model: { type: String },

@@ -10,9 +10,11 @@ const protected = passport.authenticate('jwt', { session: false })
 const validateCreatePost = require('../../validation/createPost')
 const validateDeletePost = require('../../validation/deletePost')
 const validateSinglePost = require('../../validation/singlePost')
+const validateEditPost = require('../../validation/editPost')
 
 //Controllers 
 const createPostController = require('../../controllers/posts').CreatePostController
+const editPostController = require('../../controllers/posts').EditPostController
 const myAdsController = require('../../controllers/posts').MyAdsController
 const deletePostController = require('../../controllers/posts').DeletePostController
 const singlePostController = require('../../controllers/posts').SinglePostController
@@ -55,6 +57,17 @@ router.post(
   '/single',
   validateSinglePost, 
   singlePostController
+)
+
+//@route  /api/post/edit
+//@method POST
+//@access Private
+//@desc   Edit the incoming Post (Ad)
+router.post(
+  '/edit',
+  protected,
+  validateEditPost,
+  editPostController
 )
 
 

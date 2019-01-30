@@ -12,6 +12,11 @@ import store from './redux/store'
 import { setCurrentUser, logoutUser } from './redux/actions/authActions'
 
 //Components 
+//Private Route component
+import PrivateRoute from './components/auth/PrivateRoute'
+//Not Found page
+import NotFound from './components/commons/NotFound'
+
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Login from './components/auth/Login'
@@ -19,17 +24,16 @@ import Register from './components/auth/Register'
 import Landing from './components/landing/Landing'
 import Profile from './components/profile/Profile'
 import EditProfile from './components/profile/EditProfile'
-import CreateAd from './components/ads/CreateAd'
-import MyAds from './components/ads/MyAds'
+import CreateAd from './components/ads/createAd/CreateAd'
+import MyAds from './components/ads/myAds/MyAds'
 import WishList from './components/profile/WishList'
 import Settings from './components/profile/settings/Settings'
 import ResetPassword from './components/auth/ResetPassword';
 import ResetPasswordForm from './components/auth/ResetPasswordForm';
 import SingleAd from './components/ads/singleAd/SingleAd';
-//Private Route component
-import PrivateRoute from './components/auth/PrivateRoute'
-//Not Found page
-import NotFound from './components/commons/NotFound'
+import EditAd from './components/ads/editAd/EditAd';
+
+
 
 
 //Checks if there is a token 
@@ -69,6 +73,7 @@ class App extends Component {
               <Route exact path="/reset-password" component={ResetPassword} />
               <Route exact path="/reset-password/:token" component={ResetPasswordForm} />
               <Route exact path="/post/:postId" component={SingleAd} />
+              <Route exact path="/post/edit/:postId" component={EditAd} />
 
               {/* Private Routes */}
               <Switch>

@@ -8,13 +8,16 @@ const TextAreaFieldGroup = ({
   error,
   info, 
   onChange,
+  label
 }) => {
   return (
     <div className="form-group">
+      {label ? (<label htmlFor={name}>{label}</label>) : null}
       <textarea
         className={`form-control form-control-lg ${error ? 'is-invalid' : ''}`}
         placeholder={placeholder}
         name={name}
+        id={name}
         value={value}
         onChange={onChange}
         noValidate

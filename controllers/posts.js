@@ -34,6 +34,7 @@ exports.AllPostsController = async (req, res) => {
 //@access Protected
 //@desc   Creates new Ad (Post)
 exports.CreatePostController = async (req, res) => {
+  const { errors } = req;
   try {
     
     const { files } = req
@@ -62,9 +63,59 @@ exports.CreatePostController = async (req, res) => {
     res.status(200).json({msg: "Post created"})
 
   } catch (err) {
-		res.status(500).json(err)
+    errors.error = err;
+		res.status(500).json(errors);
   }
   
+}
+
+//@route  /api/post/edit
+//@method POST
+//@access Private
+//@desc   Edit the incoming Post (Ad)
+exports.EditPostController = async (req, res) => {
+  const { errors } = req; 
+  try {
+    const { id } = req.user;
+    const { postId, contactEmail, contactPhone, title, description, category, owner } = req.body;
+    const price = parseFloat(req.body.price);
+    const { make, year, gas, model, type, transmision } = req.body;
+    const { propertyType, transaction, rooms, bathrooms } = req.body;
+
+    if(id !== owner){
+      errors.authorization = "Not Authorized"
+      return res.status(401).json(errors);
+    }
+
+    let updatedPostData = { title, description, category, price, contactEmail, contactPhone } 
+
+    switch (category) {
+
+      case "vehicles":
+        updatedPostData = {...updatedPostData, make, year, gas, model, type, transmision }
+      break;
+
+      case "real_estate":
+        updatedPostData = {...updatedPostData, propertyType, transaction, rooms, bathrooms}
+      break;
+    
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(postId, updatedPostData, { new: true });
+
+    if(!updatedPost) {
+      error.post = "Invalid Request";
+      res.status(401).json(errors);
+    } else {
+      const { _id } = updatedPost;
+      res.status(200).json({updated: _id});
+    }
+
+  } catch (err) {
+    errors.error = err;
+    res.status(500).json(errors);
+  }
+
 }
 
 

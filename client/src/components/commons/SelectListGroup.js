@@ -7,7 +7,8 @@ const SelectListGroup = ({
   error,
   info, 
   onChange,
-  options
+  options,
+  label
 }) => {
 
   const selectOptions = options.map(option => (
@@ -18,10 +19,12 @@ const SelectListGroup = ({
 
   return (
     <div className="form-group">
+     {label ? (<label htmlFor={name}>{label}</label>) : null}
       <select
         className={`form-control form-control-lg ${error ? 'is-invalid' : ''}`}
         name={name}
         value={value}
+        id={name}
         onChange={onChange}
         noValidate
       >
