@@ -75,19 +75,49 @@ exports.CreatePostController = async (req, res) => {
 //@desc   Edit the incoming Post (Ad)
 exports.EditPostController = async (req, res) => {
   const { errors } = req; 
+
   try {
+    const { files } = req;
+    const images = files.map(file => file.path)
     const { id } = req.user;
     const { postId, contactEmail, contactPhone, title, description, category, owner } = req.body;
     const price = parseFloat(req.body.price);
     const { make, year, gas, model, type, transmision } = req.body;
     const { propertyType, transaction, rooms, bathrooms } = req.body;
+    let updatedPostData = { title, description, category, price, contactEmail, contactPhone } 
+
+   
 
     if(id !== owner){
       errors.authorization = "Not Authorized"
       return res.status(401).json(errors);
     }
 
-    let updatedPostData = { title, description, category, price, contactEmail, contactPhone } 
+
+    if(files.length > 0){
+
+      try {
+        const currentPost = await Post.findById({_id: postId});
+
+        const currentImages = currentPost.images
+
+        if(currentImages.length > 0){
+          try {
+           await currentImages.forEach(image => fs.unlinkSync(image))
+          } catch (err) {
+            errors.error = err;
+            res.status(500).json(errors);
+          }
+
+        }
+
+        updatedPostData = { ...updatedPostData, images } 
+
+      } catch (err) {
+        errors.error = err;
+        res.status(500).json(errors);
+      }
+    } 
 
     switch (category) {
 
@@ -211,3 +241,4 @@ exports.SinglePostController = async (req, res) => {
     res.status(500).json(errors);
   }
 }
+

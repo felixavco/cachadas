@@ -6,7 +6,7 @@ import SelectListGroup from '../../commons/SelectListGroup';
 //List Items
 import { categories } from '../List_Items/ListsItems'
 
-const CreateAdPage1 = ({ isActive, title, description, category, price, errors, contactEmail, contactPhone, change, imagesOnChange }) => {
+const CreateAdPage1 = ({ isActive, title, description, category, price, errors, contactEmail, contactPhone, change }) => {
 
 	return (
 		<div className={!isActive ? 'input-hide' : null}>
@@ -74,18 +74,6 @@ const CreateAdPage1 = ({ isActive, title, description, category, price, errors, 
 				onChange={change}
 				error={errors.description}
 			/>
-
-			<div className="mx-auto">
-			
-				<input 
-					onChange={imagesOnChange} 
-					type="file" 
-					name="images" 
-					id="images" 
-					multiple accept="image/jpg, image/jpeg, image/png"
-				/>
-				
-			</div>
 			
 		</div>
 	);

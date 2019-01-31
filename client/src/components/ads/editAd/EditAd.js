@@ -123,6 +123,7 @@ class EditAd extends Component {
     e.preventDefault();
 
     const {
+      images,
       title, 
       price, 
       category, 
@@ -145,23 +146,60 @@ class EditAd extends Component {
 
     const $price = price.toString()
 
-    const simpleAd = { title, price: $price, category, description, contactEmail, contactPhone, owner, postId}
-
-    switch (category) {
-      case "vehicles":
-        const vehicleAd = { ...simpleAd, make, model, year, gas, type, transmision }
-        this.props.editPost(vehicleAd, this.props.history);
-      break;
-
-      case "real_estate":
-        const real_stateAd = { ...simpleAd, propertyType, transaction, rooms, bathrooms }
-        this.props.editPost(real_stateAd, this.props.history);
-      break;
-    
-      default:
-        this.props.editPost(simpleAd, this.props.history);
-      break;
+    const formData = new FormData()
+		formData.append('postId', postId)
+		formData.append('owner', owner)
+		formData.append('contactEmail', contactEmail)
+		formData.append('contactPhone', contactPhone)
+		formData.append('title', title)
+		formData.append('description', description)
+		formData.append('category', category)
+		formData.append('price', $price)
+		for(let i = 0; i < images.length; i++){
+			formData.append('images', images[i])
     }
+    
+    switch (category) {
+			case "vehicles":
+				formData.append('make', make)
+				formData.append('year', year)
+				formData.append('gas', gas)
+				formData.append('model', model)
+				formData.append('type', type)
+				formData.append('transmision', transmision)
+				this.props.editPost(formData, this.props.history);
+			break;
+			
+			case "real_estate":
+				formData.append('propertyType', propertyType)
+				formData.append('transaction', transaction)
+				formData.append('rooms', rooms)
+				formData.append('bathrooms', bathrooms)
+				this.props.editPost(formData, this.props.history);
+			break;
+		
+			default:
+        this.props.editPost(formData, this.props.history);
+			break;
+		}
+
+
+
+    // switch (category) {
+    //   case "vehicles":
+    //     const vehicleAd = { ...simpleAd, make, model, year, gas, type, transmision }
+    //     this.props.editPost(vehicleAd, this.props.history);
+    //   break;
+
+    //   case "real_estate":
+    //     const real_stateAd = { ...simpleAd, propertyType, transaction, rooms, bathrooms }
+    //     this.props.editPost(real_stateAd, this.props.history);
+    //   break;
+    
+    //   default:
+    //     this.props.editPost(simpleAd, this.props.history);
+    //   break;
+    // }
   }
 
   

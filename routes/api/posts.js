@@ -66,6 +66,7 @@ router.post(
 router.post(
   '/edit',
   protected,
+  multer({ storage, fileFilter }).array('images', 10), 
   validateEditPost,
   editPostController
 )
@@ -78,7 +79,7 @@ router.post(
 router.post(
     '/create', 
     protected,
-    multer({ storage, fileFilter }).array('images', 2), 
+    multer({ storage, fileFilter }).array('images', 10), 
     validateCreatePost,
     createPostController
 )

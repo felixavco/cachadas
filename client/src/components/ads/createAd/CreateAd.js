@@ -39,12 +39,12 @@ class CreateAd extends Component {
 			price: '',
 			make: '',
 			year: '',
-			gas: '',
+			gas: 'Gasoline',
 			model: '',
 			type: '',
 			transmision: '',
 			propertyType: '',
-			transaction: '',
+			transaction: 'Sell',
 			rooms: '',
 			bathrooms: '',
 			images: {},
@@ -299,7 +299,6 @@ class CreateAd extends Component {
                 description={description}
                 category={category}
 								change={this.onChange}
-								imagesOnChange={this.imagesOnChange}
                 errors={errors}
 								price={price}
 								contactPhone={contactPhone}
@@ -328,6 +327,26 @@ class CreateAd extends Component {
 								errors={errors}
 							/>
 
+							<div className={!isActive ? 'input-hide' : null}>
+								<button 
+									onClick={() => this.fileInput.click()}
+									className="btn btn-primary" 
+									type="button"
+								>
+									Add Images &nbsp; 
+									<i className="far fa-images"/>
+								</button>
+
+								<input 
+									className="d-none"
+								 ref={fileInput => this.fileInput = fileInput} 
+									onChange={this.imagesOnChange} 
+									type="file" 
+									name="images" 
+									id="images" 
+									multiple accept="image/jpg, image/jpeg, image/png"
+								/>
+							</div>
 
 								<div className="pagination d-flex justify-content-between">
 									<div>

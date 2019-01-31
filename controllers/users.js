@@ -7,6 +7,7 @@ const crypto = require('crypto');
 
 //Load User model
 const User = require('../models/User');
+const Post = require('../models/Post');
 
 //SendGrid NodeMailer
 const resetPasswordEmail = require('../nodeMailer/sendGrid');
@@ -290,6 +291,18 @@ exports.DeleteAccountController = async (req, res) => {
 			errors.password = 'Unauthorized request';
 			return res.status(401).json(errors);
 		}
+
+		const userPosts = await Post.find({owner: _id})
+
+		if(userPosts.length > 0) {
+			const imagesURLs = userPosts.map(post => {
+				return post.images;
+			})
+
+		 	console.log(imagesURLs);
+		}
+
+		return
 
 		const isMatch = await bcrypt.compare(currentPassword, password);
 
