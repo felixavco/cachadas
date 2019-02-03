@@ -20,9 +20,6 @@ const Avatar = props => {
 				<Link className="dropdown-item" to="/profile">
           Profile &nbsp; <i className="fas fa-user-alt"/> 
 				</Link>
-        <Link className="dropdown-item" to="/wish-list">
-          Wish List &nbsp; <i className="fas fa-heart"/>
-				</Link>
         <Link className="dropdown-item" to="/my-ads">
           My Ads &nbsp; <i className="fab fa-adversal"/>
 				</Link>

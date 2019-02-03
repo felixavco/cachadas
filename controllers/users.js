@@ -12,20 +12,6 @@ const Post = require('../models/Post');
 //SendGrid NodeMailer
 const resetPasswordEmail = require('../nodeMailer/sendGrid');
 
-//@route  /api/admin/all-users
-//@method GET
-//@access Protected
-//@desc   return a list of users, only accesible from the admin panel
-exports.AllUsersController = async (req, res) => {
-	try {
-		const users = await User.find();
-		res.status(200).json({ users });
-	} catch (error) {
-		console.error(error);
-		res.status(500).json(error);
-	}
-};
-
 //@route  /api/user/register
 //@method POST
 //@access Public
@@ -295,19 +281,22 @@ exports.DeleteAccountController = async (req, res) => {
 		const userPosts = await Post.find({owner: _id})
 
 		if(userPosts.length > 0) {
-			const imagesURLs = userPosts.map(post => {
-				return post.images;
-			})
-
-		 	console.log(imagesURLs);
+			//Merges the images path into a single Array
+			const imagesURLs = [].concat.apply([], userPosts.map(post => post.images));
+			//Deletes images asociated to each post
+			try {
+				await imagesURLs.forEach(image => fs.unlinkSync(image))
+			 } catch (err) {
+				 errors.error = err;
+				 res.status(500).json(errors);
+			 }
 		}
 
-		return
 
 		const isMatch = await bcrypt.compare(currentPassword, password);
 
 		if (!isMatch) {
-			errors.password = 'Incorrect Password';
+			errors.password = 'Incorrect Password2';
 			return res.status(401).json(errors);
 		}
 

@@ -26,12 +26,12 @@ import Profile from './components/profile/Profile'
 import EditProfile from './components/profile/EditProfile'
 import CreateAd from './components/ads/createAd/CreateAd'
 import MyAds from './components/ads/myAds/MyAds'
-import WishList from './components/profile/WishList'
 import Settings from './components/profile/settings/Settings'
 import ResetPassword from './components/auth/ResetPassword';
 import ResetPasswordForm from './components/auth/ResetPasswordForm';
 import SingleAd from './components/ads/singleAd/SingleAd';
 import EditAd from './components/ads/editAd/EditAd';
+import ContactForm from './components/contactForm/ContactForm';
 
 
 
@@ -73,7 +73,7 @@ class App extends Component {
               <Route exact path="/reset-password" component={ResetPassword} />
               <Route exact path="/reset-password/:token" component={ResetPasswordForm} />
               <Route exact path="/post/:postId" component={SingleAd} />
-              <Route exact path="/post/edit/:postId" component={EditAd} />
+              <Route exact path="/contact-us" component={ContactForm} />
 
               {/* Private Routes */}
               <Switch>
@@ -83,9 +83,6 @@ class App extends Component {
                 <PrivateRoute exact path="/edit-profile" component={EditProfile} />
               </Switch>
               <Switch>
-                <PrivateRoute exact path="/wish-list" component={WishList} />
-              </Switch>
-              <Switch>
                 <PrivateRoute exact path="/my-ads" component={MyAds} />
               </Switch>
               <Switch>
@@ -93,6 +90,9 @@ class App extends Component {
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/account-settings" component={Settings} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/post/edit/:postId" component={EditAd} />
               </Switch>
 
               {/* Not Found */}

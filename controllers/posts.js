@@ -108,7 +108,6 @@ exports.EditPostController = async (req, res) => {
             errors.error = err;
             res.status(500).json(errors);
           }
-
         }
 
         updatedPostData = { ...updatedPostData, images } 

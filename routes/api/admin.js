@@ -2,11 +2,16 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 
-//Controllers
-const allUsersController = require('../../controllers/users').AllUsersController
-
 //Load Passport jwt authentication
 const protected = passport.authenticate('jwt', { session: false })
+
+//Validation
+const validateContactForm = require('../../validation/contactForm');
+
+//Controllers
+const allUsersController = require('../../controllers/admin').AllUsersController
+const contactFormController = require('../../controllers/admin').ContactFormController
+
 
 //Authentication 
 const isAdmin = require('../../authorization/isAdmin')
@@ -20,6 +25,16 @@ router.get(
   protected, 
   isAdmin, 
   allUsersController
+)
+
+//@route  /api/admin/contact
+//@method POST
+//@access public
+//@desc   Send message from a contact form 
+router.post(
+  '/contact',
+  validateContactForm,
+  contactFormController
 )
 
 module.exports = router 

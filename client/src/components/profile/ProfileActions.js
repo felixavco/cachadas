@@ -10,9 +10,6 @@ const ProfileActions = () => {
 			<NavLink activeClassName="active" to="/edit-profile" className="btn btn-outline-primary btn-block mb-3">
 				Edit Profile &nbsp; <i className="fas fa-user-edit" />
 			</NavLink>
-			<NavLink to="/wish-list" className="btn btn-outline-primary btn-block mb-3">
-				My Wish List &nbsp; <i className="fas fa-heart" />
-			</NavLink>
 			<NavLink to="/my-ads" className="btn btn-outline-primary btn-block mb-3">
 				My Ads &nbsp; <i className="fab fa-adversal" />
 			</NavLink>
