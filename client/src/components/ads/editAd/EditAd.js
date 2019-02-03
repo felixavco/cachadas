@@ -181,25 +181,8 @@ class EditAd extends Component {
 			default:
         this.props.editPost(formData, this.props.history);
 			break;
-		}
-
-
-
-    // switch (category) {
-    //   case "vehicles":
-    //     const vehicleAd = { ...simpleAd, make, model, year, gas, type, transmision }
-    //     this.props.editPost(vehicleAd, this.props.history);
-    //   break;
-
-    //   case "real_estate":
-    //     const real_stateAd = { ...simpleAd, propertyType, transaction, rooms, bathrooms }
-    //     this.props.editPost(real_stateAd, this.props.history);
-    //   break;
+    }
     
-    //   default:
-    //     this.props.editPost(simpleAd, this.props.history);
-    //   break;
-    // }
   }
 
   
