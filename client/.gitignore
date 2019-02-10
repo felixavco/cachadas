@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-/prepros-6.config
+/src/prepros-6.config
 /keys
 
 # testing

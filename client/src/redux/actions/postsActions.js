@@ -1,6 +1,24 @@
 import axios from 'axios'
 
-import { MY_POSTS, GET_SINGLE_POST, GET_ERRORS } from './types'
+import { MY_POSTS, GET_SINGLE_POST, GET_ERRORS, POSTS_PER_PAGE } from './types'
+
+//Load Posts per page 
+export const loadAllPosts = (page) => dispatch => {
+  axios
+    .get('/api/post/?page=' + page)
+    .then(res => {
+      dispatch({
+        type: POSTS_PER_PAGE,
+        payload: res.data
+      })
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+				payload: err.response.data
+      })
+    })
+}
 
 //Create new Ad (Post)
 export const createPost = (postData, history) => dispatch => {

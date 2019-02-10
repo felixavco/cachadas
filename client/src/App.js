@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode'
 import './styles/App.css'
 
 //React Router
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 
 //Redux 
 import { Provider } from 'react-redux'
@@ -97,7 +97,7 @@ class App extends Component {
 
               {/* Not Found */}
               <Route exact path="/not-found" component={NotFound} />
-              {/* <Redirect from="*" to="/not-found" /> */}
+              {/* <Redirect  from="*" to="/not-found" /> */}
             </div>
             <Footer/>
           </Fragment>

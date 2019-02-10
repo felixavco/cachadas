@@ -10,6 +10,7 @@ import { logoutUser } from '../../redux/actions/authActions';
 
 //component
 import Avatar from './Avatar'
+import TextFieldGroup from '../commons/TextFieldGroup';
 
 class Navbar extends Component {
 

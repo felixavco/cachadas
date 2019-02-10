@@ -1,9 +1,12 @@
-import { MY_POSTS, GET_SINGLE_POST } from '../actions/types'
+import { MY_POSTS, GET_SINGLE_POST, POSTS_PER_PAGE } from '../actions/types'
+import { PostPerPage } from '../actions/postsActions';
 // import isEmpty from '../../validation/isEmpty'
 
 const initialState = {
   myPosts: [],
-  singlePost: {}
+  singlePost: {},
+  PostsPerPage: [],
+  total_items: 0
 }
 
 export default (state = initialState, action) => {
@@ -19,6 +22,13 @@ export default (state = initialState, action) => {
       return {
         ...state, 
         singlePost: action.payload
+      }
+    
+    case POSTS_PER_PAGE:
+      return {
+        ...state, 
+        PostsPerPage: action.payload.posts,
+        total_items: action.payload.total_Items
       }
   
     default:

@@ -9,25 +9,32 @@ const User = require('../models/User');
 //@access public
 //@desc   returns a list of all posts (ads)
 exports.AllPostsController = async (req, res) => {
+  
   const { errors } = req;
 
   try {
 
-    const posts = await Post.find();
+    let PAGE = req.query.page || 1;
+    let PER_PAGE = 6;
 
-    if(!posts) {
+    const TOTAL_ITEMS = await Post.countDocuments();
+
+    const pagePosts = await Post.find({}).skip((PER_PAGE * PAGE) - PER_PAGE).limit(PER_PAGE);
+
+    if(!pagePosts) {
       errors.posts = "No Posts found"
-      return res.status(403).json(posts);
+      return res.status(403).json(errors);
     }
 
-    res.status(200).json(posts);
+    res.status(200).json({
+      posts: pagePosts,
+      total_Items: TOTAL_ITEMS
+    });
     
   } catch (err) {
-    errors.error = err;
-    res.status(500).json(errors);
+    res.status(500).json({Error: `${err}`});
   }
 }
-
 
 //@route  /api/post/create
 //@method POST
