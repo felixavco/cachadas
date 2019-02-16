@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import SingleAdCard from './SingleAdCard';
 import Pagination from './Pagination';
 import Spinner from '../commons/Spinner';
-import NotFound from '../commons/NotFound'
+import NotFound from '../commons/NotFound';
 import PropTypes from 'prop-types';
 import emptyImage from '../../img/empty-image.png';
 import queryString from 'query-string';
@@ -11,6 +11,7 @@ import queryString from 'query-string';
 //Redux
 import { connect } from 'react-redux';
 import { loadAllPosts } from '../../redux/actions/postsActions';
+import SearchBar from './SearchBar';
 
 class Landing extends Component {
 	constructor(props) {
@@ -24,12 +25,15 @@ class Landing extends Component {
 			posts: [],
 			errors: {},
 			isLoading: true,
-			currentPage: qs.page || 1
+			currentPage: qs.page || 1,
+			search: 'none',
+			category: 'none'
 		};
 	}
 
 	componentDidMount() {
-		this.props.loadAllPosts(this.state.currentPage);
+		const { currentPage, search, category } = this.state;
+		this.props.loadAllPosts(currentPage, search, category);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -52,6 +56,18 @@ class Landing extends Component {
 		}
 	}
 
+	setQuery = (query) => {
+		this.setState({
+			search: query.search,
+			category: query.category
+		})
+	}
+
+	onSearch = () => {
+		const { currentPage, search, category } = this.state;
+		this.props.loadAllPosts(currentPage, search, category);
+	}
+
 	numOfPages = (items) => {
 		const { perPage } = this.state;
 
@@ -64,9 +80,10 @@ class Landing extends Component {
 	};
 
 	nextPage = () => {
-		this.setState({ currentPage: this.state.currentPage + 1 }, () =>
-			this.props.loadAllPosts(this.state.currentPage)
-		);
+		this.setState({ currentPage: this.state.currentPage + 1 }, () => {
+			const { currentPage, search, category } = this.state;
+			this.props.loadAllPosts(currentPage, search, category);
+		});
 
 		if (this.state.currentPage >= this.state.pages) {
 			this.setState({ currentPage: this.state.pages });
@@ -74,9 +91,10 @@ class Landing extends Component {
 	};
 
 	prevPage = () => {
-		this.setState({ currentPage: this.state.currentPage - 1 }, () =>
-			this.props.loadAllPosts(this.state.currentPage)
-		);
+		this.setState({ currentPage: this.state.currentPage - 1 }, () => {
+			const { currentPage, search, category } = this.state;
+			this.props.loadAllPosts(currentPage, search, category);
+		});
 
 		if (this.state.currentPage <= 1) {
 			this.setState({ currentPage: 1 });
@@ -84,7 +102,10 @@ class Landing extends Component {
 	};
 
 	setPage = (page) => {
-		this.setState({ currentPage: page }, () => this.props.loadAllPosts(this.state.currentPage));
+		this.setState({ currentPage: page }, () => {
+			const { currentPage, search, category } = this.state;
+			this.props.loadAllPosts(currentPage, search, category);
+		});
 	};
 
 	render() {
@@ -107,8 +128,8 @@ class Landing extends Component {
 			content = <div className="my-4 main-grid">{POSTS}</div>;
 		}
 
-		if(currentPage > pages || currentPage < 1) {
-			content = (<NotFound />)
+		if (currentPage > pages || currentPage < 1) {
+			content = <NotFound />;
 		}
 
 		return (
@@ -116,6 +137,8 @@ class Landing extends Component {
 				<Helmet>
 					<title>Cachadas.com</title>
 				</Helmet>
+
+				<SearchBar currentPage={currentPage} onSearch={this.onSearch} setQuery={this.setQuery}/>
 
 				<div className={`pagination-top mt-2 ${isLoading ? 'd-none' : 'd-flex justify-content-center'}`}>
 					<Pagination

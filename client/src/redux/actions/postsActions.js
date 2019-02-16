@@ -3,9 +3,10 @@ import axios from 'axios'
 import { MY_POSTS, GET_SINGLE_POST, GET_ERRORS, POSTS_PER_PAGE } from './types'
 
 //Load Posts per page 
-export const loadAllPosts = (page) => dispatch => {
+export const loadAllPosts = (page, query, category) => dispatch => {
+
   axios
-    .get('/api/post/?page=' + page)
+    .get(`/api/post/?page=${page}&search=${query || 'none'}&category=${category}`)
     .then(res => {
       dispatch({
         type: POSTS_PER_PAGE,
