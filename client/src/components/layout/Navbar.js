@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import './layout.css'
 
 //Router
 import { NavLink } from 'react-router-dom';
@@ -10,7 +9,6 @@ import { logoutUser } from '../../redux/actions/authActions';
 
 //component
 import Avatar from './Avatar'
-import SearchBar from '../landing/SearchBar';
 class Navbar extends Component {
 
 	onLogoutClick = e => {

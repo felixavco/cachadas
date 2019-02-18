@@ -12,33 +12,52 @@ exports.AllPostsController = async (req, res) => {
 	const { errors } = req;
 
 	try {
+		const escapeRegex = (text) => text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 		const PAGE = req.query.page || 1;
 		const SEARCH = req.query.search;
 		const CATEGORY = req.query.category;
 		const PER_PAGE = 6;
-		const TOTAL_ITEMS = await Post.countDocuments();
+		let TOTAL_ITEMS;
 		const regex = new RegExp(escapeRegex(SEARCH), 'gi');
 
 		let pagePosts;
 
 		if (SEARCH === 'none' && CATEGORY === 'none') {
-      pagePosts = await Post.find({}).skip(PER_PAGE * PAGE - PER_PAGE).limit(PER_PAGE);
-      
-		} else if (SEARCH === 'none' && CATEGORY !== 'none') {
-      pagePosts = await Post.find({ category: CATEGORY }).skip(PER_PAGE * PAGE - PER_PAGE).limit(PER_PAGE);
-      
-		} else if (SEARCH !== 'none' && CATEGORY === 'none') {
-			pagePosts = await Post.find({ $or: [ { title: regex }, { description: regex } ] })
-				.skip(PER_PAGE * PAGE - PER_PAGE)
-        .limit(PER_PAGE);
-        
-		} else {
-			pagePosts = await Post.find({ category: CATEGORY }, { $or: [ { title: regex }, { description: regex } ] })
+			pagePosts = await 
+				Post.find({})
+				.sort({"posted_date": -1})
 				.skip(PER_PAGE * PAGE - PER_PAGE)
 				.limit(PER_PAGE);
+			TOTAL_ITEMS = await Post.countDocuments();
+
+		} else if (SEARCH === 'none' && CATEGORY !== 'none') {
+			pagePosts = await 
+				Post.find({ category: CATEGORY })
+				.sort({"posted_date": -1})
+				.skip(PER_PAGE * PAGE - PER_PAGE)
+				.limit(PER_PAGE);
+			TOTAL_ITEMS = await Post.find({ category: CATEGORY }).countDocuments();
+
+		} else if (SEARCH !== 'none' && CATEGORY === 'none') {
+			pagePosts = await 
+				Post.find({ $or: [ { title: regex }, { description: regex } ] })
+				.sort({"posted_date": -1})
+				.skip(PER_PAGE * PAGE - PER_PAGE)
+				.limit(PER_PAGE);
+			TOTAL_ITEMS = await Post.find({ $or: [ { title: regex }, { description: regex } ] }).countDocuments();
+
+		} else {
+			pagePosts = await 
+				Post.find({ category: CATEGORY }, { $or: [ { title: regex }, { description: regex } ] })
+				.sort({"posted_date": -1})
+				.skip(PER_PAGE * PAGE - PER_PAGE)
+				.limit(PER_PAGE);
+
+			TOTAL_ITEMS = await 
+				Post.find({ category: CATEGORY },{ $or: [ { title: regex }, { description: regex } ] })
+				.countDocuments();
 		}
 
-    
 		if (!pagePosts) {
 			errors.posts = 'No Posts found';
 			return res.status(403).json(errors);
@@ -46,12 +65,9 @@ exports.AllPostsController = async (req, res) => {
 
 		res.status(200).json({
 			posts: pagePosts,
-			total_Items: TOTAL_ITEMS
+			total_Items: TOTAL_ITEMS,
 		});
-
-		function escapeRegex(text) {
-			return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-		}
+		
 	} catch (err) {
 		res.status(500).json({ Error: `${err}` });
 	}

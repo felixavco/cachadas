@@ -3,7 +3,6 @@ import Helmet from 'react-helmet';
 import SingleAdCard from './SingleAdCard';
 import Pagination from './Pagination';
 import Spinner from '../commons/Spinner';
-import NotFound from '../commons/NotFound';
 import PropTypes from 'prop-types';
 import emptyImage from '../../img/empty-image.png';
 import queryString from 'query-string';
@@ -60,22 +59,27 @@ class Landing extends Component {
 		this.setState({
 			search: query.search,
 			category: query.category
-		})
-	}
+		});
+	};
 
 	onSearch = () => {
 		const { currentPage, search, category } = this.state;
 		this.props.loadAllPosts(currentPage, search, category);
-	}
+	};
 
 	numOfPages = (items) => {
 		const { perPage } = this.state;
 
-		if (items % perPage === 0) {
-			this.setState({ pages: items / perPage });
+		if (items > 6) {
+			console.log(items);
+			if (items % perPage === 0) {
+				this.setState({ pages: items / perPage });
+			} else {
+				const x = Math.trunc(items / perPage);
+				this.setState({ pages: x + 1 });
+			}
 		} else {
-			const x = Math.trunc(items / perPage);
-			this.setState({ pages: x + 1 });
+			this.setState({ pages: 1 });
 		}
 	};
 
@@ -114,7 +118,13 @@ class Landing extends Component {
 		let content;
 
 		let POSTS = posts.map((post) => (
-			<SingleAdCard key={post._id} title={post.title} image={post.images[0] || emptyImage} price={post.price} />
+			<SingleAdCard
+				key={post._id}
+				id={post._id}
+				title={post.title}
+				image={post.images[0] || emptyImage}
+				price={post.price}
+			/>
 		));
 
 		if (isLoading) {
@@ -129,7 +139,12 @@ class Landing extends Component {
 		}
 
 		if (currentPage > pages || currentPage < 1) {
-			content = <NotFound />;
+			content = (
+				<div className="my-5">
+					<h3 className="text-center display-4">Loading....</h3>
+					<Spinner />
+				</div>
+			);
 		}
 
 		return (
@@ -138,7 +153,7 @@ class Landing extends Component {
 					<title>Cachadas.com</title>
 				</Helmet>
 
-				<SearchBar currentPage={currentPage} onSearch={this.onSearch} setQuery={this.setQuery}/>
+				<SearchBar currentPage={currentPage} onSearch={this.onSearch} setQuery={this.setQuery} />
 
 				<div className={`pagination-top mt-2 ${isLoading ? 'd-none' : 'd-flex justify-content-center'}`}>
 					<Pagination

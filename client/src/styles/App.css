@@ -1,10 +1,90 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
 p, h5, h6, h3 {
   font-family: 'Roboto', sans-serif; }
 
 .container {
   max-width: 1500px;
   width: 90%; }
+
+.avatar-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%; }
+
+footer nav ul {
+  list-style-type: none; }
+  footer nav ul li a {
+    color: snow; }
+
+footer nav .footer-nav li {
+  padding-bottom: 0.5rem;
+  font-size: 1.2rem; }
+  footer nav .footer-nav li a {
+    border-bottom: 2px solid transparent;
+    -webkit-transition: all 250ms linear;
+    -o-transition: all 250ms linear;
+    transition: all 250ms linear;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    color: snow; }
+    footer nav .footer-nav li a:hover {
+      border-bottom: 2px solid snow;
+      font-weight: 600; }
+
+footer .social-nav {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  footer .social-nav .footer-social {
+    max-width: 350px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+    footer .social-nav .footer-social li {
+      margin: 0 1rem;
+      height: 45px;
+      width: 45px;
+      border-radius: 50%;
+      background-color: #1a5ac7;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-shadow: 1px 1px #333;
+      box-shadow: 1px 1px #333;
+      -webkit-transition: all 250ms linear;
+      -o-transition: all 250ms linear;
+      transition: all 250ms linear; }
+      footer .social-nav .footer-social li a {
+        margin: 0;
+        padding: 0;
+        font-size: 1.5rem;
+        -webkit-transition: all 250ms linear;
+        -o-transition: all 250ms linear;
+        transition: all 250ms linear; }
+      footer .social-nav .footer-social li:hover {
+        -webkit-box-shadow: 0px 0px #333;
+        box-shadow: 0px 0px #333; }
+        footer .social-nav .footer-social li:hover a {
+          color: snow;
+          font-size: 1.6rem; }
+
+footer .footer-bottom {
+  background: #1a5ac7; }
+  footer .footer-bottom h5 {
+    margin: 0;
+    color: snow;
+    font-family: 'Montserrat', sans-serif; }
 
 .grid {
   display: -ms-grid;
