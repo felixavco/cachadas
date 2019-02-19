@@ -10,18 +10,18 @@ const Footer = () => {
 						<nav>
 							<ul className="footer-nav">
 								<li>
-									<Link to="/contact">
+									<Link to="/contact-us">
 										<i className="far fa-envelope"/>&nbsp;Contact Us  
 									</Link>
 								</li>
 								<li>
-									<Link to="/contact">
+									<Link to="/about-us">
 									<i class="far fa-question-circle"/>&nbsp;About Us  
 									</Link>
 								</li>
 								<li>
-									<Link to="/contact">
-										<i className="far fa-envelope"/>&nbsp;Contact Us  
+									<Link to="/report-problem">
+										<i className="fas fa-tools"/>&nbsp;Report a problem
 									</Link>
 								</li>
 							</ul>

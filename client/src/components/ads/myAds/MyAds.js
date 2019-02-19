@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ProfileTemplate from '../../profile/ProfileTemplate';
 import PropTypes from 'prop-types'
 import emptyImage  from  '../../../img/empty-image.png';
+import Helment from 'react-helmet';
 
 //Components
 import Spinner from '../../commons/Spinner';
@@ -87,6 +88,9 @@ class MyAds extends Component {
 
 		return (
 			<ProfileTemplate>
+				<Helment>
+					<title>My Ads</title>
+				</Helment>
 				<div className="my-ads">
 					<h1 className="display-4 text-center">My Ads</h1>
 					<hr />

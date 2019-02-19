@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 //Redux 
 import { Provider } from 'react-redux'
 import store from './redux/store'
-import { setCurrentUser, logoutUser } from './redux/actions/authActions'
+import { setCurrentUser, logoutUser, clearCurrentProfile } from './redux/actions/authActions'
 
 //Components 
 //Private Route component
@@ -32,6 +32,8 @@ import ResetPasswordForm from './components/auth/ResetPasswordForm';
 import SingleAd from './components/ads/singleAd/SingleAd';
 import EditAd from './components/ads/editAd/EditAd';
 import ContactForm from './components/contactForm/ContactForm';
+import About from './components/contactForm/About';
+import ReportProblem from './components/contactForm/ReportProblem';
 
 
 
@@ -51,7 +53,6 @@ if(localStorage.jwtToken) {
     //Logout the user 
     store.dispatch(logoutUser())
     // Clear current profile 
-    //*****TODO */
     // store.dispatch(clearCurrentProfile())
     //Redirect to login
     window.location.href = '/login'
@@ -74,6 +75,8 @@ class App extends Component {
               <Route exact path="/reset-password/:token" component={ResetPasswordForm} />
               <Route exact path="/post/:postId" component={SingleAd} />
               <Route exact path="/contact-us" component={ContactForm} />
+              <Route exact path="/report-problem" component={ReportProblem} />
+              <Route exact path="/about-us" component={About} />
 
               {/* Private Routes */}
               <Switch>

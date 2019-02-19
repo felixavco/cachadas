@@ -25,7 +25,7 @@ class Navbar extends Component {
 				<Fragment>
 					<li className="nav-item">
 						<NavLink activeClassName="active" className="nav-link" to="/login">
-							Login
+							Login <i className="fas fa-sign-in-alt"/> 
 						</NavLink>
 					</li>
 				</Fragment>

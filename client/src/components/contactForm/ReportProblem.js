@@ -2,11 +2,13 @@ import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha';
 import keys from '../../keys/keys';
+import { problem_descriptions } from '../ads/List_Items/ListsItems';
 import Helment from 'react-helmet';
 
 //Components
 import TextFieldGroup from '../commons/TextFieldGroup';
 import TextAreaFieldGroup from '../commons/TextAreaFieldGroup';
+import SelectListGroup from '../commons/SelectListGroup';
 import Spinner from '../commons/Spinner';
 
 class ContactForm extends Component {
@@ -17,9 +19,8 @@ class ContactForm extends Component {
 			isDisabled: true,
 			isHuman: false,
 			isSending: false,
-			name: '',
-			email: '',
 			subject: '',
+			category: '',
 			message: '',
 			errors: {}
 		};
@@ -42,9 +43,9 @@ class ContactForm extends Component {
 	};
 
 	onValidation = () => {
-		const { name, email, subject, message } = this.state;
+		const { category, subject, message } = this.state;
 
-		if (name !== '' && email !== '' && subject !== '' && message !== '') {
+		if ( category !== '' && subject !== '' && message !== '') {
 			this.setState({ isDisabled: false });
 		} else {
 			this.setState({ isDisabled: true });
@@ -54,20 +55,19 @@ class ContactForm extends Component {
 	onSubmit = (e) => {
 		e.preventDefault();
 
-		const { name, email, subject, message } = this.state;
-		const data = { name, email, subject, message };
+		const { category, subject, message } = this.state;
+		const data = { category, subject, message };
 
 		this.setState({
 			isSending: true
 		});
 
 		axios
-			.post('/api/admin/contact', data)
+			.post('/api/admin/report-problem', data)
 			.then((res) => {
 				this.setState({
 					isDisabled: true,
-					name: '',
-					email: '',
+					category: '',
 					subject: '',
 					message: '',
 					isSending: false
@@ -81,7 +81,7 @@ class ContactForm extends Component {
 	};
 
 	render() {
-		const { name, email, subject, message, errors, isDisabled, isHuman, isSending } = this.state;
+		const { category, subject, message, errors, isDisabled, isHuman, isSending } = this.state;
 
 		let sendBtn;
 
@@ -104,30 +104,13 @@ class ContactForm extends Component {
 		if (!isSending) {
 			content = (
 				<Fragment>
-					<Helment>
-						<title>Contact Us</title>
-					</Helment>
-					<div className="row">
-						<div className="col-md-6 col-12">
-							<TextFieldGroup
-								placeholder="* Name"
-								name="name"
-								value={name}
-								onChange={this.onChange}
-								error={errors.name}
-							/>
-						</div>
-						<div className="col-md-6 col-12">
-							<TextFieldGroup
-								placeholder="* Email"
-								name="email"
-								type="email"
-								value={email}
-								onChange={this.onChange}
-								error={errors.email}
-							/>
-						</div>
-					</div>
+
+					<SelectListGroup
+						name="category"
+						value={category}
+						onChange={this.onChange}
+						options={problem_descriptions}
+					/>
 
 					<TextFieldGroup
 						placeholder="* Subject"
@@ -161,7 +144,10 @@ class ContactForm extends Component {
 
 		return (
 			<form className="p-5 custom-form" onSubmit={this.onSubmit}>
-				<h1 className="display-4 text-center mb-1">Contact Us</h1>
+				<Helment>
+					<title>Report a Problem</title>
+				</Helment>
+				<h1 className="display-4 text-center mb-1">Report a problem</h1>
 				<div className="d-flex justify-content-center">
 					<small className="mb-3">* All fields are required</small>
 				</div>

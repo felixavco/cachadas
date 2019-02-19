@@ -89,7 +89,7 @@ class Register extends Component {
 						<h2 className="display-4 mt-3 text-center">Sing Up</h2>
 						<p className="lead text-center">Create your account</p>
 						<div className="d-flex justify-content-center mb-2"><small>All fields are required</small></div>
-						<form noValidate onSubmit={this.onSubmit}>
+						<form className="custom-form " noValidate onSubmit={this.onSubmit}>
 							<div className="row">
 								<div className="col-lg-4 col-12">
 									<TextFieldGroup

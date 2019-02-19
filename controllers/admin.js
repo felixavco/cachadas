@@ -1,7 +1,7 @@
 //Load User model
 const User = require('../models/User');
 
-const messageContactForm = require('../nodeMailer/gmailSMTP')
+const {messageContactForm, reportProblem} = require('../nodeMailer/gmailSMTP')
 
 //@route  /api/admin/all-users
 //@method GET
@@ -46,6 +46,29 @@ exports.ContactFormController = async(req, res) => {
     }
 
     res.status(200).json(data);
+
+  } catch (err) {
+    errors.error = err;
+    res.status(500).json(errors);
+  }
+
+}
+
+//@route  /api/admin/report-problem
+//@method POST
+//@access public
+//@desc   Send message from a contact form 
+exports.ReportProblemController = async(req, res) => {
+
+  const { errors } = req;
+
+  try {
+    const { category, subject, message } = req.body;
+    const msg = { category, subject, message };
+
+    await reportProblem(msg);
+
+    res.status(200).json({msg: "OK"});
 
   } catch (err) {
     errors.error = err;

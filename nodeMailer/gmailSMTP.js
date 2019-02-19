@@ -11,7 +11,7 @@ const trasnporter = nodeMailer.createTransport({
   }
 })
 
-const messageContactForm = (data) => {
+exports.messageContactForm = (data) => {
   const template = `
     <h3>Message from ${ data.name }</h3>
     <p>${ data.message }</p>
@@ -27,5 +27,20 @@ const messageContactForm = (data) => {
   return trasnporter.sendMail(email);
 }
 
-module.exports = messageContactForm;
+exports.reportProblem = (data) => {
+  const template = `
+    <h3>Category: ${ data.category }</h3>
+    <p>${ data.message }</p>
+  `;
+
+  const email = {
+    to: 'felizavco@gmail.com', 
+    from: 'reports@no-reply.xilews.com', 
+    subject: `[Problem Report] ${ data.subject }`, 
+    html: template
+  }
+
+  return trasnporter.sendMail(email);
+}
+
 

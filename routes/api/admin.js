@@ -7,11 +7,12 @@ const protected = passport.authenticate('jwt', { session: false })
 
 //Validation
 const validateContactForm = require('../../validation/contactForm');
+const validateReportProblem = require('../../validation/reportProblem');
 
 //Controllers
 const allUsersController = require('../../controllers/admin').AllUsersController
 const contactFormController = require('../../controllers/admin').ContactFormController
-
+const reportProblemController = require('../../controllers/admin').ReportProblemController
 
 //Authentication 
 const isAdmin = require('../../authorization/isAdmin')
@@ -35,6 +36,16 @@ router.post(
   '/contact',
   validateContactForm,
   contactFormController
+)
+
+//@route  /api/admin/report-problem
+//@method POST
+//@access public
+//@desc   Send message from a contact form 
+router.post(
+  '/report-problem',
+  validateReportProblem,
+  reportProblemController
 )
 
 module.exports = router 

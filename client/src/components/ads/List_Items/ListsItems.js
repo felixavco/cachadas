@@ -10,6 +10,13 @@ export const categories = [
   { label: 'Other', value: 'other' }
 ];
 
+export const problem_descriptions = [
+  { label: '* Select a category', value: "none" },
+  { label: 'Account Verification', value: "Account-Verification" },
+  { label: 'Interface Issues', value: "Interface" },
+  { label: 'Other', value: "Other" },
+];
+
 export const carMaker = [
   {label: '* Select Make', value: ''},
   { label: 'Acura', value: 'Acura' },

@@ -57,7 +57,7 @@ class Login extends Component {
        <div className="row">
         <div className="col-md-6 m-auto">
           <h2 className="display-4 mt-3 text-center">{pageTitle}</h2>
-          <form noValidate onSubmit={this.onSubmit}>
+          <form className="custom-form " noValidate onSubmit={this.onSubmit}>
     
             <TextFieldGroup
               placeholder="Email"
