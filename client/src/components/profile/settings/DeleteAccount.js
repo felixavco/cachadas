@@ -75,9 +75,15 @@ class DeleteAccount extends Component {
 							</div>
 							<div className="modal-body">
                 <form className="custom-form mx-auto w-75">
-
+                <small>
+                  <strong>
+                    <i class="fas fa-exclamation-triangle"/>&nbsp;
+                    IMPORTANT:
+                  </strong> 
+                  This acction cannot be undone! All your posts will be deleted.
+                </small>
                 <TextFieldGroup
-                  placeholder="Enter your current password"
+                  placeholder="Enter your password"
                   name="password"
                   type="password"
                   value={password}

@@ -1,7 +1,7 @@
 const nodeMailer = require('nodemailer');
 const { SMTP_USER, SMTP_PWD, SMTP_SERVER } = require('../config/keys');
 
-const trasnporter = nodeMailer.createTransport({
+const transporter = nodeMailer.createTransport({
   host: SMTP_SERVER,
   port: 465,
   secure: true,
@@ -24,7 +24,7 @@ exports.messageContactForm = (data) => {
     html: template
   }
 
-  return trasnporter.sendMail(email);
+  return transporter.sendMail(email);
 }
 
 exports.reportProblem = (data) => {
@@ -40,7 +40,9 @@ exports.reportProblem = (data) => {
     html: template
   }
 
-  return trasnporter.sendMail(email);
+  return transporter.sendMail(email);
 }
+
+
 
 

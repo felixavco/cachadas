@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Helment from 'react-helmet';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 
 //Router 
@@ -186,6 +187,11 @@ class CreateAd extends Component {
 		})
 	}
 
+	onResend = e => {
+		e.preventDefault();
+		axios('/api/user/send-verification');
+	}
+
 	onSubmit = e => {
 		e.preventDefault()
 		
@@ -277,11 +283,19 @@ class CreateAd extends Component {
 				errors 
 		} = this.state;
 
-		return (
-			<ProfileTemplate>
-				<Helment>
-					<title>Create Ad</title>
-				</Helment>
+		let content; 
+		const { isVerified, email } = this.props.auth.user;
+		if(!isVerified) {
+			content = (
+				<div className="pt-5">
+					<h5 className="mt-5 pt-5 text-center text-danger">
+						<span className="text-warning"><i class="fas fa-exclamation-triangle" /></span>	Verification Pending
+					</h5>
+					<p className="text-center">We sent a verification email to {email}, if your token has expired click <strong><a href="#" onClick={this.onResend}>HERE</a></strong> to receive a new verification email </p>
+				</div>
+			)
+		} else {
+			content = (
 				<div className="create-ad">
 					<div className="row">
 						<div className="col-md-10 col-12 m-auto">
@@ -376,6 +390,15 @@ class CreateAd extends Component {
 						</div>
 					</div>
 				</div>
+			)
+		}
+
+		return (
+			<ProfileTemplate>
+				<Helment>
+					<title>Create Ad</title>
+				</Helment>
+				{content}
 			</ProfileTemplate>
 		);
 	}

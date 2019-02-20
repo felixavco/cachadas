@@ -10,7 +10,7 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 
 //SendGrid NodeMailer
-const resetPasswordEmail = require('../nodeMailer/sendGrid');
+const {resetPasswordEmail, sendVerificationToken} = require('../nodeMailer/sendGrid');
 
 //@route  /api/user/register
 //@method POST
@@ -27,8 +27,27 @@ exports.RegisterController = async (req, res) => {
 			errors.email = 'El correo ya esta registrado';
 			return res.status(409).json(errors);
 		} else {
+
+			//Create a random Token
+			const verificationToken = await crypto.randomBytes(32).toString('hex');
+			
+			const expVerificationToken = Date.now() + 3600000; // Token will expire in an Hour
+
+			console.log(verificationToken)
+
 			//If address does not exist, register the user
-			const newUser = new User({ ...req.body });
+			const { firstName, lastName, email, password } = req.body;
+
+			const newUser = new User({
+				firstName, 
+				lastName, 
+				email, 
+				password, 
+				verificationToken,
+				expVerificationToken
+			});
+
+			const messageData = { firstName, email, token: verificationToken }
 
 			// Encrypt the password before save it in the DB
 			bcrypt.genSalt(10, (err, salt) => {
@@ -38,6 +57,9 @@ exports.RegisterController = async (req, res) => {
 						newUser.password = hash;
 						//register the user in the Database
 						await newUser.save();
+						
+						await sendVerificationToken(messageData);
+
 						res.status(201).json({ msg: 'OK' });
 					} catch (error) {
 						res.status(500).json({ error: `User registration failed see ${error}` });
@@ -45,18 +67,71 @@ exports.RegisterController = async (req, res) => {
 				});
 			});
 		}
-	} catch (error) {
-		res.status(503).json({ error: 'Error al registrar el usuario' });
+	} catch (err) {
+		res.status(503).json({ error: err.toString() });
 	}
 };
+
+//@route  /api/user/account-verification/:token
+//@method GET
+//@access Public
+//@desc   Verifies the user account
+exports.VerificationController = async (req, res) => {
+	try {
+		const { token } = req.params;
+		
+		const user = await User.findOne({
+			verificationToken: token,
+			expVerificationToken: { $gt: Date.now() } //checks if the token is expired
+		});
+
+		if(!user) return res.status(401).json({error: "Invalid token or token expired"});
+
+		await User.findByIdAndUpdate(user._id, {isVerified: true});
+		
+		res.status(200).json({msg: "OK"});
+		
+	} catch (err) {
+		res.status(401).json({error: err.toString()});
+	}
+}
+
+//@route  /api/user/send-verification
+//@method GET
+//@access Protected
+//@desc   Sends a new verification email 
+exports.SendVerificationController = async (req, res) => {
+	try {
+		const { _id } = req.user;
+
+		//Create a new Token and new expiration 
+		const newToken = await crypto.randomBytes(32).toString('hex');
+		const newExpToken = Date.now() + 3600000; // Token will expire in an Hour
+		const updatedTokenInfo = {
+			verificationToken: newToken,
+			expVerificationToken: newExpToken
+		}
+
+		const user = await User.findByIdAndUpdate(_id, updatedTokenInfo, { new: true });
+
+		const { firstName, email,verificationToken} = user;
+
+		const messageData = { firstName, email, token: verificationToken }
+
+		await sendVerificationToken(messageData);
+
+		res.status(200).json({msg: "OK"});
+
+	} catch (err) {
+		res.status(500).json({error: err.toString()});
+	}
+}
 
 //@route  /api/user/login
 //@method POST
 //@access Public
 //@desc   Login user and returning Token
 exports.LoginController = async (req, res) => {
-	const { errors } = req;
-
 	try {
 		const { email: r_email, password } = req.body;
 
@@ -68,38 +143,28 @@ exports.LoginController = async (req, res) => {
 			return res.status(404).json(errors);
 		}
 
-		/*
-      If the user was registered using Google OAuth, the password is equals the Google ID, 
-      if this is FALSE so the user needs to access with his password, ELSE the user has not register a password and needs to login using Golgle OAuth.
-    */
-		if (user.password != user.GoogleId) {
-			const isMatch = await bcrypt.compare(password, user.password);
+		const isMatch = await bcrypt.compare(password, user.password);
 
 			if (!isMatch) {
 				errors.password = 'Contraseña incorrecta';
 				return res.status(401).json(errors);
 			}
 
-			const { id, firstName, lastName, email, role, avatar, phone, public_email } = user;
+			const { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified } = user;
 
-			const payload = { id, firstName, lastName, email, role, avatar, phone, public_email };
+			const payload = { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified };
 
-			jwt.sign(payload, secretOrKey, { expiresIn: '7d' }, (err, token) => {
+			jwt.sign(payload, secretOrKey, { expiresIn: '1d' }, (err, token) => {
 				res.status(200).json({
 					succsess: true,
 					token: `Bearer ${token}`
 				});
 			});
-		} else {
-			errors.password = 'Use Google OAuth';
-			res.json(errors); //REMOVE LATER
-		}
-	} catch (error) {
-		console.error(error);
-		res.status(500).json(error);
+
+	} catch (err) {
+		res.status(500).json({error: err.toString()});
 	}
 };
-
 
 //@route  /api/user/profile
 //@method POST
@@ -171,6 +236,7 @@ exports.ChangePasswordController = async (req, res) => {
 				}
 			});
 		});
+		
 	} catch (err) {
 		errors.error = err;
 		res.status(500).json(errors);
@@ -198,12 +264,8 @@ exports.ResetPasswordController = async (req, res) => {
 		let token;
 
 		crypto.randomBytes(32, async (err, buffer) => {
-			if (err) {
-				console.log(err);
-				errors.error = err;
-				res.status(500).json(errors);
-			}
-
+			if (err) throw err;
+			
 			token = buffer.toString('hex');
 			user.resetToken = token;
 			user.expResToken = Date.now() + 3600000; // Token will expire in an Hour
@@ -240,19 +302,18 @@ exports.ResetPasswordControllerPut = async (req, res) => {
 		bcrypt.genSalt(10, (err, salt) => {
 			bcrypt.hash(password, salt, async (err, hash) => {
 				try {
-					if(err) throw err
-					user.password = hash
-					user.resetToken = null,
-					user.expResToken = null
-					
-					await user.save()
+					if (err) throw err;
+					user.password = hash;
+					(user.resetToken = null), (user.expResToken = null);
+
+					await user.save();
 					res.status(201).json({ msg: 'Password Updated!' });
 				} catch (err) {
 					errors.error = err;
 					res.status(500).json(errors);
 				}
-			})
-		})
+			});
+		});
 	} catch (err) {
 		errors.error = err;
 		res.status(500).json(errors);
@@ -264,7 +325,6 @@ exports.ResetPasswordControllerPut = async (req, res) => {
 //@access Protected
 //@desc   Delete user account
 exports.DeleteAccountController = async (req, res) => {
-	
 	const { errors } = req;
 
 	try {
@@ -278,20 +338,20 @@ exports.DeleteAccountController = async (req, res) => {
 			return res.status(401).json(errors);
 		}
 
-		const userPosts = await Post.find({owner: _id})
+		const userPosts = await Post.find({ owner: _id });
 
-		if(userPosts.length > 0) {
+		if (userPosts.length > 0) {
 			//Merges the images path into a single Array
-			const imagesURLs = [].concat.apply([], userPosts.map(post => post.images));
+			const imagesURLs = [].concat.apply([], userPosts.map((post) => post.images));
 			//Deletes images asociated to each post
 			try {
-				await imagesURLs.forEach(image => fs.unlinkSync(image))
-			 } catch (err) {
-				 errors.error = err;
-				 res.status(500).json(errors);
-			 }
+				await imagesURLs.forEach((image) => fs.unlinkSync(image));
+				await Post.deleteMany({ owner: _id });
+			} catch (err) {
+				errors.error = err;
+				res.status(500).json(errors);
+			}
 		}
-
 
 		const isMatch = await bcrypt.compare(currentPassword, password);
 
@@ -300,14 +360,13 @@ exports.DeleteAccountController = async (req, res) => {
 			return res.status(401).json(errors);
 		}
 
-		if(user.avatar !== "avatars/default.jpg"){
-			fs.unlink(user.avatar, () => {})
+		if (user.avatar !== 'avatars/default.jpg') {
+			fs.unlink(user.avatar, () => {});
 		}
 
 		//If Password is correct, proceed to delete user
 		await user.remove();
 		res.status(200).json({ msg: 'User Deleted!' });
-		
 	} catch (err) {
 		errors.error = err;
 		res.status(500).json(errors);

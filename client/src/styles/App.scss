@@ -9,6 +9,11 @@ p, h5, h6, h3{
   width: 90%
 }
 
+.main-cont {
+  margin-top: 80px;
+  min-height: 65vh;
+}
+
 @import '../components/layout/layout.scss';
 @import '../components/ads/ads.scss';
 @import '../components/landing/landing.scss';

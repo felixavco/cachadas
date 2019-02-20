@@ -27,7 +27,7 @@ const Avatar = props => {
 					Settings  &nbsp; <i className="fas fa-cog"/>
 				</Link>
         <span className="dropdown-item" onClick={props.onClick} style={{cursor: 'pointer'}}>
-					Logout &nbsp; <i className="fas fa-sign-out-alt"/>
+				Sign out &nbsp; <i className="fas fa-sign-out-alt"/>
 				</span>
 			</div>
 		</li>

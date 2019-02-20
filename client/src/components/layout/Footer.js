@@ -16,7 +16,7 @@ const Footer = () => {
 								</li>
 								<li>
 									<Link to="/about-us">
-									<i class="far fa-question-circle"/>&nbsp;About Us  
+									<i className="far fa-question-circle"/>&nbsp;About Us  
 									</Link>
 								</li>
 								<li>
@@ -31,13 +31,13 @@ const Footer = () => {
 						<nav className="social-nav">
 							<ul className="footer-social">
 								<li>
-									<a href="#"><i class="fab fa-facebook-square"/></a>
+									<a href="#"><i className="fab fa-facebook-square"/></a>
 								</li>
 								<li>
-									<a href="#"><i class="fab fa-twitter"/></a>
+									<a href="#"><i className="fab fa-twitter"/></a>
 								</li>
 								<li>
-									<a href="#"><i class="fab fa-instagram"/></a>
+									<a href="#"><i className="fab fa-instagram"/></a>
 								</li>
 							</ul>
 						</nav>

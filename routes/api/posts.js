@@ -13,12 +13,14 @@ const validateSinglePost = require('../../validation/singlePost')
 const validateEditPost = require('../../validation/editPost')
 
 //Controllers 
-const createPostController = require('../../controllers/posts').CreatePostController
-const editPostController = require('../../controllers/posts').EditPostController
-const myAdsController = require('../../controllers/posts').MyAdsController
-const deletePostController = require('../../controllers/posts').DeletePostController
-const singlePostController = require('../../controllers/posts').SinglePostController
-const allPostsController = require('../../controllers/posts').AllPostsController
+const {
+  CreatePostController,
+  EditPostController,
+  MyAdsController,
+  DeletePostController,
+  SinglePostController,
+  AllPostsController,
+} = require('../../controllers/posts')
 
 //Multer
 const storage = multer.diskStorage({
@@ -46,7 +48,7 @@ const fileFilter = (req, file, cb) => {
 //@desc   returns a list of all posts (ads)
 router.get(
   '/', 
-  allPostsController
+  AllPostsController
 )
 
 //@route  /api/post/single
@@ -56,7 +58,7 @@ router.get(
 router.post(
   '/single',
   validateSinglePost, 
-  singlePostController
+  SinglePostController
 )
 
 //@route  /api/post/edit
@@ -68,7 +70,7 @@ router.post(
   protected,
   multer({ storage, fileFilter }).array('images', 10), 
   validateEditPost,
-  editPostController
+  EditPostController
 )
 
 
@@ -81,7 +83,7 @@ router.post(
     protected,
     multer({ storage, fileFilter }).array('images', 10), 
     validateCreatePost,
-    createPostController
+    CreatePostController
 )
 
 //@route  /api/post/my-ads
@@ -91,7 +93,7 @@ router.post(
 router.get(
   '/my-ads',
   protected,
-  myAdsController
+  MyAdsController
 )
 
 //@route  /api/post/delete
@@ -102,7 +104,7 @@ router.post(
   '/delete',
   protected,
   validateDeletePost,
-  deletePostController
+  DeletePostController
 )
 
 

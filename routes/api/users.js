@@ -15,13 +15,17 @@ const validateResetPasswordPut = require('../../validation/resetPasswordPut')
 const validateDeleteAccount = require('../../validation/deleteAccount')
 
 //Controllers 
-const registerController = require('../../controllers/users').RegisterController
-const loginController = require('../../controllers/users').LoginController
-const updateUserProfile = require('../../controllers/users').UpdateUserProfile
-const changePasswordController = require('../../controllers/users').ChangePasswordController
-const resetPasswordController = require('../../controllers/users').ResetPasswordController
-const resetPasswordControllerPut = require('../../controllers/users').ResetPasswordControllerPut
-const deleteAccountController = require('../../controllers/users').DeleteAccountController
+const {
+	RegisterController,
+	VerificationController,
+	LoginController,
+	UpdateUserProfile,
+	ChangePasswordController,
+	ResetPasswordController,
+	ResetPasswordControllerPut,
+	DeleteAccountController,
+	SendVerificationController
+} = require('../../controllers/users')
 
 //Multer 
 const multer = require('multer')
@@ -53,7 +57,7 @@ const fileFilter = (req, file, cb) => {
 router.post(
 	'/register', 
 	validateRegisterInput,
-	registerController
+	RegisterController
 )
 
 //@route  /api/user/login
@@ -63,7 +67,26 @@ router.post(
 router.post(
 	'/login', 
 	validateLoginInput,
-	loginController
+	LoginController
+)
+
+//@route  /api/user/account-verification/:token
+//@method GET
+//@access Public
+//@desc   Verifies the user account
+router.get(
+	'/account-verification/:token', 
+	VerificationController
+)
+
+//@route  /api/user/send-verification
+//@method GET
+//@access Protected
+//@desc   Sends a new verification email 
+router.get(
+	'/send-verification', 
+	protected,
+	SendVerificationController
 )
 
 //@route  /api/user/profile
@@ -75,7 +98,7 @@ router.post(
 	protected, 
 	multer({ storage, fileFilter }).single('avatar'),
 	validateProfileUpdate, 
-	updateUserProfile
+	UpdateUserProfile
 )
 
 //@route  /api/user/change-password
@@ -86,7 +109,7 @@ router.post(
 	'/change-password', 
 	protected, 
 	validateChangePassword, 
-	changePasswordController
+	ChangePasswordController
 )
 
 //@route  /api/user/reset-password
@@ -96,7 +119,7 @@ router.post(
 router.post(
 	'/reset-password', 
 	validateResetPassword, 
-	resetPasswordController
+	ResetPasswordController
 )
 
 //@route  /api/user/reset-password
@@ -106,7 +129,7 @@ router.post(
 router.put(
 	'/reset-password', 
 	validateResetPasswordPut, 
-	resetPasswordControllerPut
+	ResetPasswordControllerPut
 )
 
 //@route  /api/user/delete
@@ -117,7 +140,7 @@ router.post(
 	'/delete', 
 	protected,
 	validateDeleteAccount,
-	deleteAccountController
+	DeleteAccountController
 )
 
 module.exports = router

@@ -105,6 +105,13 @@ class ChangePassword extends Component {
             Change Password
           </button>
         </div>
+				<small>
+					<strong>
+						<i class="fas fa-exclamation-triangle"/>&nbsp;
+						Note:
+					</strong> 
+					You will be automatically sign out! after changing your password
+				</small>
 			</form>
 		)
 	}

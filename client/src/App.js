@@ -20,6 +20,7 @@ import NotFound from './components/commons/NotFound'
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Login from './components/auth/Login'
+import VerifyAccount from './components/auth/VerifyAccount'
 import Register from './components/auth/Register'
 import Landing from './components/landing/Landing'
 import Profile from './components/profile/Profile'
@@ -77,6 +78,7 @@ class App extends Component {
               <Route exact path="/contact-us" component={ContactForm} />
               <Route exact path="/report-problem" component={ReportProblem} />
               <Route exact path="/about-us" component={About} />
+              <Route exact path="/account-verification/:token" component={VerifyAccount}/>
 
               {/* Private Routes */}
               <Switch>
@@ -100,7 +102,7 @@ class App extends Component {
 
               {/* Not Found */}
               <Route exact path="/not-found" component={NotFound} />
-              {/* <Redirect  from="*" to="/not-found" /> */}
+              {/* <Redirect from="*" to="/not-found" /> */}
             </div>
             <Footer/>
           </Fragment>

@@ -70,10 +70,24 @@ export const setCurrentUser = userData => {
 	}
 }
 
+export const logoutUser = () => (dispatch) => {
+	//remove token from local storage
+	localStorage.removeItem('jwtToken')
+	//remove Auth header for future request
+	setAuthToken(false)
+	// Set current user to {} this will set isAuthenticated to false
+	dispatch(setCurrentUser({}))
+}
+
+
 //Changes the user password (from account settings when the user knows the current password)
 export const changePassword = newPasswordData => dispatch => {
 	axios.post('/api/user/change-password', newPasswordData) 
-		.then(res => logoutUser())
+		.then(res => {
+			localStorage.removeItem('jwtToken');
+			setAuthToken(false);
+			dispatch(setCurrentUser({}));
+		})
 		.catch(err => {
 			dispatch({
 				type: GET_ERRORS,
@@ -109,7 +123,11 @@ export const resetPassword = (data, history) => dispatch => {
 
 export const deleteAccount = data => dispatch => {
 	axios.post('/api/user/delete', data)
-		.then(res => logoutUser())
+		.then(res => {
+			localStorage.removeItem('jwtToken');
+			setAuthToken(false);
+			dispatch(setCurrentUser({}));
+		})
 		.catch(err => {
 			dispatch({
 				type: GET_ERRORS,
@@ -118,11 +136,3 @@ export const deleteAccount = data => dispatch => {
 		})
 }
 
-export const logoutUser = () => (dispatch) => {
-	//remove token from local storage
-	localStorage.removeItem('jwtToken')
-	//remove Auth header for future request
-	setAuthToken(false)
-	// Set current user to {} this will set isAuthenticated to false
-	dispatch(setCurrentUser({}))
-}

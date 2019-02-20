@@ -11,11 +11,8 @@ import { logoutUser } from '../../redux/actions/authActions';
 import Avatar from './Avatar'
 class Navbar extends Component {
 
-	onLogoutClick = e => {
-		e.preventDefault()
-		this.props.logoutUser()
-	}
-
+	onLogoutClick = () => this.props.logoutUser()
+	
 	render() {
 		const { isAuthenticated, user } = this.props.auth
 		let content = '';
@@ -41,7 +38,7 @@ class Navbar extends Component {
 		}
 
 		return (
-			<nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+			<nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
 				<div className="container">
 					<NavLink className="navbar-brand" to="/">
 						Cachadas SV

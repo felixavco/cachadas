@@ -1,21 +1,23 @@
-const express = require('express')
-const router = express.Router()
-const passport = require('passport')
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
 
 //Load Passport jwt authentication
-const protected = passport.authenticate('jwt', { session: false })
+const protected = passport.authenticate('jwt', { session: false });
 
 //Validation
 const validateContactForm = require('../../validation/contactForm');
 const validateReportProblem = require('../../validation/reportProblem');
 
 //Controllers
-const allUsersController = require('../../controllers/admin').AllUsersController
-const contactFormController = require('../../controllers/admin').ContactFormController
-const reportProblemController = require('../../controllers/admin').ReportProblemController
+const {
+  AllUsersController,
+  ContactFormController,
+  ReportProblemController
+} = require('../../controllers/admin');
 
 //Authentication 
-const isAdmin = require('../../authorization/isAdmin')
+const isAdmin = require('../../authorization/isAdmin');
 
 //@route  /api/admin/all-users
 //@method GET
@@ -25,8 +27,8 @@ router.get(
   '/all-users', 
   protected, 
   isAdmin, 
-  allUsersController
-)
+  AllUsersController
+);
 
 //@route  /api/admin/contact
 //@method POST
@@ -35,8 +37,8 @@ router.get(
 router.post(
   '/contact',
   validateContactForm,
-  contactFormController
-)
+  ContactFormController
+);
 
 //@route  /api/admin/report-problem
 //@method POST
@@ -45,7 +47,7 @@ router.post(
 router.post(
   '/report-problem',
   validateReportProblem,
-  reportProblemController
-)
+  ReportProblemController
+);
 
 module.exports = router 
