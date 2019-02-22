@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, EDIT_USER } from '../actions/types'
+import { SET_CURRENT_USER, EDIT_USER, VERIFIED } from '../actions/types'
 import isEmpty from '../../validation/isEmpty'
 
 const initialState = {
@@ -20,6 +20,12 @@ export default (state = initialState, action) => {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload
+      }
+    
+    case VERIFIED:
+      return {
+        ...state,
+        user: {...state.user, isVerified: action.payload}
       }
   
     default:

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Helment from 'react-helmet';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -34,6 +34,7 @@ class CreateAd extends Component {
 			prevIsVisible: false, 
 			submitIsActive: false,
 			submitIsVisible: false,  
+			messageConfirmation: false,
       title: '',
       description: '',
       category: 'none',
@@ -189,7 +190,13 @@ class CreateAd extends Component {
 
 	onResend = e => {
 		e.preventDefault();
-		axios('/api/user/send-verification');
+		axios('/api/user/send-verification')
+		.then(res => {
+			this.setState({ messageConfirmation: true }, () => setTimeout(() => {
+				this.setState({ messageConfirmation: false })
+			}, 3000))
+		})
+		.catch(err => console.error("message failed, see error: ", err))
 	}
 
 	onSubmit = e => {
@@ -280,19 +287,35 @@ class CreateAd extends Component {
 				bathrooms,
 				contactPhone,
 				contactEmail,
+				messageConfirmation,
 				errors 
 		} = this.state;
 
 		let content; 
+		let alert;
 		const { isVerified, email } = this.props.auth.user;
+
+		if(messageConfirmation) {
+			alert = (
+				<div class="alert alert-success mt-3 text-center w-50 mx-auto" role="alert">
+					Message sent to {email}
+				</div>
+			)
+		} else {
+			alert = null;
+		}
+
 		if(!isVerified) {
 			content = (
-				<div className="pt-5">
-					<h5 className="mt-5 pt-5 text-center text-danger">
-						<span className="text-warning"><i class="fas fa-exclamation-triangle" /></span>	Verification Pending
-					</h5>
-					<p className="text-center">We sent a verification email to {email}, if your token has expired click <strong><a href="#" onClick={this.onResend}>HERE</a></strong> to receive a new verification email </p>
-				</div>
+				<Fragment>
+					<div className="pt-5">
+						<h5 className="mt-5 pt-5 text-center text-danger">
+							<span className="text-warning"><i class="fas fa-exclamation-triangle" /></span>	Verification Pending
+						</h5>
+						<p className="text-center">We sent a verification email to {email}, if your token has expired click <strong><a href="#" onClick={this.onResend}>HERE</a></strong> to receive a new verification email </p>
+					</div>
+					{alert}					
+				</Fragment>
 			)
 		} else {
 			content = (

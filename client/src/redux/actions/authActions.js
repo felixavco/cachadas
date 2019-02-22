@@ -2,7 +2,7 @@ import axios from 'axios'
 import setAuthToken from '../../utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 
-import { GET_ERRORS, SET_CURRENT_USER, EDIT_USER } from './types'
+import { GET_ERRORS, SET_CURRENT_USER, EDIT_USER, VERIFIED } from './types'
 
 //Register User
 export const registerUser = (userData, history) => (dispatch) => {
@@ -16,6 +16,17 @@ export const registerUser = (userData, history) => (dispatch) => {
 		})
 }
 
+export const accountVerification = (data) => dispatch => {
+	const { token } = data;
+	localStorage.setItem('jwtToken', token);
+	//Set token to Auth header
+	setAuthToken(token);
+	//Decode token to get user Data
+	const decodedUser = jwt_decode(token);
+	//Set Current user
+	dispatch(setCurrentUser(decodedUser));
+}
+
 //Login - Get user
 export const loginUser = userData => (dispatch) => {
 	axios
@@ -23,13 +34,13 @@ export const loginUser = userData => (dispatch) => {
 		.then((res) => {
 			//Save to Local Storage
 			const { token } = res.data
-			localStorage.setItem('jwtToken', token)
+			localStorage.setItem('jwtToken', token);
 			//Set token to Auth header
-			setAuthToken(token)
+			setAuthToken(token);
 			//Decode token to get user Data
-			const decodedUser = jwt_decode(token)
+			const decodedUser = jwt_decode(token);
 			//Set Current user
-			dispatch(setCurrentUser(decodedUser))
+			dispatch(setCurrentUser(decodedUser));
 		})
 		.catch((err) => {
 			dispatch({

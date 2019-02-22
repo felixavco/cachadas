@@ -49,7 +49,7 @@ class SearchBar extends Component {
 
 					<div className="col-lg-2 col-12">
 						<Link onClick={onSearch} className="btn btn-primary btn-block" to={`/?page=${currentPage}`}>
-							SEARCH &nbsp; <i class="fas fa-search" />
+							SEARCH &nbsp; <i className="fas fa-search" />
 						</Link>
 					</div>
 				</div>

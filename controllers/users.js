@@ -79,7 +79,8 @@ exports.RegisterController = async (req, res) => {
 exports.VerificationController = async (req, res) => {
 	try {
 		const { token } = req.params;
-		
+		const fx = parseInt(req.query.fx);
+	
 		const user = await User.findOne({
 			verificationToken: token,
 			expVerificationToken: { $gt: Date.now() } //checks if the token is expired
@@ -87,10 +88,23 @@ exports.VerificationController = async (req, res) => {
 
 		if(!user) return res.status(401).json({error: "Invalid token or token expired"});
 
-		await User.findByIdAndUpdate(user._id, {isVerified: true});
-		
-		res.status(200).json({msg: "OK"});
-		
+		const updatedUser = await User.findByIdAndUpdate(user._id, {isVerified: true}, { new: true });
+
+		if(fx) {
+			const { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified } = updatedUser;
+			const payload = { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified };
+	
+			jwt.sign(payload, secretOrKey, { expiresIn: '1d' }, (err, token) => {
+				res.status(200).json({
+					succsess: true,
+					token: `Bearer ${token}`
+				});
+			});
+
+		} else  {
+			res.status(200).json({succsess: updatedUser.isVerified});
+		}	
+
 	} catch (err) {
 		res.status(401).json({error: err.toString()});
 	}
