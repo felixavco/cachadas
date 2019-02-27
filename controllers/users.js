@@ -146,6 +146,7 @@ exports.SendVerificationController = async (req, res) => {
 //@access Public
 //@desc   Login user and returning Token
 exports.LoginController = async (req, res) => {
+	const errors = req.errors;
 	try {
 		const { email: r_email, password } = req.body;
 
@@ -359,7 +360,9 @@ exports.DeleteAccountController = async (req, res) => {
 			const imagesURLs = [].concat.apply([], userPosts.map((post) => post.images));
 			//Deletes images asociated to each post
 			try {
+				//This line deletes the images from the uploads directory
 				await imagesURLs.forEach((image) => fs.unlinkSync(image));
+				//This deletes all the post associated with the user
 				await Post.deleteMany({ owner: _id });
 			} catch (err) {
 				errors.error = err;

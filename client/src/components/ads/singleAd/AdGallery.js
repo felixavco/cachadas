@@ -24,12 +24,12 @@ const AdGallery = ({images}) => {
       </div>
 
       <a className="carousel-control-prev" href="#postGallery" role="button" data-slide="prev">
-        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <i className="far fa-arrow-alt-circle-left"/>
         <span className="sr-only">Previous</span>
       </a>
 
       <a className="carousel-control-next" href="#postGallery" role="button" data-slide="next">
-        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <i className="far fa-arrow-alt-circle-right"/>
         <span className="sr-only">Next</span>
       </a>
 

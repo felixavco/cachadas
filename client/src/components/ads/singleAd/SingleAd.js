@@ -110,7 +110,7 @@ class SingleAd extends Component {
 				</div>
 
 				<div className="row mb-4">			
-					<div className="col-md-7 col-12">
+					<div className="col-md-7 col-12 gallery-cont">
 						<AdGallery 
 							images={images}
 						/>

@@ -15,36 +15,36 @@ module.exports =  (req, res, next) => {
 
   //First Name Validation
   if(Validator.isEmpty(firstName)) {
-    errors.firstName = "El campo Nombre es requerido"
+    errors.firstName = "First Name is required"
   } else if (!Validator.isLength(firstName, {min: 2, max: 30})) {
-    errors.firstName = "El Nombre debe de tener entre 2 a 30 caracteres"
+    errors.firstName = "First Name must have between 2 and 30 characters"
   }
 
   //Last Name Validation
   if(Validator.isEmpty(lastName)) {
-    errors.lastName = "El campo Apellido es requerido"
+    errors.lastName = "Last Name is required"
   } else if(!Validator.isLength(lastName, {min: 2, max: 30})) {
-    errors.lastName = "El Apellido debe de tener entre 2 a 30 caracteres"
+    errors.lastName = "Last Name must have between 2 and 30 characters"
   }
 
   //Email Validation
   if(Validator.isEmpty(email)) {
-    errors.email = "El Correo electronico es requerido"
+    errors.email = "Email is required"
   } else if(!Validator.isEmail(email)) {
-    errors.email = "El formato del Correo electronico no es valido"
+    errors.email = "Invaild Email format"
   }
 
   //Password Validation
   if(Validator.isEmpty(password)) {
-    errors.password = "Ingrese una contraseña"
+    errors.password = "Password is required "
   } else if(!Validator.isLength(password, {min:6, max:30})){
-    errors.password = "La contraseña debe de contener almenos 6 caracteres"
+    errors.password = "Password must be 6 characters in length"
   }
 
   if(Validator.isEmpty(password2)) {
-    errors.password2 = "Confirme su contraseña"
+    errors.password2 = "Confirm your password"
   } else if(!Validator.equals(password, password2)) {
-    errors.password2 = "Las contraseñas no coinciden"
+    errors.password2 = "Passwords don't match"
   }
 
   if(!isEmpty(errors)) {

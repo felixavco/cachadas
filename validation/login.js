@@ -12,16 +12,16 @@ module.exports = (req, res, next) => {
 
   //Email Validation
   if(Validator.isEmpty(email)) {
-    errors.email = "Ingrese su correo electronico"
+    errors.email = "Enter your email address"
   } else if(!Validator.isEmail(email)) {
-    errors.email = "El formato del Correo electronico no es valido"
+    errors.email = "Invalid Email format"
   }
 
   //Password Validation
   if(Validator.isEmpty(password)) {
-    errors.password = "Ingrese su contraseña"
+    errors.password = "Enter your password"
   } else if(!Validator.isLength(password, {min:6, max:30})){
-    errors.password = "Contraseña incorrecta."
+    errors.password = "Incorrect Password"
   }
 
   if(!isEmpty(errors)) {

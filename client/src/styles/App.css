@@ -1,6 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
-p, h5, h6, h3 {
+p,
+h5,
+h6,
+h3 {
   font-family: 'Roboto', sans-serif; }
 
 .container {
@@ -10,6 +13,29 @@ p, h5, h6, h3 {
 .main-cont {
   margin-top: 80px;
   min-height: 65vh; }
+
+.gallery-cont {
+  min-height: 100%;
+  padding: 0;
+  margin: 0; }
+
+#postGallery {
+  height: 100%; }
+  #postGallery .carousel-indicators li {
+    background-color: #4582ec; }
+  #postGallery .carousel-control-prev .far, #postGallery .carousel-control-next .far {
+    font-size: 3rem;
+    color: #4582ec; }
+  #postGallery .carousel-inner {
+    overflow: hidden;
+    height: 100%; }
+    #postGallery .carousel-inner .carousel-item {
+      overflow: hidden;
+      height: 100%; }
+      #postGallery .carousel-inner .carousel-item img {
+        height: 100%;
+        width: 100%;
+        overflow: hidden; }
 
 .avatar-img {
   width: 35px;
