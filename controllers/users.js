@@ -24,7 +24,7 @@ exports.RegisterController = async (req, res) => {
 		const user = await User.findOne({ email: req.body.email });
 		if (user) {
 			//If exist return an error
-			errors.email = 'El correo ya esta registrado';
+			errors.email = 'Email is already registered';
 			return res.status(409).json(errors);
 		} else {
 
@@ -154,14 +154,14 @@ exports.LoginController = async (req, res) => {
 		const user = await User.findOne({ email: r_email });
 
 		if (!user) {
-			errors.email = 'No se encontro ningun usuario';
+			errors.email = 'User not found';
 			return res.status(404).json(errors);
 		}
 
 		const isMatch = await bcrypt.compare(password, user.password);
 
 			if (!isMatch) {
-				errors.password = 'Contraseña incorrecta';
+				errors.password = 'Invalid Email address';
 				return res.status(401).json(errors);
 			}
 
