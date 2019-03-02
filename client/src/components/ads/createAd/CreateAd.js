@@ -427,7 +427,7 @@ class CreateAd extends Component {
 	}
 }
 
-CreateAd.proptypes = {
+CreateAd.propTypes = {
 	createPost: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
