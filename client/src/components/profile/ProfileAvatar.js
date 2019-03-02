@@ -16,7 +16,7 @@ const ProfileAvatar = props => {
 };
 
 ProfileAvatar.propTypes = {
-	avatarURL: Proptypes.string.isRequired,
+	avatarURL: PropTypes.string.isRequired,
 	alt: PropTypes.string.isRequired
 }
 
