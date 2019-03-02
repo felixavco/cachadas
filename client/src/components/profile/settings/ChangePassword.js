@@ -117,7 +117,7 @@ class ChangePassword extends Component {
 	}
 }
 
-ChangePassword.proptypes = {
+ChangePassword.propTypes = {
 	errors: PropTypes.object.isRequired
 }
 

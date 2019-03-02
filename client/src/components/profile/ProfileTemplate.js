@@ -25,7 +25,7 @@ class ProfileTemplate extends Component {
 	}
 }
 
-ProfileTemplate.prototypes = {
+ProfileTemplate.propTypes = {
 	auth: PropTypes.object.isRequired
 };
 

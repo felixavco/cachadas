@@ -181,7 +181,7 @@ class Landing extends Component {
 	}
 }
 
-Landing.proptypes = {
+Landing.propTypes = {
 	loadAllPosts: PropTypes.func.isRequired,
 	postsPerPage: PropTypes.array.isRequired,
 	errors: PropTypes.object.isRequired

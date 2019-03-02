@@ -2,6 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 
 const singleAdCard = ({id, title, price, image}) => {
+
+  title = title.substring(0, 20) + '...';
+
   return (
     <Link to={`/post/${id}`}>
       <div className="single-post-card">

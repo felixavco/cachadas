@@ -1,4 +1,5 @@
 import React from 'react'
+import emtpyImage from '../../../img/empty-image.png'
 
 const AdGallery = ({images}) => {
 
@@ -6,11 +7,21 @@ const AdGallery = ({images}) => {
     <li key={i} data-target="#postGallery" data-slide-to="0" className={i === 0 ? 'active' : null}></li>
   ))
 
-  let gallery_Images = images.map((image, i) => (
-    <div key={i} className={`carousel-item ${i === 0 ? 'active' : null}`}>
-      <img className="d-block w-100" src={`/${image}`} alt={image}/>
+  let gallery_Images;
+
+  if(images.length !== 0) {
+    gallery_Images = images.map((image, i) => (
+      <div key={i} className={`carousel-item ${i === 0 ? 'active' : null}`}>
+        <img className="d-block w-100" src={`/${image}`} alt={image}/>
+      </div>
+    ))
+  } else {
+    <div className='carousel-item active'>
+      <img className="d-block w-100" src={emtpyImage} alt="No-image"/>
     </div>
-  ))
+  }
+
+ 
 
   return (
     <div id="postGallery" className="carousel slide mb-3" data-ride="carousel">

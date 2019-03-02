@@ -109,7 +109,7 @@ class DeleteAccount extends Component {
 	}
 }
 
-DeleteAccount.proptypes = {
+DeleteAccount.propTypes = {
   errors: PropTypes.object.isRequired
 }
 

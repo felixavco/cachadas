@@ -87,7 +87,7 @@ class VerifyAccount extends Component {
 		}
 }
 
-VerifyAccount.proptypes = {
+VerifyAccount.propTypes = {
 	accountVerification: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired
 }

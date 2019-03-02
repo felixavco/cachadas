@@ -22,13 +22,8 @@ class AdCard extends Component {
 	render() {
 		let { img, description, title, id } = this.props;
 
-		// if (title.length >= 25) {
 			title = title.substring(0, 25) + '...';
-		// }
-
-		// if (description.length >= 100) {
 			description = description.substring(0, 100) + '...';
-		// }
 
 
 		return (

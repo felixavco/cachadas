@@ -1,5 +1,5 @@
 import React from 'react';
-import Proptypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 const ProfileAvatar = props => {
 	return (
@@ -15,9 +15,9 @@ const ProfileAvatar = props => {
 	);
 };
 
-ProfileAvatar.proptypes = {
+ProfileAvatar.propTypes = {
 	avatarURL: Proptypes.string.isRequired,
-	alt: Proptypes.string.isRequired
+	alt: PropTypes.string.isRequired
 }
 
 export default ProfileAvatar;
