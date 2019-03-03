@@ -17,7 +17,7 @@ const AdGallery = ({ images }) => {
 	} else {
 		gallery_Images = (
 			<div className="carousel-item active">
-				<img className="d-block w-100" src={emtpyImage} alt="No-image" />
+				<img className="d-block w-100" src={emtpyImage} alt="Empty" />
 			</div>
 		);
 	}

@@ -312,7 +312,7 @@ class CreateAd extends Component {
 						<h5 className="mt-5 pt-5 text-center text-danger">
 							<span className="text-warning"><i class="fas fa-exclamation-triangle" /></span>	Verification Pending
 						</h5>
-						<p className="text-center">We sent a verification email to {email}, if your token has expired click <strong><a href="#" onClick={this.onResend}>HERE</a></strong> to receive a new verification email </p>
+						<p className="text-center">We sent a verification email to {email}, if your token has expired click <strong><a href="/" onClick={this.onResend}>HERE</a></strong> to receive a new verification email </p>
 					</div>
 					{alert}					
 				</Fragment>

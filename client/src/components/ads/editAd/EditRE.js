@@ -34,7 +34,6 @@ const EditRE = ({propertyType, transaction, rooms, bathrooms, errors, onchange})
           onChange={onchange}
           name="rooms"
           value={rooms}
-          onChange={onchange}
           options={Rooms}
           error={errors.rooms}
         />

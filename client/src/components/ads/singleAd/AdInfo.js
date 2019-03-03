@@ -75,7 +75,7 @@ const AdInfo = ({ owner, category, description, contactEmail, contactPhone, make
         </div>
         <div className="col-md-6 col-12">
           <p>
-            <strong>Email: </strong><a href={`mailto:${contactEmail}`} target="_blank">{contactEmail}</a>
+            <strong>Email: </strong><a href={`mailto:${contactEmail}`} target="_blank" rel="noopener noreferrer">{contactEmail}</a>
             </p>
           </div>
       </div>

@@ -8,7 +8,7 @@ const Pagination = ({ currentPage, nextPage, prevPage, setPage, pages }) => {
 	for (let i = 0; i < pages; i++) {
 		PAGES = [
 			...PAGES,
-			<li onClick={() => setPage(i + 1)} key={i} className={`page-item ${i + 1 == currentPage ? 'active' : ''}`}>
+			<li onClick={() => setPage(i + 1)} key={i} className={`page-item ${i + 1 === currentPage ? 'active' : ''}`}>
 				<Link className="page-link" to={`/?page=${i + 1}`}>
 					{i + 1}
 				</Link>

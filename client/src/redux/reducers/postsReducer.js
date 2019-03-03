@@ -1,6 +1,4 @@
 import { MY_POSTS, GET_SINGLE_POST, POSTS_PER_PAGE } from '../actions/types'
-import { PostPerPage } from '../actions/postsActions';
-// import isEmpty from '../../validation/isEmpty'
 
 const initialState = {
   myPosts: [],
