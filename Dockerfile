@@ -29,6 +29,7 @@ ENV SENDGRID_KEY secret
 ENV SMTP_USER usergmail.com
 ENV SMTP_PWD userpassword
 ENV SMTP_SERVER smtp.gmail.com
+ENV MY_HOST host
 ENV PORT 80
 
 EXPOSE 80

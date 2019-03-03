@@ -7,5 +7,6 @@ module.exports = {
   SENDGRID_KEY: process.env.SENDGRID_KEY,
   SMTP_USER: process.env.SMTP_USER,
   SMTP_PWD: process.env.SMTP_PWD,
-  SMTP_SERVER: process.env.SMTP_SERVER
+  SMTP_SERVER: process.env.SMTP_SERVER,
+  HOST: process.env.MY_HOST
 }
