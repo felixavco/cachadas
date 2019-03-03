@@ -10,7 +10,7 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 
 //SendGrid NodeMailer
-const {resetPasswordEmail, sendVerificationToken} = require('../nodeMailer/sendGrid');
+const { resetPasswordEmail, sendVerificationToken } = require('../nodeMailer/sendGrid');
 
 //@route  /api/user/register
 //@method POST
@@ -27,27 +27,26 @@ exports.RegisterController = async (req, res) => {
 			errors.email = 'Email is already registered';
 			return res.status(409).json(errors);
 		} else {
-
 			//Create a random Token
 			const verificationToken = await crypto.randomBytes(32).toString('hex');
-			
+
 			const expVerificationToken = Date.now() + 3600000; // Token will expire in an Hour
 
-			console.log(verificationToken)
+			console.log(verificationToken);
 
 			//If address does not exist, register the user
 			const { firstName, lastName, email, password } = req.body;
 
 			const newUser = new User({
-				firstName, 
-				lastName, 
-				email, 
-				password, 
+				firstName,
+				lastName,
+				email,
+				password,
 				verificationToken,
 				expVerificationToken
 			});
 
-			const messageData = { firstName, email, token: verificationToken }
+			const messageData = { firstName, email, token: verificationToken };
 
 			// Encrypt the password before save it in the DB
 			bcrypt.genSalt(10, (err, salt) => {
@@ -57,7 +56,7 @@ exports.RegisterController = async (req, res) => {
 						newUser.password = hash;
 						//register the user in the Database
 						await newUser.save();
-						
+
 						await sendVerificationToken(messageData);
 
 						res.status(201).json({ msg: 'OK' });
@@ -80,66 +79,63 @@ exports.VerificationController = async (req, res) => {
 	try {
 		const { token } = req.params;
 		const fx = parseInt(req.query.fx);
-	
+
 		const user = await User.findOne({
 			verificationToken: token,
 			expVerificationToken: { $gt: Date.now() } //checks if the token is expired
 		});
 
-		if(!user) return res.status(401).json({error: "Invalid token or token expired"});
+		if (!user) return res.status(401).json({ error: 'Invalid token or token expired' });
 
-		const updatedUser = await User.findByIdAndUpdate(user._id, {isVerified: true}, { new: true });
+		const updatedUser = await User.findByIdAndUpdate(user._id, { isVerified: true }, { new: true });
 
-		if(fx) {
+		if (fx) {
 			const { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified } = updatedUser;
 			const payload = { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified };
-	
+
 			jwt.sign(payload, secretOrKey, { expiresIn: '1d' }, (err, token) => {
 				res.status(200).json({
 					succsess: true,
 					token: `Bearer ${token}`
 				});
 			});
-
-		} else  {
-			res.status(200).json({succsess: updatedUser.isVerified});
-		}	
-
+		} else {
+			res.status(200).json({ succsess: updatedUser.isVerified });
+		}
 	} catch (err) {
-		res.status(401).json({error: err.toString()});
+		res.status(401).json({ error: err.toString() });
 	}
-}
+};
 
 //@route  /api/user/send-verification
 //@method GET
 //@access Protected
-//@desc   Sends a new verification email 
+//@desc   Sends a new verification email
 exports.SendVerificationController = async (req, res) => {
 	try {
 		const { _id } = req.user;
 
-		//Create a new Token and new expiration 
+		//Create a new Token and new expiration
 		const newToken = await crypto.randomBytes(32).toString('hex');
 		const newExpToken = Date.now() + 3600000; // Token will expire in an Hour
 		const updatedTokenInfo = {
 			verificationToken: newToken,
 			expVerificationToken: newExpToken
-		}
+		};
 
 		const user = await User.findByIdAndUpdate(_id, updatedTokenInfo, { new: true });
 
-		const { firstName, email,verificationToken} = user;
+		const { firstName, email, verificationToken } = user;
 
-		const messageData = { firstName, email, token: verificationToken }
+		const messageData = { firstName, email, token: verificationToken };
 
 		await sendVerificationToken(messageData);
 
-		res.status(200).json({msg: "OK"});
-
+		res.status(200).json({ msg: 'OK' });
 	} catch (err) {
-		res.status(500).json({error: err.toString()});
+		res.status(500).json({ error: err.toString() });
 	}
-}
+};
 
 //@route  /api/user/login
 //@method POST
@@ -160,24 +156,23 @@ exports.LoginController = async (req, res) => {
 
 		const isMatch = await bcrypt.compare(password, user.password);
 
-			if (!isMatch) {
-				errors.password = 'Invalid Email address';
-				return res.status(401).json(errors);
-			}
+		if (!isMatch) {
+			errors.password = 'Invalid Email address';
+			return res.status(401).json(errors);
+		}
 
-			const { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified } = user;
+		const { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified } = user;
 
-			const payload = { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified };
+		const payload = { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified };
 
-			jwt.sign(payload, secretOrKey, { expiresIn: '1d' }, (err, token) => {
-				res.status(200).json({
-					succsess: true,
-					token: `Bearer ${token}`
-				});
+		jwt.sign(payload, secretOrKey, { expiresIn: '1d' }, (err, token) => {
+			res.status(200).json({
+				succsess: true,
+				token: `Bearer ${token}`
 			});
-
+		});
 	} catch (err) {
-		res.status(500).json({error: err.toString()});
+		res.status(500).json({ error: err.toString() });
 	}
 };
 
@@ -203,9 +198,17 @@ exports.UpdateUserProfile = async (req, res) => {
 			errors.user = 'Invalid Request';
 			res.status(400).json(errors);
 		} else {
-			const { id, firstName, lastName, public_email, phone, avatar, email, role } = updatedUser;
-			const updatedProfile = { id, firstName, lastName, public_email, phone, avatar, email, role };
-			res.status(200).json(updatedProfile);
+			const { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified } = updatedUser;
+
+			const payload = { id, firstName, lastName, email, role, avatar, phone, public_email, isVerified };
+
+			jwt.sign(payload, secretOrKey, { expiresIn: '1d' }, (err, token) => {
+				if (err) throw err;
+				res.status(200).json({
+					succsess: true,
+					token: `Bearer ${token}`
+				});
+			});
 		}
 	} catch (error) {
 		console.error(error);
@@ -251,7 +254,6 @@ exports.ChangePasswordController = async (req, res) => {
 				}
 			});
 		});
-		
 	} catch (err) {
 		errors.error = err;
 		res.status(500).json(errors);
@@ -280,7 +282,7 @@ exports.ResetPasswordController = async (req, res) => {
 
 		crypto.randomBytes(32, async (err, buffer) => {
 			if (err) throw err;
-			
+
 			token = buffer.toString('hex');
 			user.resetToken = token;
 			user.expResToken = Date.now() + 3600000; // Token will expire in an Hour

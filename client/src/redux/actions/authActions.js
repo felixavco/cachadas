@@ -2,7 +2,7 @@ import axios from 'axios';
 import setAuthToken from '../../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
-import { GET_ERRORS, SET_CURRENT_USER, EDIT_USER } from './types';
+import { GET_ERRORS, SET_CURRENT_USER } from './types';
 
 //Register User
 export const registerUser = (userData, history) => (dispatch) => {
@@ -53,13 +53,20 @@ export const editUser = (updatedUser, history) => (dispatch) => {
 	axios
 		.post('/api/user/profile', updatedUser)
 		.then((res) => {
-			dispatch({
-				type: EDIT_USER,
-				payload: res.data
-			});
+
+			const { token } = res.data;
+
+			localStorage.setItem('jwtToken', token);
+			//Set token to Auth header
+			setAuthToken(token);
+			//Decode token to get user Data
+			const decodedUser = jwt_decode(token);
+			dispatch(setCurrentUser(decodedUser));
+
 			if (history) {
 				history.push('/profile');
 			} else {
+				//Hard page reload to force load the new profile picture
 				window.location.replace('/profile');
 			}
 		})

@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, EDIT_USER } from '../actions/types'
+import { SET_CURRENT_USER,  } from '../actions/types'
 import isEmpty from '../../validation/isEmpty'
 
 const initialState = {
@@ -8,12 +8,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
-    case EDIT_USER:
-      return {
-        ...state,
-        user: action.payload
-      }
     
     case SET_CURRENT_USER:
       return {

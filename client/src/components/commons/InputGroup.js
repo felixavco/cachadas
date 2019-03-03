@@ -25,6 +25,7 @@ const InputGroup = ({
         onChange={onChange}
         type={type}
         noValidate
+        autoComplete
       />
       {error && (<div className="invalid-feedback">{ error }</div>)}
     </div>
