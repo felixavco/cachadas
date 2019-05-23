@@ -1,15 +1,26 @@
 const nodemailer = require('nodemailer');
 const sendGridTransport = require('nodemailer-sendgrid-transport');
-const { SENDGRID_KEY } = require('../config/keys');
-const { HOST } = require('../config/keys');
+const { SMTP_USER, SMTP_PWD, SMTP_SERVER, HOST } = require('../config/keys');
 
-const transporter = nodemailer.createTransport(
-	sendGridTransport({
-		auth: {
-			api_key: SENDGRID_KEY
-		}
-	})
-);
+//Sendgrid Settings
+// const transporter = nodemailer.createTransport(
+// 	sendGridTransport({
+// 		auth: {
+// 			api_key: SENDGRID_KEY
+// 		}
+// 	})
+// );
+
+
+const transporter = nodeMailer.createTransport({
+  host: SMTP_SERVER,
+  port: 465,
+  secure: true,
+  auth: {
+    user: SMTP_USER,
+    pass: SMTP_PWD
+  }
+})
 
 exports.resetPasswordEmail = (userEmail, token) => {
 	let template = `
