@@ -11,7 +11,7 @@ const { SMTP_USER, SMTP_PWD, SMTP_SERVER, HOST } = require('../config/keys');
 // 	})
 // );
 
-
+// Settings for Gmail smtp
 const transporter = nodeMailer.createTransport({
   host: SMTP_SERVER,
   port: 465,
