@@ -1,15 +1,5 @@
 const nodemailer = require('nodemailer');
-const sendGridTransport = require('nodemailer-sendgrid-transport');
 const { SMTP_USER, SMTP_PWD, SMTP_SERVER, HOST } = require('../config/keys');
-
-//Sendgrid Settings
-// const transporter = nodemailer.createTransport(
-// 	sendGridTransport({
-// 		auth: {
-// 			api_key: SENDGRID_KEY
-// 		}
-// 	})
-// );
 
 // Settings for Gmail smtp
 const transporter = nodeMailer.createTransport({
