@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const nodeMailer = require('nodemailer');
 const { SMTP_USER, SMTP_PWD, SMTP_SERVER, HOST } = require('../config/keys');
 
 // Settings for Gmail smtp
