@@ -1,7 +1,7 @@
 //Load User model
 const User = require('../models/User');
 
-const {messageContactForm, reportProblem} = require('../nodeMailer/gmailSMTP')
+const {messageContactForm, reportProblem} = require('../mailer/mailgun');
 
 //@route  /api/admin/all-users
 //@method GET
@@ -29,23 +29,9 @@ exports.ContactFormController = async(req, res) => {
     const { name, email, subject, message } = req.body;
     const msg = { name, email, subject, message };
 
-    const info = await messageContactForm(msg);
+    messageContactForm(msg);
 
-    const data = {
-      response: info.response,
-      messageId: info.messageId,
-      rejected: info.rejected.length > 0 ? true : false,
-      accepted: info.accepted.length > 0 ? true : false,
-      messageSize: info.messageSize,
-      messageTime: info.messageTime,
-      envelopeTime: info.envelopeTime,
-      envelope: {
-        from: email,
-        to: "contact@cachadas.com"
-      }
-    }
-
-    res.status(200).json(data);
+    res.status(200).json({msg: "OK"});
 
   } catch (err) {
     errors.error = err;
@@ -66,7 +52,7 @@ exports.ReportProblemController = async(req, res) => {
     const { category, subject, message } = req.body;
     const msg = { category, subject, message };
 
-    await reportProblem(msg);
+    reportProblem(msg);
 
     res.status(200).json({msg: "OK"});
 

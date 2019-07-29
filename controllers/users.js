@@ -10,7 +10,7 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 
 //SendGrid NodeMailer
-const { resetPasswordEmail, sendVerificationToken } = require('../nodeMailer/sendGrid');
+const { resetPasswordEmail, sendVerificationToken } = require('../mailer/mailgun');
 
 //@route  /api/user/register
 //@method POST
@@ -57,7 +57,7 @@ exports.RegisterController = async (req, res) => {
 						//register the user in the Database
 						await newUser.save();
 
-						await sendVerificationToken(messageData);
+						sendVerificationToken(messageData);
 
 						res.status(201).json({ msg: 'OK' });
 					} catch (error) {
@@ -287,7 +287,7 @@ exports.ResetPasswordController = async (req, res) => {
 			user.resetToken = token;
 			user.expResToken = Date.now() + 3600000; // Token will expire in an Hour
 			await user.save();
-			await resetPasswordEmail(email, token);
+			resetPasswordEmail(email, token);
 			res.status(200).json({ msg: 'Reset password email successfully sent' });
 		});
 	} catch (err) {
