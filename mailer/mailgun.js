@@ -68,3 +68,21 @@ exports.reportProblem = (data) => {
 
     mailGun.messages().send(email);
 }
+
+
+exports.felixavelarContactForm = (data) => {
+    const template = `
+      <h3>Message from ${ data.name}</h3>
+      <p>${ data.message}</p>
+    `;
+
+    const email = {
+        to: 'hey@felixavelar.com',
+        cc: 'felixavco@gmail.com',
+        from: data.email,
+        subject: `[felixavelar.com] ${data.subject}`,
+        html: template
+    }
+
+    mailGun.messages().send(email);
+}

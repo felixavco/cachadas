@@ -62,3 +62,24 @@ exports.ReportProblemController = async(req, res) => {
   }
 
 }
+
+//@route  /api/admin/felixavelar-contact
+//@method POST
+//@access public
+//@desc   felixavelar.com contact form controller 
+exports.felixavelarContactFormController = async(req, res) => {
+
+  try {
+    const { name, email, subject, message } = req.body;
+    const msg = { name, email, subject, message };
+
+    messageContactForm(msg);
+
+    res.status(200).json({msg: "OK"});
+
+  } catch (err) {
+    errors.error = err;
+    res.status(500).json(errors);
+  }
+
+}

@@ -10,7 +10,7 @@ const validateContactForm = require('../../validation/contactForm');
 const validateReportProblem = require('../../validation/reportProblem');
 
 //Controllers
-const { AllUsersController, ContactFormController, ReportProblemController } = require('../../controllers/admin');
+const { AllUsersController, ContactFormController, ReportProblemController, felixavelarContactFormController } = require('../../controllers/admin');
 
 //Authentication
 const isAdmin = require('../../authorization/isAdmin');
@@ -32,5 +32,11 @@ router.post('/contact', validateContactForm, ContactFormController);
 //@access public
 //@desc   Send message from a contact form
 router.post('/report-problem', validateReportProblem, ReportProblemController);
+
+//@route  /api/admin/felixavelar-contact
+//@method POST
+//@access public
+//@desc   felixavelar.com contact form controller 
+router.post('/felixavelar-contact', felixavelarContactFormController);
 
 module.exports = router;
