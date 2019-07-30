@@ -114,7 +114,7 @@ exports.CreatePostController = async (req, res) => {
 		res.status(200).json({ msg: 'Post created' });
 	} catch (err) {
 		errors.error = err;
-		res.status(500).json(errors);
+		res.status(500).json({ERROR: errors.toString()});
 	}
 };
 

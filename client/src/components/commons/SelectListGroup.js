@@ -21,7 +21,7 @@ const SelectListGroup = ({
     <div className="form-group">
      {label ? (<label htmlFor={name}>{label}</label>) : null}
       <select
-        className={`form-control form-control-lg ${error ? 'is-invalid' : ''}`}
+        className={`form-control form-control ${error ? 'is-invalid' : ''}`}
         name={name}
         value={value}
         id={name}

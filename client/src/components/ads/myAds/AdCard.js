@@ -28,7 +28,7 @@ class AdCard extends Component {
 
 		return (
 			<Fragment>
-				<div className="adCard">
+				<div className="adCard mx-auto">
 					<Link to={`/post/${id}?origin=my-ads`}>
 						<div className="img-cont">
 							<img src={img} alt={title} />

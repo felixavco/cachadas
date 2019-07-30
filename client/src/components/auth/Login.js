@@ -21,7 +21,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    if(this.props.auth.isAuthenticated) {
+    if (this.props.auth.isAuthenticated) {
       this.props.history.push('/')
     } else {
       document.title = this.state.pageTitle
@@ -30,11 +30,11 @@ class Login extends Component {
 
   //Set errors from redux to the component state
   componentWillReceiveProps = nextProps => {
-    if(nextProps.auth.isAuthenticated){
+    if (nextProps.auth.isAuthenticated) {
       this.props.history.push('/profile')
     }
 
-    if(nextProps.errors) {
+    if (nextProps.errors) {
       this.setState({ errors: nextProps.errors })
     }
   }
@@ -51,43 +51,43 @@ class Login extends Component {
 
   render() {
     const { email, password, pageTitle, errors } = this.state
-    
+
     return (
       <div className="login">
-       <div className="row">
-        <div className="col-md-6 m-auto">
-          <h2 className="display-4 mt-3 text-center">{pageTitle}</h2>
-          <form className="custom-form " noValidate onSubmit={this.onSubmit}>
-    
-            <TextFieldGroup
-              placeholder="Email"
-              name="email"
-              type="email"
-              value={email}
-              onChange={this.onChange}
-              error={errors.email}
-						/>
+        <div className="row">
+          <div className="col-12 col-md-6 col-lg-4 m-auto">
+            <h2 className="display-4 my-3 text-center">{pageTitle}</h2>
+            <form className="custom-form " noValidate onSubmit={this.onSubmit}>
 
-            <TextFieldGroup
-              placeholder="Password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={this.onChange}
-              error={errors.password}
-						/>
+              <TextFieldGroup
+                placeholder="Email"
+                name="email"
+                type="email"
+                value={email}
+                onChange={this.onChange}
+                error={errors.email}
+              />
 
-            <button type="submit" className="btn btn-primary btn-block">{pageTitle} &nbsp;<i className="fas fa-sign-in-alt" /></button>
-          </form>
-          
-          <div className="mt-3">
-            <p className="lead">New User? <Link to="/register">Create an Account</Link></p> 
-          </div>
-          <div className="mt-3">
-            <p className="lead">Forgot Password? <Link to="/reset-password">Reset Password</Link></p> 
+              <TextFieldGroup
+                placeholder="Password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={this.onChange}
+                error={errors.password}
+              />
+
+              <button type="submit" className="btn btn-primary btn-block">{pageTitle} &nbsp;<i className="fas fa-sign-in-alt" /></button>
+            </form>
+
+            <div className="mt-3">
+              <p className="lead">New User? <Link to="/register">Create an Account</Link></p>
+            </div>
+            <div className="mt-3">
+              <p className="lead">Forgot Password? <Link to="/reset-password">Reset Password</Link></p>
+            </div>
           </div>
         </div>
-       </div>
       </div>
     )
   }

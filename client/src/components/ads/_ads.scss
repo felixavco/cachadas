@@ -1,10 +1,11 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1rem;
+  grid-template-columns: repeat(3, 32%);
+  width: 100%;
+  grid-gap: 0.7rem;
 
   .adCard {
-    width: 100%;
+    // width: 50%;
     height: 450px;
     box-shadow: 0px 0px 15px #c5c5c5;
     border-radius: 0.3rem;
@@ -47,5 +48,17 @@
         color: #fafafa;
       }
     }
+  }
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(2, 47%);
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(1, 90%);
   }
 }

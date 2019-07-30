@@ -18,7 +18,7 @@ const InputGroup = ({
         </span>
       </div>
       <input
-        className={`form-control form-control-lg ${error ? 'is-invalid' : ''}`}
+        className={`form-control form-control ${error ? 'is-invalid' : ''}`}
         placeholder={placeholder}
         name={name}
         value={value}

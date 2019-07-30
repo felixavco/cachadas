@@ -64,7 +64,7 @@ class App extends Component {
 				<Router>
 					<Fragment>
 						<Navbar />
-						<div className="container main-cont">
+						<div className="container-fluid main-cont">
 							<Switch>
 								{/* Public Routes */}
 								<Route exact path="/" component={Landing} />

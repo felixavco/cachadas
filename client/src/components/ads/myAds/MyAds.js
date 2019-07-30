@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ProfileTemplate from '../../profile/ProfileTemplate';
 import PropTypes from 'prop-types'
-import emptyImage  from  '../../../img/empty-image.png';
+import emptyImage from '../../../img/empty-image.png';
 import Helment from 'react-helmet';
 
 //Components
@@ -31,22 +31,22 @@ class MyAds extends Component {
 
 	componentWillReceiveProps = nextProps => {
 		if (nextProps.myPosts) {
-			this.setState({ 
+			this.setState({
 				myPosts: nextProps.myPosts,
 				isLoading: false
 			});
 		}
 	}
-	
+
 	onDelete = id => {
 
 		const { myPosts } = this.state;
 
-		const data = {postId: id}
+		const data = { postId: id }
 
 		const newMyPosts = myPosts.filter(post => post._id !== id);
 
-		this.setState({myPosts: newMyPosts});
+		this.setState({ myPosts: newMyPosts });
 
 		this.props.deletePost(data, newMyPosts);
 	}
@@ -69,7 +69,7 @@ class MyAds extends Component {
 			} else {
 
 				const myAds = myPosts.reverse().map(post => (
-					<AdCard 
+					<AdCard
 						key={post._id}
 						img={post.images[0] || emptyImage}
 						description={post.description}
@@ -79,9 +79,12 @@ class MyAds extends Component {
 					/>
 				))
 				content = (
-					<div className="grid">
-						{myAds}
-					</div>
+					// <div class="container">
+						<div className="grid">
+							{myAds}
+						</div>
+					// </div>
+
 				);
 			}
 		}

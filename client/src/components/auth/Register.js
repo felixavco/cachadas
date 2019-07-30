@@ -48,8 +48,8 @@ class Register extends Component {
 
 		const { firstName, lastName, email, password, password2, isHuman } = this.state;
 
-		
-		if(isHuman) {
+
+		if (isHuman) {
 			const newUser = { firstName, lastName, email, password, password2 };
 			this.props.registerUser(newUser, this.props.history);
 		}
@@ -58,8 +58,8 @@ class Register extends Component {
 	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
 	onValidate = value => {
-		if(value) {
-			this.setState({isHuman: true});
+		if (value) {
+			this.setState({ isHuman: true });
 		}
 	}
 
@@ -68,7 +68,7 @@ class Register extends Component {
 
 		let RegistrationBtn;
 
-		if(isHuman){
+		if (isHuman) {
 			RegistrationBtn = (
 				<button type="submit" className="btn btn-primary btn-block">
 					CREATE ACCOUNT &nbsp;<i className="fas fa-user-circle" />
@@ -91,38 +91,37 @@ class Register extends Component {
 						<div className="d-flex justify-content-center mb-2"><small>All fields are required</small></div>
 						<form className="custom-form " noValidate onSubmit={this.onSubmit}>
 							<div className="row">
-								<div className="col-lg-4 col-12">
-									<TextFieldGroup
-										placeholder="First Name"
-										name="firstName"
-										value={firstName}
-										onChange={this.onChange}
-										error={errors.firstName}
-									/>
-								</div>
-								<div className="col-lg-4 col-12">
-									<TextFieldGroup
-										placeholder="Last Name"
-										name="lastName"
-										value={lastName}
-										onChange={this.onChange}
-										error={errors.lastName}
-									/>
-								</div>
-								<div className="col-lg-4 col-12">
-									<TextFieldGroup
-										placeholder="Email"
-										name="email"
-										type="email"
-										value={email}
-										onChange={this.onChange}
-										error={errors.email}
-									/>
-								</div>
-							</div>
-
-							<div className="row">
-								<div className="col-lg-8 col-12 m-auto">
+								<div className="col-12 col-md-10 col-lg-8 mx-auto">
+									<div className="row">
+										<div className="col-lg-6 col-12">
+											<TextFieldGroup
+												placeholder="First Name"
+												name="firstName"
+												value={firstName}
+												onChange={this.onChange}
+												error={errors.firstName}
+											/>
+										</div>
+										<div className="col-lg-6 col-12">
+											<TextFieldGroup
+												placeholder="Last Name"
+												name="lastName"
+												value={lastName}
+												onChange={this.onChange}
+												error={errors.lastName}
+											/>
+										</div>
+										<div className="col-lg-6 col-12">
+											<TextFieldGroup
+												placeholder="Email"
+												name="email"
+												type="email"
+												value={email}
+												onChange={this.onChange}
+												error={errors.email}
+											/>
+										</div>
+									</div>
 									<div className="row">
 										<div className="col-lg-6 col-12">
 											<TextFieldGroup
@@ -154,17 +153,17 @@ class Register extends Component {
 									onChange={this.onValidate}
 								/>
 							</div>
-					
+
 							<div className="row">
 								<div className="col-lg-4 col-md-6 col-12 mx-auto">
-									{ RegistrationBtn }
+									{RegistrationBtn}
 								</div>
 							</div>
 						</form>
 
 						<div className="mt-3 d-flex justify-content-center">
-            	<p className="lead">Already have an account? <Link to="/login">Login</Link></p> 
-          	</div>
+							<p className="lead">Already have an account? <Link to="/login">Login</Link></p>
+						</div>
 					</div>
 				</div>
 			</div>

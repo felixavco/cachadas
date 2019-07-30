@@ -6,6 +6,7 @@ const AdInfo = ({ owner, category, description, contactEmail, contactPhone, make
 
   let content = null;
   
+	// eslint-disable-next-line default-case
 	switch (category) {
 		case 'vehicles':
 			content = (
